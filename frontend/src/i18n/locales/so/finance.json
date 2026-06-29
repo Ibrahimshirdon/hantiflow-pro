@@ -1,0 +1,138 @@
+{
+  "customerLoanDetailsPage": {
+    "title": "{{name}} — Faahfaahinta Deynta",
+    "defaultCustomerName": "Macmiil",
+    "backToLoans": "Ku noqo Deymaha",
+    "stats": {
+      "creditLimit": "Xadka deynta",
+      "outstandingBalance": "Haraaga deynta",
+      "availableCredit": "Deynta la heli karo",
+      "walletBalance": "Hadhaaga boorsada",
+      "totalLoanAmount": "Wadarta deynta",
+      "totalRepaid": "Wadarta la bixiyay",
+      "remainingBalance": "Haraaga lacagta",
+      "activeLoans": "Deymaha firfircoon"
+    },
+    "loansCard": {
+      "title": "Deymaha",
+      "empty": "Macmiilkan deyn uma jirto.",
+      "setDueDate": "Dejin taariikhda dhammaadka",
+      "recordRepayment": "Diiwaangeli bixin",
+      "columns": {
+        "orderNumber": "Dalabka #",
+        "principal": "Lacagta asalka",
+        "repaid": "La bixiyay",
+        "remaining": "Haraysa",
+        "dueDate": "Taariikhda dhammaadka"
+      }
+    },
+    "repaymentHistoryCard": {
+      "title": "Taariikhda bixinnada",
+      "empty": "Wali lama diiwaangelin bixin.",
+      "selfWallet": "Naftiisa (boorsada)",
+      "columns": {
+        "method": "Habka"
+      }
+    },
+    "repayDialog": {
+      "title": "Diiwaangeli bixin: {{orderNumber}}",
+      "remainingBalance": "Haraaga lacagta: ${{amount}}",
+      "method": "Habka",
+      "customerWalletBalance": "Hadhaaga boorsada macmiilka: ${{amount}}"
+    },
+    "dueDateDialog": {
+      "title": "Dejin taariikhda dhammaadka: {{orderNumber}}",
+      "save": "Keydi taariikhda dhammaadka"
+    },
+    "paymentMethods": {
+      "cash": "Cash",
+      "card": "Kaarka",
+      "mobileMoney": "Lacagta Mobilka",
+      "wallet": "Boorsada"
+    },
+    "toasts": {
+      "repaymentRecorded": "Bixinta waa la diiwaangeliyay",
+      "dueDateUpdated": "Taariikhda dhammaadka waa la cusboonaysiiyay"
+    }
+  },
+  "expensesPage": {
+    "title": "Kharashaadka",
+    "subtitle": "La socod kharashaadka ganacsiga iyo rasiidhada.",
+    "empty": "Kharash kuma jiro xilliga la doortay.",
+    "filters": {
+      "from": "Laga bilaabo",
+      "to": "Ilaa",
+      "total": "Wadarta: ${{amount}}"
+    },
+    "columns": {
+      "category": "Qaybta",
+      "paidTo": "Loo bixiyay",
+      "method": "Habka",
+      "totalLabel": "Wadarta"
+    },
+    "toasts": {
+      "expenseDeleted": "Kharashka waa la tirtiray"
+    }
+  },
+  "financialReportsPage": {
+    "title": "Warbixinnada Maaliyadda",
+    "subtitle": "Dakhliga, faa'iidada, iyo socodka lacagta xilli la doortay.",
+    "filters": {
+      "from": "Laga bilaabo",
+      "to": "Ilaa"
+    },
+    "stats": {
+      "salesRevenue": "Dakhliga iibka",
+      "otherIncome": "Dakhli kale",
+      "totalRevenue": "Wadarta dakhliga",
+      "costOfGoodsSold": "Qiimaha alaabta la iibiyay",
+      "totalExpenses": "Wadarta kharashaadka",
+      "netProfit": "Faa'iidada saafiga ah"
+    },
+    "cashFlowCard": {
+      "title": "Socodka lacagta",
+      "cashIn": "Lacag soo gashay",
+      "cashOut": "Lacag baxday",
+      "net": "Saafiga"
+    },
+    "expensesByCategoryCard": {
+      "title": "Kharashaadka qaybaha ku kala qaybsan"
+    }
+  },
+  "loansPage": {
+    "title": "Deymaha",
+    "subtitle": "Deynta macaamiisha la siiyay marka la iibsanayo, oo loo kala saaray macmiilba macmiilkiisa.",
+    "empty": "Macaamiil lama helin.",
+    "stats": {
+      "totalOutstanding": "Wadarta haraysa",
+      "customersWithLoans": "Macaamiisha deynta leh",
+      "activeLoans": "Deymaha firfircoon"
+    },
+    "filters": {
+      "activeOnly": "Macaamiisha leh deymo firfircoon",
+      "all": "Dhammaan macaamiisha taariikh deyn leh"
+    },
+    "columns": {
+      "totalLoanAmount": "Wadarta Deynta",
+      "totalRepaid": "Wadarta La Bixiyay",
+      "remainingBalance": "Haraaga Lacagta",
+      "activeLoans": "Deymaha Firfircoon"
+    }
+  },
+  "createExpenseDialog": {
+    "trigger": "Kharash cusub",
+    "title": "Diiwaangeli kharash",
+    "save": "Keydi kharashka",
+    "fields": {
+      "category": "Qaybta",
+      "categoryPlaceholder": "Kirada, Adeegyada, Mushaharka...",
+      "paidTo": "Loo bixiyay",
+      "paymentMethod": "Habka lacag-bixinta",
+      "attachReceipt": "Ku lifaaq rasiid (ikhtiyaari)",
+      "receiptAttached": "Rasiidka: {{name}}"
+    },
+    "toasts": {
+      "expenseRecorded": "Kharashka waa la diiwaangeliyay"
+    }
+  }
+}

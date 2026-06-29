@@ -1,0 +1,120 @@
+{
+  "statuses": {
+    "unassigned": "Unassigned",
+    "assigned": "Assigned",
+    "picked_up": "Picked up",
+    "in_transit": "In transit",
+    "delivered": "Delivered",
+    "failed": "Failed"
+  },
+  "dispatchBoardPage": {
+    "title": "Dispatch Board",
+    "subtitle": "Assign drivers and track outbound deliveries.",
+    "table": {
+      "orderNumber": "Order #",
+      "dropoff": "Dropoff",
+      "driver": "Driver",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "loading": "Loading...",
+    "empty": "No deliveries yet.",
+    "noDriver": "—",
+    "assignDriverPlaceholder": "Assign driver",
+    "toasts": {
+      "driverAssigned": "Driver assigned"
+    }
+  },
+  "deliveryDetailPage": {
+    "loading": "Loading...",
+    "title": "Delivery for {{orderNumber}}",
+    "driverLabel": "Driver: {{driverName}}",
+    "unassignedDriver": "Unassigned",
+    "assignDriverPlaceholder": "Assign a driver",
+    "noDriversAvailable": "No drivers available",
+    "pickup": {
+      "title": "Pickup"
+    },
+    "dropoff": {
+      "title": "Dropoff"
+    },
+    "proofOfDelivery": {
+      "title": "Proof of delivery",
+      "alt": "Proof of delivery"
+    },
+    "customerConfirmation": {
+      "title": "Customer confirmation",
+      "confirmedOn": "Customer confirmed receipt on {{date}}",
+      "notConfirmedYet": "Customer hasn't confirmed receipt yet."
+    },
+    "statusTimeline": {
+      "title": "Status timeline"
+    },
+    "toasts": {
+      "driverAssigned": "Driver assigned"
+    }
+  },
+  "deliveryIssuesPage": {
+    "title": "Delivery Issues",
+    "subtitle": "Problems customers have reported with their deliveries.",
+    "openIssuesBanner": {
+      "count_one": "{{count}} open issue",
+      "count_other": "{{count}} open issues",
+      "awaiting": "awaiting a response."
+    },
+    "filter": {
+      "open": "Open",
+      "resolved": "Resolved",
+      "all": "All"
+    },
+    "table": {
+      "orderNumber": "Order #",
+      "customer": "Customer",
+      "description": "Description",
+      "status": "Status",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "loading": "Loading...",
+    "empty": "No delivery issues found.",
+    "resolveButton": "Resolve",
+    "resolveDialog": {
+      "title": "Resolve delivery issue",
+      "notePlaceholder": "Resolution note (optional) — visible to the customer",
+      "resolving": "Resolving...",
+      "markResolved": "Mark resolved"
+    },
+    "toasts": {
+      "issueResolved": "Issue resolved"
+    }
+  },
+  "createDeliveryDialog": {
+    "trigger": "New delivery",
+    "title": "Create delivery",
+    "salesOrder": {
+      "label": "Sales order",
+      "placeholder": "Select an order"
+    },
+    "pickupAddress": {
+      "sectionLabel": "Pickup address",
+      "addressLabel": "Address",
+      "cityLabel": "City"
+    },
+    "dropoffAddress": {
+      "sectionLabel": "Dropoff address",
+      "addressLabel": "Address",
+      "cityLabel": "City"
+    },
+    "notes": {
+      "label": "Notes (optional)"
+    },
+    "creating": "Creating...",
+    "submit": "Create delivery",
+    "defaultPickupLabel": "Pickup address",
+    "defaultDropoffLabel": "Delivery address",
+    "toasts": {
+      "selectOrder": "Select an order",
+      "deliveryCreated": "Delivery created"
+    }
+  }
+}

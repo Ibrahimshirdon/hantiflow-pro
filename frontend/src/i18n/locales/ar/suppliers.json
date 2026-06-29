@@ -1,0 +1,48 @@
+{
+  "stockPage": {
+    "title": "مخزون الموردين",
+    "subtitle": "استعرض ما يتوفر حاليًا لدى كل مورد واطلب مخزونًا إذا احتجت إليه.",
+    "empty": "لا توجد منتجات موردين بعد.",
+    "inCatalog": "ضمن الكتالوج",
+    "notYetSubmitted": "لم يتم إرساله بعد",
+    "requestStock": "طلب مخزون",
+    "table": {
+      "product": "المنتج",
+      "company": "الشركة",
+      "supplier": "المورد",
+      "manager": "المدير",
+      "category": "الفئة",
+      "available": "المتوفر",
+      "unit": "الوحدة",
+      "wholesalePrice": "سعر الجملة",
+      "sellingPrice": "سعر البيع"
+    },
+    "requestsCard": {
+      "title": "طلبات المخزون",
+      "requestedBy": "طلب من قبل",
+      "empty": "لم يتم إرسال أي طلبات مخزون بعد."
+    },
+    "submissionsCard": {
+      "title": "طلبات الإرسال المعلقة",
+      "empty": "لا توجد طلبات إرسال من الموردين بعد."
+    },
+    "submissionsRejectDialog": {
+      "title": "رفض الطلب: {{name}}",
+      "reasonLabel": "السبب (اختياري)",
+      "submit": "رفض الطلب",
+      "rejecting": "جارٍ الرفض..."
+    },
+    "dialog": {
+      "title": "طلب مخزون: {{name}}",
+      "quantityLabel": "الكمية (يحتفظ المورد حاليًا بـ {{count}})",
+      "messageLabel": "رسالة إلى المورد (اختياري)",
+      "send": "إرسال الطلب",
+      "sending": "جارٍ الإرسال..."
+    }
+  },
+  "toasts": {
+    "requestSent": "تم إرسال الطلب إلى المورد",
+    "submissionApproved": "تمت الموافقة على الطلب وإضافته إلى المخزون",
+    "submissionRejected": "تم رفض طلب الإرسال"
+  }
+}

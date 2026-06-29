@@ -1,0 +1,120 @@
+{
+  "statuses": {
+    "unassigned": "غير مُعيَّن",
+    "assigned": "معيَّن",
+    "picked_up": "تم الاستلام",
+    "in_transit": "في الطريق",
+    "delivered": "تم التوصيل",
+    "failed": "فشل"
+  },
+  "dispatchBoardPage": {
+    "title": "لوحة التوزيع",
+    "subtitle": "عيّن السائقين وتابع عمليات التوصيل الصادرة.",
+    "table": {
+      "orderNumber": "رقم الطلب",
+      "dropoff": "موقع التسليم",
+      "driver": "السائق",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "loading": "جارٍ التحميل...",
+    "empty": "لا توجد عمليات توصيل بعد.",
+    "noDriver": "—",
+    "assignDriverPlaceholder": "تعيين سائق",
+    "toasts": {
+      "driverAssigned": "تم تعيين السائق"
+    }
+  },
+  "deliveryDetailPage": {
+    "loading": "جارٍ التحميل...",
+    "title": "توصيل الطلب {{orderNumber}}",
+    "driverLabel": "السائق: {{driverName}}",
+    "unassignedDriver": "غير مُعيَّن",
+    "assignDriverPlaceholder": "تعيين سائق",
+    "noDriversAvailable": "لا يوجد سائقون متاحون",
+    "pickup": {
+      "title": "الاستلام"
+    },
+    "dropoff": {
+      "title": "التسليم"
+    },
+    "proofOfDelivery": {
+      "title": "إثبات التوصيل",
+      "alt": "إثبات التوصيل"
+    },
+    "customerConfirmation": {
+      "title": "تأكيد العميل",
+      "confirmedOn": "أكّد العميل الاستلام في {{date}}",
+      "notConfirmedYet": "لم يؤكد العميل الاستلام بعد."
+    },
+    "statusTimeline": {
+      "title": "سجل الحالة"
+    },
+    "toasts": {
+      "driverAssigned": "تم تعيين السائق"
+    }
+  },
+  "deliveryIssuesPage": {
+    "title": "مشاكل التوصيل",
+    "subtitle": "المشاكل التي أبلغ عنها العملاء بخصوص توصيلاتهم.",
+    "openIssuesBanner": {
+      "count_one": "{{count}} مشكلة مفتوحة",
+      "count_other": "{{count}} مشاكل مفتوحة",
+      "awaiting": "في انتظار الرد."
+    },
+    "filter": {
+      "open": "مفتوحة",
+      "resolved": "محلولة",
+      "all": "الكل"
+    },
+    "table": {
+      "orderNumber": "رقم الطلب",
+      "customer": "العميل",
+      "description": "الوصف",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "actions": "الإجراءات"
+    },
+    "loading": "جارٍ التحميل...",
+    "empty": "لم يتم العثور على مشاكل توصيل.",
+    "resolveButton": "حل",
+    "resolveDialog": {
+      "title": "حل مشكلة التوصيل",
+      "notePlaceholder": "ملاحظة الحل (اختياري) — تظهر للعميل",
+      "resolving": "جارٍ الحل...",
+      "markResolved": "تعليم كمحلولة"
+    },
+    "toasts": {
+      "issueResolved": "تم حل المشكلة"
+    }
+  },
+  "createDeliveryDialog": {
+    "trigger": "توصيل جديد",
+    "title": "إنشاء توصيل",
+    "salesOrder": {
+      "label": "طلب البيع",
+      "placeholder": "اختر طلبًا"
+    },
+    "pickupAddress": {
+      "sectionLabel": "عنوان الاستلام",
+      "addressLabel": "العنوان",
+      "cityLabel": "المدينة"
+    },
+    "dropoffAddress": {
+      "sectionLabel": "عنوان التسليم",
+      "addressLabel": "العنوان",
+      "cityLabel": "المدينة"
+    },
+    "notes": {
+      "label": "ملاحظات (اختياري)"
+    },
+    "creating": "جارٍ الإنشاء...",
+    "submit": "إنشاء التوصيل",
+    "defaultPickupLabel": "عنوان الاستلام",
+    "defaultDropoffLabel": "عنوان التسليم",
+    "toasts": {
+      "selectOrder": "اختر طلبًا",
+      "deliveryCreated": "تم إنشاء التوصيل"
+    }
+  }
+}

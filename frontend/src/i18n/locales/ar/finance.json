@@ -1,0 +1,138 @@
+{
+  "customerLoanDetailsPage": {
+    "title": "{{name}} — تفاصيل القرض",
+    "defaultCustomerName": "عميل",
+    "backToLoans": "العودة إلى القروض",
+    "stats": {
+      "creditLimit": "حد الائتمان",
+      "outstandingBalance": "الرصيد المستحق",
+      "availableCredit": "الائتمان المتاح",
+      "walletBalance": "رصيد المحفظة",
+      "totalLoanAmount": "إجمالي مبلغ القرض",
+      "totalRepaid": "إجمالي المسدد",
+      "remainingBalance": "الرصيد المتبقي",
+      "activeLoans": "القروض النشطة"
+    },
+    "loansCard": {
+      "title": "القروض",
+      "empty": "لا توجد قروض لهذا العميل.",
+      "setDueDate": "تحديد تاريخ الاستحقاق",
+      "recordRepayment": "تسجيل دفعة",
+      "columns": {
+        "orderNumber": "رقم الطلب",
+        "principal": "الأصل",
+        "repaid": "المسدد",
+        "remaining": "المتبقي",
+        "dueDate": "تاريخ الاستحقاق"
+      }
+    },
+    "repaymentHistoryCard": {
+      "title": "سجل الدفعات",
+      "empty": "لم يتم تسجيل أي دفعات بعد.",
+      "selfWallet": "بنفسه (المحفظة)",
+      "columns": {
+        "method": "الطريقة"
+      }
+    },
+    "repayDialog": {
+      "title": "تسجيل دفعة: {{orderNumber}}",
+      "remainingBalance": "الرصيد المتبقي: ${{amount}}",
+      "method": "الطريقة",
+      "customerWalletBalance": "رصيد محفظة العميل: ${{amount}}"
+    },
+    "dueDateDialog": {
+      "title": "تحديد تاريخ الاستحقاق: {{orderNumber}}",
+      "save": "حفظ تاريخ الاستحقاق"
+    },
+    "paymentMethods": {
+      "cash": "نقدًا",
+      "card": "بطاقة",
+      "mobileMoney": "محفظة الهاتف",
+      "wallet": "المحفظة"
+    },
+    "toasts": {
+      "repaymentRecorded": "تم تسجيل الدفعة",
+      "dueDateUpdated": "تم تحديث تاريخ الاستحقاق"
+    }
+  },
+  "expensesPage": {
+    "title": "المصروفات",
+    "subtitle": "تتبّع مصروفات الأعمال والإيصالات.",
+    "empty": "لا توجد مصروفات في هذا النطاق.",
+    "filters": {
+      "from": "من",
+      "to": "إلى",
+      "total": "الإجمالي: ${{amount}}"
+    },
+    "columns": {
+      "category": "الفئة",
+      "paidTo": "مدفوع إلى",
+      "method": "الطريقة",
+      "totalLabel": "الإجمالي"
+    },
+    "toasts": {
+      "expenseDeleted": "تم حذف المصروف"
+    }
+  },
+  "financialReportsPage": {
+    "title": "التقارير المالية",
+    "subtitle": "الإيرادات والأرباح والتدفق النقدي خلال نطاق تاريخي.",
+    "filters": {
+      "from": "من",
+      "to": "إلى"
+    },
+    "stats": {
+      "salesRevenue": "إيرادات المبيعات",
+      "otherIncome": "دخل آخر",
+      "totalRevenue": "إجمالي الإيرادات",
+      "costOfGoodsSold": "تكلفة البضاعة المباعة",
+      "totalExpenses": "إجمالي المصروفات",
+      "netProfit": "صافي الربح"
+    },
+    "cashFlowCard": {
+      "title": "التدفق النقدي",
+      "cashIn": "النقد الداخل",
+      "cashOut": "النقد الخارج",
+      "net": "الصافي"
+    },
+    "expensesByCategoryCard": {
+      "title": "المصروفات حسب الفئة"
+    }
+  },
+  "loansPage": {
+    "title": "القروض",
+    "subtitle": "الائتمان الممنوح للعملاء عند الدفع، مجمّعًا حسب العميل.",
+    "empty": "لم يتم العثور على عملاء.",
+    "stats": {
+      "totalOutstanding": "إجمالي المستحق",
+      "customersWithLoans": "العملاء الذين لديهم قروض",
+      "activeLoans": "القروض النشطة"
+    },
+    "filters": {
+      "activeOnly": "العملاء الذين لديهم قروض نشطة",
+      "all": "جميع العملاء الذين لديهم سجل قروض"
+    },
+    "columns": {
+      "totalLoanAmount": "إجمالي مبلغ القرض",
+      "totalRepaid": "إجمالي المسدد",
+      "remainingBalance": "الرصيد المتبقي",
+      "activeLoans": "القروض النشطة"
+    }
+  },
+  "createExpenseDialog": {
+    "trigger": "مصروف جديد",
+    "title": "تسجيل مصروف",
+    "save": "حفظ المصروف",
+    "fields": {
+      "category": "الفئة",
+      "categoryPlaceholder": "إيجار، مرافق، رواتب...",
+      "paidTo": "مدفوع إلى",
+      "paymentMethod": "طريقة الدفع",
+      "attachReceipt": "إرفاق إيصال (اختياري)",
+      "receiptAttached": "الإيصال: {{name}}"
+    },
+    "toasts": {
+      "expenseRecorded": "تم تسجيل المصروف"
+    }
+  }
+}

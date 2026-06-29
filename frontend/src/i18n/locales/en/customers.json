@@ -1,0 +1,40 @@
+{
+  "page": {
+    "title": "Customers",
+    "subtitle": "View customer details and manage their accounts, wallet, and loyalty points.",
+    "wallet": "Wallet",
+    "loyaltyPoints": "Loyalty points",
+    "addresses": "Addresses",
+    "creditLimit": "Credit limit",
+    "outstandingLoan": "Outstanding loan",
+    "empty": "No customers yet.",
+    "suspended": "Suspended",
+    "adjustWallet": "Adjust wallet",
+    "adjustLoyalty": "Adjust loyalty",
+    "setCreditLimit": "Set credit limit",
+    "suspend": "Suspend",
+    "activate": "Activate"
+  },
+  "dialogs": {
+    "adjustWalletTitle": "Adjust wallet: {{name}}",
+    "currentBalance": "Current balance: ${{value}}",
+    "type": "Type",
+    "topUp": "Top up (add money)",
+    "debit": "Debit (remove money)",
+    "reason": "Reason",
+    "saveAdjustment": "Save adjustment",
+    "adjustLoyaltyTitle": "Adjust loyalty points: {{name}}",
+    "currentPoints": "Current points: {{value}}",
+    "pointsChangeLabel": "Points change (negative to deduct)",
+    "setCreditLimitTitle": "Set credit limit: {{name}}",
+    "currentLimitAndOutstanding": "Current limit: ${{limit}} · Outstanding: ${{outstanding}}",
+    "newCreditLimit": "New credit limit",
+    "saveLimit": "Save limit"
+  },
+  "toasts": {
+    "statusUpdated": "Customer status updated",
+    "walletAdjusted": "Wallet adjusted",
+    "loyaltyAdjusted": "Loyalty points adjusted",
+    "creditLimitUpdated": "Credit limit updated"
+  }
+}

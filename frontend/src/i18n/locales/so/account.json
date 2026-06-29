@@ -1,0 +1,52 @@
+{
+  "title": "Dejinta Akoonka",
+  "subtitle": "Maamul profile-kaaga, furahaaga sirta ah, iyo muuqaalka app-ka.",
+  "photo": {
+    "title": "Sawirka profile-ka",
+    "change": "Bedel sawirka",
+    "uploading": "Waa la soo gelinayaa..."
+  },
+  "profile": {
+    "title": "Profile-ka",
+    "email": "Iimaylka",
+    "name": "Magaca",
+    "username": "Magaca isticmaale",
+    "usernamePlaceholder": "Lama dejin — waxaad ku geli kartaa keliya iimaylka",
+    "usernameHint": "Waxay kuu ogolaanaysaa inaad sidoo kale ku gasho magaca isticmaale.",
+    "save": "Keydi isbeddelada",
+    "saving": "Waa la keydinayaa..."
+  },
+  "password": {
+    "title": "Bedel furaha sirta ah",
+    "current": "Furaha sirta ah ee hadda",
+    "new": "Furaha sirta ah ee cusub",
+    "confirm": "Xaqiiji furaha sirta ah ee cusub",
+    "submit": "Bedel furaha sirta ah",
+    "submitting": "Waa la bedelayaa...",
+    "minLengthError": "Furaha sirta ah ee cusub waa inuu ahaadaa ugu yaraan 6 xaraf",
+    "mismatchError": "Furayaasha sirta ah ee cusub isma raacayaan",
+    "wrongCurrentError": "Furaha sirta ah ee hadda waa qalad",
+    "weakError": "Furaha sirta ah ee cusub aad buu u tabar yar yahay (ugu yaraan 6 xaraf)",
+    "genericError": "Furaha sirta ah lama bedeli karo. Fadlan isku day mar kale."
+  },
+  "appearance": {
+    "title": "Muuqaalka",
+    "currentlyUsing": "Hadda waxaad isticmaalaysaa qaab {{mode}}.",
+    "dark": "madow",
+    "light": "iftiin",
+    "switchToLight": "U beddel qaabka iftiinka",
+    "switchToDark": "U beddel qaabka madow"
+  },
+  "language": {
+    "title": "Luqadda",
+    "description": "Dooro luqadda lagu isticmaalo app-ka oo dhan.",
+    "english": "Ingiriisi",
+    "somali": "Soomaali",
+    "arabic": "Carabi"
+  },
+  "toasts": {
+    "profileUpdated": "Profile-ka waa la cusboonaysiiyay",
+    "photoUpdated": "Sawirka profile-ka waa la cusboonaysiiyay",
+    "passwordChanged": "Furaha sirta ah waa la beddelay"
+  }
+}

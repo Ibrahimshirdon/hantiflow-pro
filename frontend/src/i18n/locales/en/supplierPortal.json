@@ -1,0 +1,192 @@
+{
+  "dashboardPage": {
+    "welcome": "Welcome, {{name}}",
+    "subtitle": "Your catalog, stock requests, and companies at a glance.",
+    "viewBreakdown": "View breakdown",
+    "viewAll": "View all",
+    "stats": {
+      "totalProducts": "Total products",
+      "companies": "Companies",
+      "wholesaleValue": "Wholesale value in stock",
+      "unitsShippedOut": "Units shipped out (all-time)",
+      "pendingRequests": "Pending requests",
+      "valueShippedOut": "Value shipped out (all-time)",
+      "submitted": "Submitted to inventory",
+      "notSubmitted": "Not yet submitted"
+    },
+    "charts": {
+      "requestsByStatus": "Stock requests by status",
+      "requests": "Requests",
+      "topProductsByValue": "Top products by wholesale stock value",
+      "wholesaleValue": "Wholesale value",
+      "catalogValueByCompany": "Catalog value by company"
+    },
+    "yourCompanies": {
+      "title": "Your companies",
+      "location": "Location",
+      "manager": "Manager",
+      "empty": "No companies yet."
+    },
+    "recentRequests": {
+      "title": "Recent stock requests",
+      "empty": "No stock requests yet."
+    },
+    "table": {
+      "product": "Product",
+      "qty": "Qty",
+      "qtyInStock": "Qty in stock",
+      "wholesalePrice": "Wholesale price",
+      "currentWholesalePrice": "Current wholesale price"
+    },
+    "lowStock": {
+      "title": "Low stock in your catalog",
+      "empty": "No products are below their minimum stock level."
+    },
+    "breakdown": {
+      "totalCompanies": "Total companies",
+      "totalWholesaleValue": "Total wholesale value",
+      "wholesaleValueHint": "Sum of (quantity in stock x wholesale price) across every product in your catalog.",
+      "subtotal": "Subtotal",
+      "unitsShippedOutHint": "Sum of quantity across every stock request that's been approved.",
+      "noApprovedRequests": "No approved requests yet.",
+      "requestedBy": "Requested by",
+      "noPendingRequests": "No pending requests.",
+      "valueShippedOutHint": "Sum of (quantity x current wholesale price) across every approved stock request. Uses each product's current wholesale price, not the price at the time it was approved.",
+      "linkedProductId": "Linked product ID",
+      "noSubmittedProducts": "No products submitted to inventory yet.",
+      "allSubmitted": "Every product has been submitted to inventory."
+    }
+  },
+  "companiesPage": {
+    "title": "My Companies",
+    "subtitle": "Companies you manage and supply products under.",
+    "newCompany": "New company",
+    "empty": "No companies yet. Create one to start adding products.",
+    "fields": {
+      "companyName": "Company name",
+      "descriptionOptional": "Description (optional)",
+      "location": "Location",
+      "managerName": "Manager name",
+      "manager": "Manager",
+      "contactPhone": "Contact phone",
+      "contactEmail": "Contact email"
+    },
+    "table": {
+      "contact": "Contact"
+    },
+    "createDialog": {
+      "title": "Create company",
+      "submit": "Create company",
+      "creating": "Creating..."
+    },
+    "editDialog": {
+      "title": "Edit {{name}}",
+      "submit": "Save changes"
+    },
+    "deleteDialog": {
+      "title": "Delete company",
+      "bodyPrefix": "This will permanently delete",
+      "bodySuffix": ". This cannot be undone. If it still has products under it, deletion will be blocked.",
+      "submit": "Delete permanently"
+    },
+    "toasts": {
+      "created": "Company created",
+      "updated": "Company updated",
+      "deleted": "Company deleted"
+    }
+  },
+  "productsPage": {
+    "title": "My Products",
+    "subtitle": "Products you supply, grouped under your companies. Submitting stock sends a request for admin approval before it's added to inventory.",
+    "addProduct": "Add product",
+    "empty": "No products yet.",
+    "submit": "Submit",
+    "statusSubmitted": "Submitted",
+    "statusNotSubmitted": "Not submitted",
+    "statusPendingApproval": "Pending approval",
+    "fields": {
+      "company": "Company",
+      "selectCompanyPlaceholder": "Select a company",
+      "brandOptional": "Brand (optional)",
+      "descriptionOptional": "Description (optional)",
+      "category": "Category",
+      "unitType": "Unit type (kg, pcs, box...)",
+      "quantityInStock": "Quantity in stock",
+      "wholesalePrice": "Wholesale price",
+      "sellingPrice": "Selling price",
+      "minimumStockLevel": "Minimum stock level",
+      "expiryDateOptional": "Expiry date (optional)",
+      "purchaseSource": "Purchase source",
+      "purchasePrice": "Purchase price",
+      "batchNumber": "Batch number",
+      "warehouseLocation": "Warehouse location (your own record)",
+      "taxRate": "Tax rate",
+      "noTax": "No tax"
+    },
+    "table": {
+      "product": "Product",
+      "company": "Company",
+      "unit": "Unit",
+      "wholesale": "Wholesale",
+      "selling": "Selling"
+    },
+    "createDialog": {
+      "submit": "Create product",
+      "creating": "Creating..."
+    },
+    "editDialog": {
+      "title": "Edit {{name}}",
+      "submit": "Save changes"
+    },
+    "deleteDialog": {
+      "title": "Delete product",
+      "bodyPrefix": "This will permanently delete",
+      "bodySuffix": " from your own product list. This does not affect inventory already submitted from it.",
+      "submit": "Delete permanently"
+    },
+    "submitDialog": {
+      "title": "Request to submit {{name}}",
+      "quantityLabel": "Quantity (you hold {{count}})",
+      "submit": "Request submission",
+      "submitting": "Requesting..."
+    },
+    "submissionsCard": {
+      "title": "My Submissions",
+      "empty": "No submissions yet.",
+      "reason": "Reason"
+    },
+    "toasts": {
+      "created": "Product created",
+      "updated": "Product updated",
+      "deleted": "Product deleted",
+      "submissionRequested": "Submission requested — awaiting admin approval",
+      "selectCompany": "Select a company"
+    }
+  },
+  "stockRequestsPage": {
+    "title": "Stock Requests",
+    "subtitle": "Admin and manager requests for stock from your products. Approving immediately submits the requested quantity to inventory.",
+    "empty": "No stock requests yet.",
+    "table": {
+      "product": "Product",
+      "company": "Company",
+      "requestedBy": "Requested by",
+      "message": "Message"
+    },
+    "rejectDialog": {
+      "title": "Reject request: {{name}}",
+      "reasonLabel": "Reason (optional)",
+      "submit": "Reject request",
+      "rejecting": "Rejecting..."
+    },
+    "toasts": {
+      "approved": "Request approved and submitted to inventory",
+      "rejected": "Request rejected"
+    }
+  },
+  "categoriesPage": {
+    "title": "Categories",
+    "subtitle": "Browse the categories used in the internal catalog.",
+    "empty": "No categories yet."
+  }
+}

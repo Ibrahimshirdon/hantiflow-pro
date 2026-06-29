@@ -1,0 +1,192 @@
+{
+  "dashboardPage": {
+    "welcome": "مرحبًا، {{name}}",
+    "subtitle": "نظرة سريعة على كتالوجك وطلبات المخزون والشركات.",
+    "viewBreakdown": "عرض التفاصيل",
+    "viewAll": "عرض الكل",
+    "stats": {
+      "totalProducts": "إجمالي المنتجات",
+      "companies": "الشركات",
+      "wholesaleValue": "قيمة الجملة في المخزون",
+      "unitsShippedOut": "الوحدات المشحونة (إجمالي الفترة)",
+      "pendingRequests": "الطلبات المعلقة",
+      "valueShippedOut": "القيمة المشحونة (إجمالي الفترة)",
+      "submitted": "تم إرساله إلى المخزون",
+      "notSubmitted": "لم يُرسل بعد"
+    },
+    "charts": {
+      "requestsByStatus": "طلبات المخزون حسب الحالة",
+      "requests": "الطلبات",
+      "topProductsByValue": "أفضل المنتجات من حيث قيمة مخزون الجملة",
+      "wholesaleValue": "قيمة الجملة",
+      "catalogValueByCompany": "قيمة الكتالوج حسب الشركة"
+    },
+    "yourCompanies": {
+      "title": "شركاتك",
+      "location": "الموقع",
+      "manager": "المدير",
+      "empty": "لا توجد شركات بعد."
+    },
+    "recentRequests": {
+      "title": "طلبات المخزون الأخيرة",
+      "empty": "لا توجد طلبات مخزون بعد."
+    },
+    "table": {
+      "product": "المنتج",
+      "qty": "الكمية",
+      "qtyInStock": "الكمية في المخزون",
+      "wholesalePrice": "سعر الجملة",
+      "currentWholesalePrice": "سعر الجملة الحالي"
+    },
+    "lowStock": {
+      "title": "مخزون منخفض في كتالوجك",
+      "empty": "لا توجد منتجات أقل من الحد الأدنى للمخزون."
+    },
+    "breakdown": {
+      "totalCompanies": "إجمالي الشركات",
+      "totalWholesaleValue": "إجمالي قيمة الجملة",
+      "wholesaleValueHint": "مجموع (الكمية في المخزون × سعر الجملة) لكل منتج في كتالوجك.",
+      "subtotal": "الإجمالي الفرعي",
+      "unitsShippedOutHint": "مجموع الكمية لكل طلب مخزون تمت الموافقة عليه.",
+      "noApprovedRequests": "لا توجد طلبات تمت الموافقة عليها بعد.",
+      "requestedBy": "طلب من قبل",
+      "noPendingRequests": "لا توجد طلبات معلقة.",
+      "valueShippedOutHint": "مجموع (الكمية × سعر الجملة الحالي) لكل طلب مخزون تمت الموافقة عليه. يستخدم سعر الجملة الحالي للمنتج، وليس السعر وقت الموافقة.",
+      "linkedProductId": "رقم تعريف المنتج المرتبط",
+      "noSubmittedProducts": "لا توجد منتجات أُرسلت إلى المخزون بعد.",
+      "allSubmitted": "تم إرسال جميع المنتجات إلى المخزون."
+    }
+  },
+  "companiesPage": {
+    "title": "شركاتي",
+    "subtitle": "الشركات التي تديرها وتورّد المنتجات تحتها.",
+    "newCompany": "شركة جديدة",
+    "empty": "لا توجد شركات بعد. أنشئ واحدة لبدء إضافة المنتجات.",
+    "fields": {
+      "companyName": "اسم الشركة",
+      "descriptionOptional": "الوصف (اختياري)",
+      "location": "الموقع",
+      "managerName": "اسم المدير",
+      "manager": "المدير",
+      "contactPhone": "هاتف التواصل",
+      "contactEmail": "بريد التواصل"
+    },
+    "table": {
+      "contact": "التواصل"
+    },
+    "createDialog": {
+      "title": "إنشاء شركة",
+      "submit": "إنشاء شركة",
+      "creating": "جارٍ الإنشاء..."
+    },
+    "editDialog": {
+      "title": "تعديل {{name}}",
+      "submit": "حفظ التغييرات"
+    },
+    "deleteDialog": {
+      "title": "حذف الشركة",
+      "bodyPrefix": "سيؤدي هذا إلى حذف",
+      "bodySuffix": "نهائيًا. لا يمكن التراجع عن هذا الإجراء. إذا كانت لا تزال تحتوي على منتجات، سيتم حظر الحذف.",
+      "submit": "حذف نهائي"
+    },
+    "toasts": {
+      "created": "تم إنشاء الشركة",
+      "updated": "تم تحديث الشركة",
+      "deleted": "تم حذف الشركة"
+    }
+  },
+  "productsPage": {
+    "title": "منتجاتي",
+    "subtitle": "المنتجات التي تورّدها، مصنفة تحت شركاتك. إرسال المخزون يبعث طلبًا لموافقة المسؤول قبل إضافته إلى المخزون.",
+    "addProduct": "إضافة منتج",
+    "empty": "لا توجد منتجات بعد.",
+    "submit": "إرسال",
+    "statusSubmitted": "تم الإرسال",
+    "statusNotSubmitted": "لم يُرسل",
+    "statusPendingApproval": "في انتظار الموافقة",
+    "fields": {
+      "company": "الشركة",
+      "selectCompanyPlaceholder": "اختر شركة",
+      "brandOptional": "العلامة التجارية (اختياري)",
+      "descriptionOptional": "الوصف (اختياري)",
+      "category": "الفئة",
+      "unitType": "نوع الوحدة (كجم، قطعة، صندوق...)",
+      "quantityInStock": "الكمية في المخزون",
+      "wholesalePrice": "سعر الجملة",
+      "sellingPrice": "سعر البيع",
+      "minimumStockLevel": "الحد الأدنى للمخزون",
+      "expiryDateOptional": "تاريخ انتهاء الصلاحية (اختياري)",
+      "purchaseSource": "مصدر الشراء",
+      "purchasePrice": "سعر الشراء",
+      "batchNumber": "رقم الدفعة",
+      "warehouseLocation": "موقع المستودع (سجلك الخاص)",
+      "taxRate": "نسبة الضريبة",
+      "noTax": "بدون ضريبة"
+    },
+    "table": {
+      "product": "المنتج",
+      "company": "الشركة",
+      "unit": "الوحدة",
+      "wholesale": "الجملة",
+      "selling": "البيع"
+    },
+    "createDialog": {
+      "submit": "إنشاء منتج",
+      "creating": "جارٍ الإنشاء..."
+    },
+    "editDialog": {
+      "title": "تعديل {{name}}",
+      "submit": "حفظ التغييرات"
+    },
+    "deleteDialog": {
+      "title": "حذف المنتج",
+      "bodyPrefix": "سيؤدي هذا إلى حذف",
+      "bodySuffix": "نهائيًا من قائمة منتجاتك الخاصة. لا يؤثر هذا على المخزون الذي أُرسل منه سابقًا.",
+      "submit": "حذف نهائي"
+    },
+    "submitDialog": {
+      "title": "طلب إرسال {{name}}",
+      "quantityLabel": "الكمية (لديك {{count}})",
+      "submit": "طلب الإرسال",
+      "submitting": "جارٍ الطلب..."
+    },
+    "submissionsCard": {
+      "title": "طلبات إرسالي",
+      "empty": "لا توجد طلبات إرسال بعد.",
+      "reason": "السبب"
+    },
+    "toasts": {
+      "created": "تم إنشاء المنتج",
+      "updated": "تم تحديث المنتج",
+      "deleted": "تم حذف المنتج",
+      "submissionRequested": "تم تقديم طلب الإرسال — في انتظار موافقة المسؤول",
+      "selectCompany": "اختر شركة"
+    }
+  },
+  "stockRequestsPage": {
+    "title": "طلبات المخزون",
+    "subtitle": "طلبات المسؤولين والمديرين للمخزون من منتجاتك. الموافقة ترسل الكمية المطلوبة إلى المخزون فورًا.",
+    "empty": "لا توجد طلبات مخزون بعد.",
+    "table": {
+      "product": "المنتج",
+      "company": "الشركة",
+      "requestedBy": "طلب من قبل",
+      "message": "الرسالة"
+    },
+    "rejectDialog": {
+      "title": "رفض الطلب: {{name}}",
+      "reasonLabel": "السبب (اختياري)",
+      "submit": "رفض الطلب",
+      "rejecting": "جارٍ الرفض..."
+    },
+    "toasts": {
+      "approved": "تمت الموافقة على الطلب وإرساله إلى المخزون",
+      "rejected": "تم رفض الطلب"
+    }
+  },
+  "categoriesPage": {
+    "title": "الفئات",
+    "subtitle": "استعرض الفئات المستخدمة في الكتالوج الداخلي.",
+    "empty": "لا توجد فئات بعد."
+  }
+}

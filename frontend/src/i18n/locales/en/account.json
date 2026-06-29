@@ -1,0 +1,52 @@
+{
+  "title": "Account Settings",
+  "subtitle": "Manage your profile, password, and appearance.",
+  "photo": {
+    "title": "Profile photo",
+    "change": "Change photo",
+    "uploading": "Uploading..."
+  },
+  "profile": {
+    "title": "Profile",
+    "email": "Email",
+    "name": "Name",
+    "username": "Username",
+    "usernamePlaceholder": "Not set — you can only sign in with email",
+    "usernameHint": "Lets you sign in with a username too.",
+    "save": "Save changes",
+    "saving": "Saving..."
+  },
+  "password": {
+    "title": "Change password",
+    "current": "Current password",
+    "new": "New password",
+    "confirm": "Confirm new password",
+    "submit": "Change password",
+    "submitting": "Changing...",
+    "minLengthError": "New password must be at least 6 characters",
+    "mismatchError": "New passwords do not match",
+    "wrongCurrentError": "Current password is incorrect",
+    "weakError": "New password is too weak (minimum 6 characters)",
+    "genericError": "Could not change password. Please try again."
+  },
+  "appearance": {
+    "title": "Appearance",
+    "currentlyUsing": "Currently using {{mode}} mode.",
+    "dark": "dark",
+    "light": "light",
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode"
+  },
+  "language": {
+    "title": "Language",
+    "description": "Choose the language used across the app.",
+    "english": "English",
+    "somali": "Somali",
+    "arabic": "Arabic"
+  },
+  "toasts": {
+    "profileUpdated": "Profile updated",
+    "photoUpdated": "Profile photo updated",
+    "passwordChanged": "Password changed"
+  }
+}

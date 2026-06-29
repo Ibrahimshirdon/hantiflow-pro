@@ -1,0 +1,56 @@
+{
+  "statuses": {
+    "assigned": "معيَّن",
+    "picked_up": "تم الاستلام",
+    "in_transit": "في الطريق",
+    "delivered": "تم التوصيل",
+    "failed": "فشل"
+  },
+  "activePage": {
+    "loading": "جارٍ التحميل...",
+    "greeting": "مرحبًا، {{name}}",
+    "subtitle": "توصيلتك النشطة.",
+    "stats": {
+      "deliveredToday": "تم التوصيل اليوم",
+      "deliveredThisWeek": "تم التوصيل هذا الأسبوع",
+      "deliveredThisMonth": "تم التوصيل هذا الشهر",
+      "failedLast30Days": "فاشلة (30 يومًا)"
+    },
+    "noActiveDelivery": {
+      "title": "لا توجد توصيلة نشطة",
+      "body": "ستظهر هنا توصيلتك التالية المخصصة لك."
+    },
+    "activeDelivery": {
+      "orderLabel": "الطلب {{orderNumber}}",
+      "dropoffLabel": "موقع التسليم",
+      "notesLabel": "ملاحظات",
+      "photoSelected": "الصورة المحددة: {{fileName}}",
+      "attachProof": "إرفاق إثبات التوصيل (اختياري)",
+      "updating": "جارٍ التحديث...",
+      "reportFailed": "الإبلاغ عن فشل التوصيل"
+    },
+    "nextAction": {
+      "assigned": "تعليم كمستلَم",
+      "picked_up": "تعليم كفي الطريق",
+      "in_transit": "تعليم كمسلَّم"
+    },
+    "toasts": {
+      "statusUpdated": "تم تحديث الحالة"
+    }
+  },
+  "historyPage": {
+    "title": "سجل التوصيل",
+    "stats": {
+      "totalDelivered": "إجمالي الموصَّل",
+      "totalFailed": "إجمالي الفاشل",
+      "successRate": "معدل النجاح"
+    },
+    "table": {
+      "orderNumber": "رقم الطلب",
+      "dropoff": "موقع التسليم",
+      "status": "الحالة"
+    },
+    "loading": "جارٍ التحميل...",
+    "empty": "لا توجد عمليات توصيل مكتملة بعد."
+  }
+}

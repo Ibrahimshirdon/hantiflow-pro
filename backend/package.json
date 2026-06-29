@@ -1,0 +1,41 @@
+{
+  "name": "hantiflow-pro-backend",
+  "version": "1.0.0",
+  "description": "HantiFlow Pro - Inventory, Wholesale, Sales, Delivery & Business Management System (API)",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS=--use-system-ca tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "cross-env NODE_OPTIONS=--use-system-ca node dist/server.js",
+    "typecheck": "tsc --noEmit",
+    "seed:admin": "cross-env NODE_OPTIONS=--use-system-ca tsx scripts/seedAdmin.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "^2.10.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "exceljs": "^4.4.0",
+    "express": "^5.2.1",
+    "firebase-admin": "^14.0.0",
+    "helmet": "^8.2.0",
+    "morgan": "^1.11.0",
+    "multer": "^2.2.0",
+    "pdfkit": "^0.19.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^25.9.3",
+    "@types/pdfkit": "^0.17.6",
+    "cross-env": "^10.1.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}

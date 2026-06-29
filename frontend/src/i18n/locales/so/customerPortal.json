@@ -1,0 +1,186 @@
+{
+  "dashboardPage": {
+    "welcomeBack": "Soo dhowow, {{name}}",
+    "subtitle": "Dalabaadkaaga, boorsadaada, iyo howlahaaga isku eeg.",
+    "stats": {
+      "walletBalance": "Hadhaaga boorsada",
+      "loyaltyPoints": "Dhibcaha daacadnimada",
+      "activeOrders": "Dalabaadka firfircoon",
+      "completedOrders": "Dalabaadka dhammaystiran",
+      "totalSpent": "Wadarta lagu kharash gareeyay",
+      "creditLimit": "Xadka deynta",
+      "outstandingLoan": "Deynta haray",
+      "availableCredit": "Deynta la heli karo"
+    },
+    "spendingChart": {
+      "title": "Kharashaadkayga (30-kii maalmood ee la soo dhaafay)",
+      "seriesName": "La kharash gareeyay"
+    },
+    "recentOrders": {
+      "title": "Dalabaadkii dhowaa",
+      "viewAll": "Eeg dhammaan",
+      "columnOrderNumber": "Dalabka #",
+      "columnTotal": "Wadarta",
+      "columnStatus": "Xaaladda",
+      "empty": "Wali ma aadan dalabaan."
+    },
+    "recentWalletActivity": {
+      "title": "Dhaqdhaqaaqii dhowaa ee boorsada",
+      "viewAll": "Eeg dhammaan",
+      "columnReason": "Sababta",
+      "columnAmount": "Qadarka",
+      "empty": "Wali ma jiro dhaqdhaqaaq boorso."
+    },
+    "loans": {
+      "title": "Deymahayga",
+      "columnOrderNumber": "Dalabka #",
+      "columnPrincipal": "Asalka deynta",
+      "columnRemaining": "Inta haray",
+      "columnDueDate": "Taariikhda dhammaadka",
+      "columnActions": "Ficillada",
+      "overdueBadge": "Wakhtigii dhaafay",
+      "repayFromWallet": "Ka bixi boorsada",
+      "noDueDate": "—"
+    },
+    "promo": {
+      "readyToOrder": "Ma diyaar u tahay inaad wax dalabato?",
+      "goToShop": "Aad Dukaanka →"
+    },
+    "repayDialog": {
+      "title": "Bixi deynta: {{orderNumber}}",
+      "balanceSummary": "Hadhaaga deynta: {{remaining}} · Hadhaaga boorsada: {{walletBalance}}",
+      "amountLabel": "Qadarka",
+      "paying": "Waa la bixinayaa...",
+      "repay": "Bixi"
+    },
+    "toasts": {
+      "loanRepaid": "Deynta waxaa laga bixiyay boorsada"
+    }
+  },
+  "shopPage": {
+    "search": {
+      "placeholder": "Raadi badeecadaha...",
+      "allCategories": "Dhammaan qaybaha"
+    },
+    "fulfillment": {
+      "pickup": "Ka qaad dukaanka",
+      "delivery": "Gaarsiin"
+    },
+    "paymentMethods": {
+      "wallet": "Boorsada",
+      "cash": "Lacag goor gaarsiinta",
+      "card": "Kaarka",
+      "mobileMoney": "Lacagta Mobile",
+      "loan": "Deyn (xadka deynta lagu xisaabiyo)"
+    },
+    "product": {
+      "noImage": "Sawir ma jiro",
+      "addToCart": "Ku dar gaadiga"
+    },
+    "noProductsFound": "Wax badeeco ah lama helin.",
+    "cart": {
+      "title": "Gaadigaaga",
+      "empty": "Gaadigu waa banaan yahay",
+      "unitPriceEach": "{{price}} mid kasta",
+      "discountCodePlaceholder": "Koodhka dhimista",
+      "apply": "Codso",
+      "fulfillmentLabel": "Habka la qaadanayo",
+      "addressLabel": "Cinwaanka",
+      "cityLabel": "Magaalada",
+      "subtotal": "Wadarta hoose",
+      "discount": "Dhimis",
+      "tax": "Canshuur",
+      "deliveryFee": "Kharashka gaarsiinta",
+      "total": "Wadarta",
+      "placingOrder": "Waa la dirayaa dalabka...",
+      "placeOrder": "Dir dalabka · {{total}}",
+      "codeApplied": "Koodhka {{code}} waa la codsaday"
+    },
+    "toasts": {
+      "addedToCart": "{{name}} waxaa lagu daray gaadiga",
+      "discountApplied": "Dhimis waa la codsaday: -{{amount}}",
+      "orderPlaced": "Dalabka waa la diray!",
+      "cartEmpty": "Gaadigaagu waa banaan yahay",
+      "enterDeliveryAddress": "Geli cinwaanka gaarsiinta"
+    },
+    "deliveryAddressLabel": "Cinwaanka gaarsiinta"
+  },
+  "ordersPage": {
+    "title": "Dalabaadkaaga",
+    "subtitle": "La soco dalabaadkaaga oo eeg taariikhda iibsigaaga.",
+    "columnOrderNumber": "Dalabka #",
+    "columnItems": "Alaabta",
+    "columnTotal": "Wadarta",
+    "columnStatus": "Xaaladda",
+    "columnDate": "Taariikhda",
+    "loading": "Waa la soo rarayaa...",
+    "empty": "Wali ma aadan dalabaan."
+  },
+  "orderDetailPage": {
+    "loading": "Waa la soo rarayaa...",
+    "orderTitle": "Dalabka {{orderNumber}}",
+    "placedAt": "Waxaa la diray {{date}}",
+    "items": {
+      "title": "Alaabta",
+      "columnProduct": "Badeecada",
+      "columnQty": "Tirada",
+      "columnUnitPrice": "Qiimaha midka",
+      "columnLineTotal": "Wadarta khadka"
+    },
+    "summary": {
+      "subtotal": "Wadarta hoose",
+      "discount": "Dhimis",
+      "tax": "Canshuur",
+      "deliveryFee": "Kharashka gaarsiinta",
+      "total": "Wadarta"
+    },
+    "delivery": {
+      "title": "La socodka gaarsiinta",
+      "deliveringTo": "Waxaa loo gaarsiinayaa {{address}}",
+      "confirmedReceipt": "Waad xaqiijisay inaad heshay dalabkan",
+      "iReceivedDelivery": "Waan helay gaarsiintayda",
+      "issueReported": "Dhibaato waa la soo sheegay: \"{{description}}\"",
+      "reportAnIssue": "Soo sheeg dhibaato"
+    },
+    "invoice": {
+      "title": "Qaansheegta {{invoiceNumber}}",
+      "summary": "Xaaladda: {{status}} · Wadarta {{total}}"
+    },
+    "receipt": {
+      "title": "Rasiidka {{receiptNumber}}",
+      "summary": "{{amount}} waxaa lagu bixiyay {{method}}"
+    },
+    "reportDialog": {
+      "title": "Soo sheeg dhibaato gaarsiin",
+      "description": "Noo sheeg waxa khaldamay — maamule ama maareeye ayaa raacin kara.",
+      "placeholder": "Tusaale: Dalabku wuu soo daahay, alaabtu way burburtay, alaab khaldan ayaa la keenay...",
+      "sending": "Waa la dirayaa...",
+      "sendReport": "Dir warbixinta"
+    },
+    "confirmDialog": {
+      "title": "Xaqiiji helitaanka",
+      "description": "Noo ogeysii inaad heshay dalabkaaga, oo qiimee sida gaarsiintu u dhacday.",
+      "submitting": "Waa la gudbinayaa...",
+      "submit": "Gudbi"
+    },
+    "toasts": {
+      "issueReported": "Dhibaato waa la soo sheegay — kooxdayadu way raacin doontaa",
+      "deliveryConfirmed": "Mahadsanid xaqiijintaada!"
+    }
+  },
+  "walletPage": {
+    "title": "Boorsada",
+    "subtitle": "Dalabaadka ku bixi hadhaaga boorsadaada. Kaliya maamule ama maareeye ayaa boorsadaada lacag ku dari kara.",
+    "currentBalance": "Hadhaaga hadda",
+    "columnDate": "Taariikhda",
+    "columnType": "Nooca",
+    "columnReason": "Sababta",
+    "columnOrder": "Dalabka",
+    "columnBy": "Waxaa fuliyay",
+    "columnAmount": "Qadarka",
+    "columnBalanceAfter": "Hadhaaga kadib",
+    "empty": "Wali wax dhaqdhaqaaq ah ma jiraan.",
+    "viewOrder": "Eeg dalabka",
+    "noValue": "—"
+  }
+}

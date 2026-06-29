@@ -1,0 +1,149 @@
+{
+  "dashboardPage": {
+    "welcome": "Welcome back, {{name}}",
+    "signedInAs": "Signed in as {{role}}.",
+    "viewAll": "View all",
+    "stats": {
+      "totalProducts": "Total products",
+      "inventoryValue": "Inventory value",
+      "lowStockItems": "Low stock items",
+      "expiringBatches30d": "Expiring batches (30d)",
+      "revenue30d": "Revenue (30d)",
+      "expenses30d": "Expenses (30d)",
+      "netProfit30d": "Net profit (30d)",
+      "completedOrders30d": "Completed orders (30d)",
+      "mySales24h": "My sales (24h)",
+      "mySales7d": "My sales (7d)",
+      "mySales30d": "My sales (30d)",
+      "stockReceived30d": "Stock received (30d)",
+      "amountWithCount": "${{amount}} ({{count}})"
+    },
+    "yourWork": {
+      "title": "Your work",
+      "subtitle": "Your own sales and stock receiving activity."
+    },
+    "mySalesTrend": {
+      "title": "My sales trend (last 14 days)",
+      "legend": "My sales"
+    },
+    "myRecentSales": {
+      "title": "My recent sales",
+      "empty": "No sales yet."
+    },
+    "stockReceived": {
+      "title": "Stock I've received",
+      "empty": "No stock received yet."
+    },
+    "table": {
+      "orderNumber": "Order #",
+      "items": "Items",
+      "product": "Product",
+      "goodQty": "Good qty",
+      "issues": "Issues",
+      "qtySold": "Qty sold",
+      "revenue": "Revenue",
+      "customer": "Customer",
+      "orders": "Orders",
+      "totalSpent": "Total spent",
+      "damagedMissing": "{{count}} damaged/missing",
+      "type": "Type",
+      "payment": "Payment"
+    },
+    "needsAttention": {
+      "title": "Needs your attention",
+      "pendingApproval": "Products pending approval",
+      "unassignedDeliveries": "Unassigned deliveries",
+      "openDeliveryIssues": "Open delivery issues",
+      "review": "Review",
+      "dispatchBoard": "Dispatch board"
+    },
+    "salesTrendForecast": {
+      "title": "Sales trend & 7-day forecast",
+      "actualSales": "Actual sales",
+      "forecast": "Forecast",
+      "disclaimer": "Forecast is a linear trend projected from the last 30 days of sales, not a trained model."
+    },
+    "topProducts": {
+      "title": "Top products (last 30 days)"
+    },
+    "bestCustomers": {
+      "title": "Best customers (last 30 days)",
+      "empty": "No customer orders yet."
+    },
+    "inventoryByCategory": {
+      "title": "Inventory value by category",
+      "legend": "Inventory value",
+      "empty": "No category data yet."
+    },
+    "lowStockAlerts": {
+      "title": "Low stock alerts",
+      "emptyEmoji": "✅",
+      "emptyTitle": "No products are out of stock.",
+      "emptySubtitle": "All inventory levels are healthy.",
+      "outOfStock": "Out of stock",
+      "left": "{{count}} left",
+      "outstandingDebt": "Outstanding debt: ${{amount}}",
+      "unpaidCustomers_one": "{{count}} customer with unpaid balance",
+      "unpaidCustomers_other": "{{count}} customers with unpaid balance"
+    },
+    "expiringBatches": {
+      "title": "Batches expiring within 30 days",
+      "emptyEmoji": "🎉",
+      "emptyTitle": "No products are expiring in the next 30 days.",
+      "table": {
+        "product": "Product",
+        "batch": "Batch",
+        "expiresIn": "Expires In",
+        "qty": "Qty"
+      },
+      "daysLeft_one": "{{count}} day",
+      "daysLeft_other": "{{count}} days",
+      "expired": "Expired"
+    },
+    "teamOverview": {
+      "title": "Team overview"
+    },
+    "recentActivity": {
+      "title": "Recent activity",
+      "emptyEmoji": "📭",
+      "emptyTitle": "No activity recorded yet.",
+      "actions": {
+        "SUPPLIER_SUBMISSION_REQUESTED": "{{user}} requested to submit {{quantity}} units to inventory",
+        "SUPPLIER_SUBMISSION_APPROVED": "{{user}} approved a supplier submission of {{quantity}} units",
+        "SUPPLIER_SUBMISSION_REJECTED": "{{user}} rejected a supplier submission",
+        "SUPPLIER_PRODUCT_SUBMITTED_TO_INVENTORY": "{{user}} submitted {{quantity}} units to inventory",
+        "DELIVERY_ISSUE_REPORTED": "{{user}} reported a delivery issue",
+        "DELIVERY_ISSUE_RESOLVED": "{{user}} resolved a delivery issue",
+        "DELIVERY_CONFIRMED_BY_CUSTOMER": "{{user}} confirmed delivery ({{rating}}★)",
+        "SYSTEM_RESET": "{{user}} performed a full system reset",
+        "CUSTOMER_STATUS_CHANGED": "{{user}} changed a customer's status to {{status}}",
+        "CUSTOMER_WALLET_ADJUSTED": "{{user}} recorded a wallet {{type}} of ${{amount}}",
+        "CUSTOMER_LOYALTY_ADJUSTED": "{{user}} adjusted loyalty points by {{pointsChange}}",
+        "CUSTOMER_CREDIT_LIMIT_SET": "{{user}} set a customer's credit limit to ${{creditLimit}}",
+        "LOAN_REPAYMENT_RECORDED": "{{user}} recorded a loan repayment of ${{amount}}",
+        "LOAN_REPAID_FROM_WALLET": "{{user}} repaid ${{amount}} of a loan from wallet",
+        "LOAN_DUE_DATE_SET": "{{user}} updated a loan's due date",
+        "STOCK_REQUEST_CREATED": "{{user}} requested {{quantity}} units of stock from a supplier",
+        "STOCK_REQUEST_APPROVED": "{{user}} approved a stock request ({{quantity}} units)",
+        "STOCK_REQUEST_REJECTED": "{{user}} rejected a stock request",
+        "PRODUCT_APPROVED": "{{user}} approved \"{{name}}\"",
+        "PRODUCT_DELETED": "{{user}} deleted \"{{name}}\"",
+        "STOCK_ADJUSTED": "{{user}} adjusted stock by {{quantityChange}} ({{type}})",
+        "STOCK_RECEIVED": "{{user}} received {{goodQuantity}} units into inventory",
+        "USER_CREATED": "{{user}} created a new {{role}} account ({{email}})",
+        "USER_STATUS_CHANGED": "{{user}} changed an account status to {{status}}",
+        "USER_DELETED": "{{user}} deleted the {{role}} account {{email}}",
+        "USER_PASSWORD_RESET": "{{user}} reset a user's password",
+        "REPORT_EXPORTED": "{{user}} exported a report"
+      }
+    },
+    "recentOrders": {
+      "title": "Recent Orders",
+      "empty": "No recent orders."
+    },
+    "orderType": {
+      "pos": "POS",
+      "online": "Online"
+    }
+  }
+}

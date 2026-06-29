@@ -1,0 +1,38 @@
+{
+  "activityLogsPage": {
+    "title": "Activity Logs",
+    "subtitle": "Track every login, page view, and action recorded across the system.",
+    "filterByUser": "Filter by user",
+    "allUsers": "All users",
+    "user": "User",
+    "action": "Action",
+    "empty": "No activity logs found."
+  },
+  "auditLogsPage": {
+    "title": "Audit Logs",
+    "subtitle": "A detailed record of every create, update, and delete action performed across the system.",
+    "filterByUser": "Filter by user",
+    "allUsers": "All users",
+    "user": "User",
+    "action": "Action",
+    "entity": "Entity",
+    "beforeAfter": "Before / After",
+    "empty": "No audit logs found.",
+    "before": "Before: {{value}}",
+    "after": "After: {{value}}"
+  },
+  "systemResetPage": {
+    "title": "Danger Zone",
+    "subtitle": "Irreversible system-wide actions. Proceed with extreme caution.",
+    "cardTitle": "Reset entire system",
+    "warning": "This will permanently delete all data — products, orders, customers, suppliers, deliveries, and accounts (except your own admin account) — and cannot be undone.",
+    "resetSystemButton": "Reset system",
+    "confirmDialogTitle": "Confirm system reset",
+    "confirmDialogBody": "This action is permanent and cannot be reversed. All business data will be deleted.",
+    "confirmDialogTypePhrase": "Type",
+    "confirmationPhraseLabel": "Confirmation phrase",
+    "resetting": "Resetting...",
+    "permanentlyResetButton": "Permanently reset",
+    "resetSuccess": "System reset complete. {{count}} accounts were deleted."
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "dashboardPage": {
+    "welcome": "مرحبًا بعودتك، {{name}}",
+    "signedInAs": "تم تسجيل الدخول بصفتك {{role}}.",
+    "viewAll": "عرض الكل",
+    "stats": {
+      "totalProducts": "إجمالي المنتجات",
+      "inventoryValue": "قيمة المخزون",
+      "lowStockItems": "عناصر منخفضة المخزون",
+      "expiringBatches30d": "دفعات منتهية الصلاحية (30 يومًا)",
+      "revenue30d": "الإيرادات (30 يومًا)",
+      "expenses30d": "المصروفات (30 يومًا)",
+      "netProfit30d": "صافي الربح (30 يومًا)",
+      "completedOrders30d": "الطلبات المكتملة (30 يومًا)",
+      "mySales24h": "مبيعاتي (24 ساعة)",
+      "mySales7d": "مبيعاتي (7 أيام)",
+      "mySales30d": "مبيعاتي (30 يومًا)",
+      "stockReceived30d": "المخزون المستلم (30 يومًا)",
+      "amountWithCount": "${{amount}} ({{count}})"
+    },
+    "yourWork": {
+      "title": "عملك",
+      "subtitle": "نشاط مبيعاتك واستلامك للمخزون الخاص بك."
+    },
+    "mySalesTrend": {
+      "title": "اتجاه مبيعاتي (آخر 14 يومًا)",
+      "legend": "مبيعاتي"
+    },
+    "myRecentSales": {
+      "title": "مبيعاتي الأخيرة",
+      "empty": "لا توجد مبيعات بعد."
+    },
+    "stockReceived": {
+      "title": "المخزون الذي استلمته",
+      "empty": "لم يتم استلام أي مخزون بعد."
+    },
+    "table": {
+      "orderNumber": "رقم الطلب",
+      "items": "العناصر",
+      "product": "المنتج",
+      "goodQty": "الكمية السليمة",
+      "issues": "المشاكل",
+      "qtySold": "الكمية المباعة",
+      "revenue": "الإيرادات",
+      "customer": "العميل",
+      "orders": "الطلبات",
+      "totalSpent": "إجمالي المصروف",
+      "damagedMissing": "{{count}} تالف/مفقود",
+      "type": "النوع",
+      "payment": "الدفع"
+    },
+    "needsAttention": {
+      "title": "يحتاج إلى اهتمامك",
+      "pendingApproval": "منتجات في انتظار الموافقة",
+      "unassignedDeliveries": "توصيلات غير مخصصة",
+      "openDeliveryIssues": "مشاكل توصيل مفتوحة",
+      "review": "مراجعة",
+      "dispatchBoard": "لوحة التوزيع"
+    },
+    "salesTrendForecast": {
+      "title": "اتجاه المبيعات وتوقعات 7 أيام",
+      "actualSales": "المبيعات الفعلية",
+      "forecast": "التوقع",
+      "disclaimer": "التوقع هو اتجاه خطي مستنبط من آخر 30 يومًا من المبيعات، وليس نموذجًا مدربًا."
+    },
+    "topProducts": {
+      "title": "أفضل المنتجات (آخر 30 يومًا)"
+    },
+    "bestCustomers": {
+      "title": "أفضل العملاء (آخر 30 يومًا)",
+      "empty": "لا توجد طلبات عملاء بعد."
+    },
+    "inventoryByCategory": {
+      "title": "قيمة المخزون حسب الفئة",
+      "legend": "قيمة المخزون",
+      "empty": "لا توجد بيانات فئات بعد."
+    },
+    "lowStockAlerts": {
+      "title": "تنبيهات انخفاض المخزون",
+      "emptyEmoji": "✅",
+      "emptyTitle": "لا توجد منتجات غير متوفرة في المخزون.",
+      "emptySubtitle": "جميع مستويات المخزون سليمة.",
+      "outOfStock": "غير متوفر",
+      "left": "متبقٍ {{count}}",
+      "outstandingDebt": "الدين المستحق: ${{amount}}",
+      "unpaidCustomers_one": "عميل واحد لديه رصيد غير مدفوع",
+      "unpaidCustomers_other": "{{count}} عملاء لديهم رصيد غير مدفوع"
+    },
+    "expiringBatches": {
+      "title": "دفعات تنتهي صلاحيتها خلال 30 يومًا",
+      "emptyEmoji": "🎉",
+      "emptyTitle": "لا توجد منتجات تنتهي صلاحيتها خلال 30 يومًا.",
+      "table": {
+        "product": "المنتج",
+        "batch": "الدفعة",
+        "expiresIn": "تنتهي خلال",
+        "qty": "الكمية"
+      },
+      "daysLeft_one": "يوم واحد",
+      "daysLeft_other": "{{count}} أيام",
+      "expired": "منتهية الصلاحية"
+    },
+    "teamOverview": {
+      "title": "نظرة عامة على الفريق"
+    },
+    "recentActivity": {
+      "title": "النشاط الأخير",
+      "emptyEmoji": "📭",
+      "emptyTitle": "لم يتم تسجيل أي نشاط بعد.",
+      "actions": {
+        "SUPPLIER_SUBMISSION_REQUESTED": "{{user}} طلب إرسال {{quantity}} وحدة إلى المخزون",
+        "SUPPLIER_SUBMISSION_APPROVED": "{{user}} وافق على طلب إرسال من مورد بكمية {{quantity}} وحدة",
+        "SUPPLIER_SUBMISSION_REJECTED": "{{user}} رفض طلب إرسال من مورد",
+        "SUPPLIER_PRODUCT_SUBMITTED_TO_INVENTORY": "{{user}} أرسل {{quantity}} وحدة إلى المخزون",
+        "DELIVERY_ISSUE_REPORTED": "{{user}} أبلغ عن مشكلة توصيل",
+        "DELIVERY_ISSUE_RESOLVED": "{{user}} حل مشكلة توصيل",
+        "DELIVERY_CONFIRMED_BY_CUSTOMER": "{{user}} أكد التوصيل ({{rating}}★)",
+        "SYSTEM_RESET": "{{user}} نفّذ إعادة تهيئة كاملة للنظام",
+        "CUSTOMER_STATUS_CHANGED": "{{user}} غيّر حالة عميل إلى {{status}}",
+        "CUSTOMER_WALLET_ADJUSTED": "{{user}} سجّل {{type}} محفظة بقيمة ${{amount}}",
+        "CUSTOMER_LOYALTY_ADJUSTED": "{{user}} عدّل نقاط الولاء بمقدار {{pointsChange}}",
+        "CUSTOMER_CREDIT_LIMIT_SET": "{{user}} حدد سقف ائتمان عميل بـ ${{creditLimit}}",
+        "LOAN_REPAYMENT_RECORDED": "{{user}} سجّل سداد قرض بقيمة ${{amount}}",
+        "LOAN_REPAID_FROM_WALLET": "{{user}} سدد ${{amount}} من قرض عبر المحفظة",
+        "LOAN_DUE_DATE_SET": "{{user}} حدّث تاريخ استحقاق قرض",
+        "STOCK_REQUEST_CREATED": "{{user}} طلب {{quantity}} وحدة مخزون من مورد",
+        "STOCK_REQUEST_APPROVED": "{{user}} وافق على طلب مخزون ({{quantity}} وحدة)",
+        "STOCK_REQUEST_REJECTED": "{{user}} رفض طلب مخزون",
+        "PRODUCT_APPROVED": "{{user}} وافق على \"{{name}}\"",
+        "PRODUCT_DELETED": "{{user}} حذف \"{{name}}\"",
+        "STOCK_ADJUSTED": "{{user}} عدّل المخزون بمقدار {{quantityChange}} ({{type}})",
+        "STOCK_RECEIVED": "{{user}} استلم {{goodQuantity}} وحدة إلى المخزون",
+        "USER_CREATED": "{{user}} أنشأ حساب {{role}} جديد ({{email}})",
+        "USER_STATUS_CHANGED": "{{user}} غيّر حالة حساب إلى {{status}}",
+        "USER_DELETED": "{{user}} حذف حساب {{role}} {{email}}",
+        "USER_PASSWORD_RESET": "{{user}} أعاد تعيين كلمة مرور مستخدم",
+        "REPORT_EXPORTED": "{{user}} صدّر تقريرًا"
+      }
+    },
+    "recentOrders": {
+      "title": "الطلبات الأخيرة",
+      "empty": "لا توجد طلبات أخيرة."
+    },
+    "orderType": {
+      "pos": "نقطة البيع",
+      "online": "عبر الإنترنت"
+    }
+  }
+}

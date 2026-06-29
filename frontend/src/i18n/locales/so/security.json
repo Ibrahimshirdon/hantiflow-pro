@@ -1,0 +1,38 @@
+{
+  "activityLogsPage": {
+    "title": "Diiwaanka Howlaha",
+    "subtitle": "La soco gelitaan kasta, daawasho bog, iyo ficil kasta oo nidaamka lagu diiwaangeliyay.",
+    "filterByUser": "Ku kala saar isticmaale",
+    "allUsers": "Dhammaan isticmaalayaasha",
+    "user": "Isticmaale",
+    "action": "Ficilka",
+    "empty": "Wax diiwaan howl ah lama helin."
+  },
+  "auditLogsPage": {
+    "title": "Diiwaanka Baaritaanka",
+    "subtitle": "Diiwaan faahfaahsan oo ka kooban ficil kasta oo abuur, cusboonaysiin, iyo tirtiro oo nidaamka lagu sameeyay.",
+    "filterByUser": "Ku kala saar isticmaale",
+    "allUsers": "Dhammaan isticmaalayaasha",
+    "user": "Isticmaale",
+    "action": "Ficilka",
+    "entity": "Shayga",
+    "beforeAfter": "Ka hor / Ka dib",
+    "empty": "Wax diiwaan baaritaan ah lama helin.",
+    "before": "Ka hor: {{value}}",
+    "after": "Ka dib: {{value}}"
+  },
+  "systemResetPage": {
+    "title": "Aagga Khatarta",
+    "subtitle": "Ficillada nidaamka oo aan dib loo celin karin. Ka digtoonow aad.",
+    "cardTitle": "Dib u deji nidaamka oo dhan",
+    "warning": "Tani waxay si joogto ah u tirtiri doontaa dhammaan xogta — badeecadaha, dalabaadka, macaamiisha, alaab-qeybiyeyaasha, gaarsiinta, iyo akoonnada (marka laga reebo akoonkaaga maamulka) — lamana soo celin karo.",
+    "resetSystemButton": "Dib u deji nidaamka",
+    "confirmDialogTitle": "Xaqiiji dib-u-dejinta nidaamka",
+    "confirmDialogBody": "Ficilkani waa mid joogto ah lamana soo celin karo. Dhammaan xogta ganacsiga waa la tirtiri doonaa.",
+    "confirmDialogTypePhrase": "Qor",
+    "confirmationPhraseLabel": "Weedha xaqiijinta",
+    "resetting": "Waa la dib-u-dejinayaa...",
+    "permanentlyResetButton": "Si joogto ah u dib-u-deji",
+    "resetSuccess": "Dib-u-dejinta nidaamka waa la dhammeeyay. {{count}} akoon ayaa la tirtiray."
+  }
+}

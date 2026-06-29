@@ -1,0 +1,129 @@
+{
+  "posPage": {
+    "searchPlaceholder": "Iskaan barcode-ka ama raadi badeecadaha...",
+    "inStock": "{{count}} {{unit}} ayaa kaydka ku jira",
+    "walkInCustomer": "Macmiil aan diiwaangashanayn",
+    "cartEmpty": "Gaariga iibka waa madhan yahay",
+    "eachPrice": "${{price}} mid kasta",
+    "discountCodePlaceholder": "Koodhka dhimista",
+    "apply": "Codso",
+    "paymentMethods": {
+      "cash": "Lacag caddaan ah",
+      "card": "Kaarka",
+      "wallet": "Boorsada",
+      "mobile_money": "Lacagta Mobilada",
+      "loan": "Deyn"
+    },
+    "processing": "Waa la habeynayaa...",
+    "charge": "Qaad ${{total}}",
+    "toasts": {
+      "discountApplied": "Dhimis la dhaqan geliyay: -${{amount}}",
+      "saleCompleted": "Iibka waa la dhammeeyay",
+      "cartEmpty": "Gaariga iibka waa madhan yahay",
+      "loanRequiresCustomer": "Dooro macmiil diiwaangashan si aad u isticmaalo lacag-bixinta deynta"
+    }
+  },
+  "salesOrdersPage": {
+    "title": "Dalabaadka Iibka",
+    "subtitle": "Dhammaan macaamilladda iibka ee goobta (POS).",
+    "soldBy": "Waxaa iibiyay",
+    "everyone": "Dhammaan qofka",
+    "walkIn": "Aan diiwaangashanayn",
+    "empty": "Wali iib lama gaarin.",
+    "columns": {
+      "orderNumber": "Lambarka Dalabka",
+      "customer": "Macmiilka",
+      "completedBy": "Waxaa dhammaystiray",
+      "items": "Alaabta",
+      "payment": "Lacag-bixinta"
+    }
+  },
+  "salesOrderDetailPage": {
+    "orderHeading": "Dalabka {{orderNumber}}",
+    "soldBy": "Waxaa iibiyay {{name}}",
+    "completedBy": "Waxaa dhammaystiray {{name}}",
+    "items": "Alaabta",
+    "deliveryFee": "Lacagta Gaarsiinta",
+    "grandTotal": "Wadarta Guud",
+    "invoiceHeading": "Qaansheegta {{invoiceNumber}}",
+    "invoiceStatusLine": "Xaaladda: {{status}} · Wadarta ${{total}}",
+    "receiptHeading": "Rasiidka {{receiptNumber}}",
+    "receiptPaidLine": "La bixiyay ${{amount}} iyadoo loo marayo {{method}}",
+    "columns": {
+      "product": "Badeecada",
+      "qty": "Tirada",
+      "unitPrice": "Qiimaha Halkii",
+      "taxRate": "Heerka Canshuurta",
+      "lineTotal": "Wadarta Khadka"
+    },
+    "receiptPaper": {
+      "orderNo": "Dalabka #",
+      "cashier": "Iibiyaha",
+      "customer": "Macmiilka",
+      "total": "WADARTA",
+      "payment": "Lacag bixinta",
+      "paid": "La bixiyay",
+      "change": "Baaqi",
+      "thankYou": "Mahadsanid iibsigaaga!",
+      "paidStamp": "LA BIXIYAY"
+    }
+  },
+  "discountsPage": {
+    "title": "Dhimista",
+    "subtitle": "Koodhadhka dhimista ee la isticmaalo marka la bixinayo.",
+    "newDiscount": "Dhimis cusub",
+    "dialogTitle": "Samee koodhka dhimista",
+    "createDiscount": "Samee dhimis",
+    "creating": "Waa la samaynayaa...",
+    "selectCategory": "Dooro qaybta",
+    "selectProduct": "Dooro badeecada",
+    "deactivate": "Joojinta",
+    "activate": "Hawlgalinta",
+    "fields": {
+      "code": "Koodhka",
+      "type": "Nooca",
+      "valuePercentage": "Qiimaha (tusaale 10 = 10%)",
+      "valueAmount": "Qiimaha (qadarka)",
+      "appliesTo": "Waxay khusayso",
+      "validFrom": "Laga bilaabo",
+      "validTo": "Ilaa",
+      "usageLimit": "Xadka isticmaalka (ikhtiyaari)"
+    },
+    "types": {
+      "percentage": "Boqolkiiba",
+      "fixed": "Qadar go'an"
+    },
+    "appliesToOptions": {
+      "all": "Dalabka oo dhan",
+      "category": "Qayb gaar ah",
+      "product": "Badeeco gaar ah"
+    },
+    "columns": {
+      "value": "Qiimaha",
+      "used": "La isticmaalay"
+    },
+    "toasts": {
+      "created": "Dhimista waa la abuuray",
+      "selectTarget": "Dooro waxa dhimistan khusayso"
+    }
+  },
+  "taxRatesPage": {
+    "title": "Heerarka Canshuurta",
+    "subtitle": "Dejinta heerarka canshuurta ee lagu dabaqo badeecadaha.",
+    "newTaxRate": "Heer canshuur cusub",
+    "dialogTitle": "Samee heerka canshuurta",
+    "creating": "Waa la samaynayaa...",
+    "setAsDefault": "U dejin sida caadiga ah",
+    "default": "Caadiga ah",
+    "fields": {
+      "rate": "Heerka (tirakoob, tusaale 0.15 = 15%)"
+    },
+    "columns": {
+      "rate": "Heerka",
+      "default": "Caadiga ah"
+    },
+    "toasts": {
+      "created": "Heerka canshuurta waa la abuuray"
+    }
+  }
+}

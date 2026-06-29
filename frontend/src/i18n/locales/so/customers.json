@@ -1,0 +1,40 @@
+{
+  "page": {
+    "title": "Macaamiisha",
+    "subtitle": "Eeg faahfaahinta macaamiisha oo maamul akoonadooda, boorsada, iyo dhibcaha daacadnimada.",
+    "wallet": "Boorsada",
+    "loyaltyPoints": "Dhibcaha daacadnimada",
+    "addresses": "Cinwaannada",
+    "creditLimit": "Xadka deynta",
+    "outstandingLoan": "Deynta haray",
+    "empty": "Wali ma jiraan macaamiil.",
+    "suspended": "La joojiyay",
+    "adjustWallet": "Saami boorsada",
+    "adjustLoyalty": "Saami daacadnimada",
+    "setCreditLimit": "Dejii xadka deynta",
+    "suspend": "Joojii",
+    "activate": "Shaqaysii"
+  },
+  "dialogs": {
+    "adjustWalletTitle": "Saami boorsada: {{name}}",
+    "currentBalance": "Hadhaaga hadda: ${{value}}",
+    "type": "Nooca",
+    "topUp": "Buuxi (lacag ku dar)",
+    "debit": "Ka jar (lacag ka qaad)",
+    "reason": "Sababta",
+    "saveAdjustment": "Keydi saamaynta",
+    "adjustLoyaltyTitle": "Saami dhibcaha daacadnimada: {{name}}",
+    "currentPoints": "Dhibcaha hadda: {{value}}",
+    "pointsChangeLabel": "Isbeddelka dhibcaha (taban si loo jaro)",
+    "setCreditLimitTitle": "Dejii xadka deynta: {{name}}",
+    "currentLimitAndOutstanding": "Xadka hadda: ${{limit}} · Haray: ${{outstanding}}",
+    "newCreditLimit": "Xadka deynta cusub",
+    "saveLimit": "Keydi xadka"
+  },
+  "toasts": {
+    "statusUpdated": "Xaaladda macmiilka waa la cusboonaysiiyay",
+    "walletAdjusted": "Boorsada waa la saamayn",
+    "loyaltyAdjusted": "Dhibcaha daacadnimada waa la saamayn",
+    "creditLimitUpdated": "Xadka deynta waa la cusboonaysiiyay"
+  }
+}

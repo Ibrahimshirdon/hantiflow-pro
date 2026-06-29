@@ -1,0 +1,186 @@
+{
+  "dashboardPage": {
+    "welcomeBack": "Welcome back, {{name}}",
+    "subtitle": "Your orders, wallet, and activity at a glance.",
+    "stats": {
+      "walletBalance": "Wallet balance",
+      "loyaltyPoints": "Loyalty points",
+      "activeOrders": "Active orders",
+      "completedOrders": "Completed orders",
+      "totalSpent": "Total spent",
+      "creditLimit": "Credit limit",
+      "outstandingLoan": "Outstanding loan",
+      "availableCredit": "Available credit"
+    },
+    "spendingChart": {
+      "title": "My spending (last 30 days)",
+      "seriesName": "Spent"
+    },
+    "recentOrders": {
+      "title": "Recent orders",
+      "viewAll": "View all",
+      "columnOrderNumber": "Order #",
+      "columnTotal": "Total",
+      "columnStatus": "Status",
+      "empty": "You haven't placed any orders yet."
+    },
+    "recentWalletActivity": {
+      "title": "Recent wallet activity",
+      "viewAll": "View all",
+      "columnReason": "Reason",
+      "columnAmount": "Amount",
+      "empty": "No wallet activity yet."
+    },
+    "loans": {
+      "title": "My loans",
+      "columnOrderNumber": "Order #",
+      "columnPrincipal": "Principal",
+      "columnRemaining": "Remaining",
+      "columnDueDate": "Due date",
+      "columnActions": "Actions",
+      "overdueBadge": "Overdue",
+      "repayFromWallet": "Repay from wallet",
+      "noDueDate": "—"
+    },
+    "promo": {
+      "readyToOrder": "Ready to order something?",
+      "goToShop": "Go to Shop →"
+    },
+    "repayDialog": {
+      "title": "Repay loan: {{orderNumber}}",
+      "balanceSummary": "Remaining balance: {{remaining}} · Wallet balance: {{walletBalance}}",
+      "amountLabel": "Amount",
+      "paying": "Paying...",
+      "repay": "Repay"
+    },
+    "toasts": {
+      "loanRepaid": "Loan repaid from wallet"
+    }
+  },
+  "shopPage": {
+    "search": {
+      "placeholder": "Search products...",
+      "allCategories": "All categories"
+    },
+    "fulfillment": {
+      "pickup": "Pickup",
+      "delivery": "Delivery"
+    },
+    "paymentMethods": {
+      "wallet": "Wallet",
+      "cash": "Cash on delivery",
+      "card": "Card",
+      "mobileMoney": "Mobile Money",
+      "loan": "Loan (against my credit limit)"
+    },
+    "product": {
+      "noImage": "No image",
+      "addToCart": "Add to cart"
+    },
+    "noProductsFound": "No products found.",
+    "cart": {
+      "title": "Your cart",
+      "empty": "Cart is empty",
+      "unitPriceEach": "{{price}} each",
+      "discountCodePlaceholder": "Discount code",
+      "apply": "Apply",
+      "fulfillmentLabel": "Fulfillment",
+      "addressLabel": "Address",
+      "cityLabel": "City",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "tax": "Tax",
+      "deliveryFee": "Delivery fee",
+      "total": "Total",
+      "placingOrder": "Placing order...",
+      "placeOrder": "Place order · {{total}}",
+      "codeApplied": "Code {{code}} applied"
+    },
+    "toasts": {
+      "addedToCart": "{{name}} added to cart",
+      "discountApplied": "Discount applied: -{{amount}}",
+      "orderPlaced": "Order placed!",
+      "cartEmpty": "Your cart is empty",
+      "enterDeliveryAddress": "Enter a delivery address"
+    },
+    "deliveryAddressLabel": "Delivery address"
+  },
+  "ordersPage": {
+    "title": "Your Orders",
+    "subtitle": "Track orders and view your purchase history.",
+    "columnOrderNumber": "Order #",
+    "columnItems": "Items",
+    "columnTotal": "Total",
+    "columnStatus": "Status",
+    "columnDate": "Date",
+    "loading": "Loading...",
+    "empty": "You haven't placed any orders yet."
+  },
+  "orderDetailPage": {
+    "loading": "Loading...",
+    "orderTitle": "Order {{orderNumber}}",
+    "placedAt": "Placed {{date}}",
+    "items": {
+      "title": "Items",
+      "columnProduct": "Product",
+      "columnQty": "Qty",
+      "columnUnitPrice": "Unit price",
+      "columnLineTotal": "Line total"
+    },
+    "summary": {
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "tax": "Tax",
+      "deliveryFee": "Delivery fee",
+      "total": "Total"
+    },
+    "delivery": {
+      "title": "Delivery tracking",
+      "deliveringTo": "Delivering to {{address}}",
+      "confirmedReceipt": "You confirmed receipt of this order",
+      "iReceivedDelivery": "I received my delivery",
+      "issueReported": "Issue reported: \"{{description}}\"",
+      "reportAnIssue": "Report an issue"
+    },
+    "invoice": {
+      "title": "Invoice {{invoiceNumber}}",
+      "summary": "Status: {{status}} · Total {{total}}"
+    },
+    "receipt": {
+      "title": "Receipt {{receiptNumber}}",
+      "summary": "Paid {{amount}} via {{method}}"
+    },
+    "reportDialog": {
+      "title": "Report a delivery issue",
+      "description": "Tell us what went wrong — an admin or manager will follow up.",
+      "placeholder": "e.g. Order arrived late, item was damaged, wrong item delivered...",
+      "sending": "Sending...",
+      "sendReport": "Send report"
+    },
+    "confirmDialog": {
+      "title": "Confirm receipt",
+      "description": "Let us know you received your order, and rate how the delivery went.",
+      "submitting": "Submitting...",
+      "submit": "Submit"
+    },
+    "toasts": {
+      "issueReported": "Issue reported — our team will follow up",
+      "deliveryConfirmed": "Thanks for confirming!"
+    }
+  },
+  "walletPage": {
+    "title": "Wallet",
+    "subtitle": "Pay for orders with your wallet balance. Only an admin or manager can add funds to your wallet.",
+    "currentBalance": "Current balance",
+    "columnDate": "Date",
+    "columnType": "Type",
+    "columnReason": "Reason",
+    "columnOrder": "Order",
+    "columnBy": "By",
+    "columnAmount": "Amount",
+    "columnBalanceAfter": "Balance after",
+    "empty": "No transactions yet.",
+    "viewOrder": "View order",
+    "noValue": "—"
+  }
+}

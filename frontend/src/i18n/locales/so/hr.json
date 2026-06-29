@@ -1,0 +1,66 @@
+{
+  "salariesPage": {
+    "title": "Mushaharrada Shaqaalaha",
+    "subtitle": "Dejiso oo maamul mushaharka bishii ee shaqaale kasta, maareeyaha, iyo darawalka.",
+    "totalPayroll": "Wadarta mushaharka bishii",
+    "columns": {
+      "monthlySalary": "Mushaharka bishii",
+      "effectiveDate": "Taariikhda dhaqangelinta"
+    },
+    "empty": "Lama helin shaqaale, maareeye, ama darawal.",
+    "setSalary": "Dejiso mushaharka",
+    "dialog": {
+      "title": "Mushaharka: {{name}}",
+      "save": "Keydi mushaharka"
+    },
+    "toasts": {
+      "saved": "Mushaharka waa la keydiyay",
+      "deleted": "Diiwaanka mushaharka waa la tirtiray"
+    }
+  },
+  "attendancePage": {
+    "title": "Xaadirinta",
+    "subtitle": "Calaamadi oo dib u eeg xaadirinta maalinlaha ah ee shaqaale kasta, maareeyaha, iyo darawalka.",
+    "presentSummary": "{{count}} ka mid ah {{total}} ayaa joogay",
+    "columns": {
+      "checkIn": "Wakhtiga gelitaanka",
+      "checkOut": "Wakhtiga bixitaanka"
+    },
+    "empty": "Lama helin shaqaale, maareeye, ama darawal.",
+    "mark": "Calaamadi",
+    "status": {
+      "present": "Joogay",
+      "late": "Soo daahay",
+      "half_day": "Nus maalin",
+      "leave": "Fasax",
+      "absent": "Maqnaa",
+      "notMarked": "Lama calaamadin"
+    },
+    "dialog": {
+      "title": "Xaadirinta: {{name}} — {{date}}",
+      "save": "Keydi xaadirinta"
+    },
+    "toasts": {
+      "saved": "Xaadirinta waa la keydiyay",
+      "deleted": "Diiwaanka xaadirinta waa la tirtiray"
+    }
+  },
+  "myAttendancePage": {
+    "title": "Xaadirintayda",
+    "subtitle": "Calaamadi gelitaankaaga marka aad timaaddo, iyo bixitaankaaga marka aad baxdo.",
+    "todayCard": {
+      "title": "Maanta"
+    },
+    "notCheckedIn": "Wali maanta ma gelin.",
+    "checkIn": "Gal",
+    "checkOut": "Bax",
+    "checkedInAt": "Waxaad gashay {{time}}",
+    "checkedOutAt": "waxaad baxday {{time}}",
+    "historyTitle": "Taariikhda dhowaan",
+    "historyEmpty": "Wali wax xaadirin ah lama diiwaangelin.",
+    "toasts": {
+      "checkedIn": "Waa lagu galay",
+      "checkedOut": "Waa lagu baxay"
+    }
+  }
+}

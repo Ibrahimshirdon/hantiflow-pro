@@ -1,0 +1,120 @@
+{
+  "statuses": {
+    "unassigned": "Aan loo qoondayn",
+    "assigned": "La qoondeeyay",
+    "picked_up": "La qaaday",
+    "in_transit": "Socota",
+    "delivered": "La gaarsiiyay",
+    "failed": "Guul darraysatay"
+  },
+  "dispatchBoardPage": {
+    "title": "Bogga Diridda",
+    "subtitle": "U qoondee darawalka oo la soco gaarsiinta dibadda.",
+    "table": {
+      "orderNumber": "Dalabka #",
+      "dropoff": "Goobta la geynayo",
+      "driver": "Darawalka",
+      "status": "Xaaladda",
+      "actions": "Ficillada"
+    },
+    "loading": "Waa la soo rarayaa...",
+    "empty": "Wali ma jiraan gaarsiino.",
+    "noDriver": "—",
+    "assignDriverPlaceholder": "U qoondee darawal",
+    "toasts": {
+      "driverAssigned": "Darawalka waa la qoondeeyay"
+    }
+  },
+  "deliveryDetailPage": {
+    "loading": "Waa la soo rarayaa...",
+    "title": "Gaarsiinta dalabka {{orderNumber}}",
+    "driverLabel": "Darawalka: {{driverName}}",
+    "unassignedDriver": "Aan loo qoondayn",
+    "assignDriverPlaceholder": "U qoondee darawal",
+    "noDriversAvailable": "Wax darawal ah lama hayo",
+    "pickup": {
+      "title": "Qaadista"
+    },
+    "dropoff": {
+      "title": "Geynta"
+    },
+    "proofOfDelivery": {
+      "title": "Caddaynta gaarsiinta",
+      "alt": "Caddaynta gaarsiinta"
+    },
+    "customerConfirmation": {
+      "title": "Xaqiijinta macmiilka",
+      "confirmedOn": "Macmiilku wuxuu xaqiijiyay helitaanka {{date}}",
+      "notConfirmedYet": "Macmiilku weli ma xaqiijin helitaanka."
+    },
+    "statusTimeline": {
+      "title": "Taariikhda xaaladaha"
+    },
+    "toasts": {
+      "driverAssigned": "Darawalka waa la qoondeeyay"
+    }
+  },
+  "deliveryIssuesPage": {
+    "title": "Dhibaatooyinka Gaarsiinta",
+    "subtitle": "Dhibaatooyinka macaamiishu ka soo sheegeen gaarsiinta alaabtooda.",
+    "openIssuesBanner": {
+      "count_one": "{{count}} dhibaato oo furan",
+      "count_other": "{{count}} dhibaatooyin oo furan",
+      "awaiting": "oo sugaya jawaab."
+    },
+    "filter": {
+      "open": "Furan",
+      "resolved": "La xaliyay",
+      "all": "Dhammaan"
+    },
+    "table": {
+      "orderNumber": "Dalabka #",
+      "customer": "Macmiilka",
+      "description": "Sharaxaad",
+      "status": "Xaaladda",
+      "date": "Taariikhda",
+      "actions": "Ficillada"
+    },
+    "loading": "Waa la soo rarayaa...",
+    "empty": "Wax dhibaato gaarsiineed ah lama helin.",
+    "resolveButton": "Xali",
+    "resolveDialog": {
+      "title": "Xali dhibaatada gaarsiinta",
+      "notePlaceholder": "Fariin xal ah (ikhtiyaari) — wuxuu u muuqan doonaa macmiilka",
+      "resolving": "Waa la xalinayaa...",
+      "markResolved": "Calaamadi in la xaliyay"
+    },
+    "toasts": {
+      "issueResolved": "Dhibaatada waa la xaliyay"
+    }
+  },
+  "createDeliveryDialog": {
+    "trigger": "Gaarsiin cusub",
+    "title": "Samee gaarsiin",
+    "salesOrder": {
+      "label": "Dalabka iibka",
+      "placeholder": "Dooro dalab"
+    },
+    "pickupAddress": {
+      "sectionLabel": "Cinwaanka qaadista",
+      "addressLabel": "Cinwaanka",
+      "cityLabel": "Magaalada"
+    },
+    "dropoffAddress": {
+      "sectionLabel": "Cinwaanka geynta",
+      "addressLabel": "Cinwaanka",
+      "cityLabel": "Magaalada"
+    },
+    "notes": {
+      "label": "Faallooyin (ikhtiyaari)"
+    },
+    "creating": "Waa la samaynayaa...",
+    "submit": "Samee gaarsiin",
+    "defaultPickupLabel": "Cinwaanka qaadista",
+    "defaultDropoffLabel": "Cinwaanka gaarsiinta",
+    "toasts": {
+      "selectOrder": "Dooro dalab",
+      "deliveryCreated": "Gaarsiinta waa la sameeyay"
+    }
+  }
+}

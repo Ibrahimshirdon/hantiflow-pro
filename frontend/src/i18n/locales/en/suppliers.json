@@ -1,0 +1,48 @@
+{
+  "stockPage": {
+    "title": "Supplier Stock",
+    "subtitle": "Browse what every supplier currently has on hand and request stock if you need it.",
+    "empty": "No supplier products yet.",
+    "inCatalog": "In catalog",
+    "notYetSubmitted": "Not yet submitted",
+    "requestStock": "Request stock",
+    "table": {
+      "product": "Product",
+      "company": "Company",
+      "supplier": "Supplier",
+      "manager": "Manager",
+      "category": "Category",
+      "available": "Available",
+      "unit": "Unit",
+      "wholesalePrice": "Wholesale price",
+      "sellingPrice": "Selling price"
+    },
+    "requestsCard": {
+      "title": "Stock requests",
+      "requestedBy": "Requested by",
+      "empty": "No stock requests sent yet."
+    },
+    "submissionsCard": {
+      "title": "Pending Submissions",
+      "empty": "No supplier submissions yet."
+    },
+    "submissionsRejectDialog": {
+      "title": "Reject submission: {{name}}",
+      "reasonLabel": "Reason (optional)",
+      "submit": "Reject submission",
+      "rejecting": "Rejecting..."
+    },
+    "dialog": {
+      "title": "Request stock: {{name}}",
+      "quantityLabel": "Quantity (supplier currently holds {{count}})",
+      "messageLabel": "Message to supplier (optional)",
+      "send": "Send request",
+      "sending": "Sending..."
+    }
+  },
+  "toasts": {
+    "requestSent": "Request sent to the supplier",
+    "submissionApproved": "Submission approved and added to inventory",
+    "submissionRejected": "Submission rejected"
+  }
+}

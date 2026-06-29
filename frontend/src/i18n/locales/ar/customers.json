@@ -1,0 +1,40 @@
+{
+  "page": {
+    "title": "العملاء",
+    "subtitle": "عرض تفاصيل العملاء وإدارة حساباتهم ومحافظهم ونقاط الولاء الخاصة بهم.",
+    "wallet": "المحفظة",
+    "loyaltyPoints": "نقاط الولاء",
+    "addresses": "العناوين",
+    "creditLimit": "حد الائتمان",
+    "outstandingLoan": "القرض المستحق",
+    "empty": "لا يوجد عملاء بعد.",
+    "suspended": "موقوف",
+    "adjustWallet": "تعديل المحفظة",
+    "adjustLoyalty": "تعديل الولاء",
+    "setCreditLimit": "تحديد حد الائتمان",
+    "suspend": "تعليق",
+    "activate": "تفعيل"
+  },
+  "dialogs": {
+    "adjustWalletTitle": "تعديل المحفظة: {{name}}",
+    "currentBalance": "الرصيد الحالي: ${{value}}",
+    "type": "النوع",
+    "topUp": "شحن (إضافة أموال)",
+    "debit": "خصم (إزالة أموال)",
+    "reason": "السبب",
+    "saveAdjustment": "حفظ التعديل",
+    "adjustLoyaltyTitle": "تعديل نقاط الولاء: {{name}}",
+    "currentPoints": "النقاط الحالية: {{value}}",
+    "pointsChangeLabel": "تغيير النقاط (سالب للخصم)",
+    "setCreditLimitTitle": "تحديد حد الائتمان: {{name}}",
+    "currentLimitAndOutstanding": "الحد الحالي: ${{limit}} · المستحق: ${{outstanding}}",
+    "newCreditLimit": "حد الائتمان الجديد",
+    "saveLimit": "حفظ الحد"
+  },
+  "toasts": {
+    "statusUpdated": "تم تحديث حالة العميل",
+    "walletAdjusted": "تم تعديل المحفظة",
+    "loyaltyAdjusted": "تم تعديل نقاط الولاء",
+    "creditLimitUpdated": "تم تحديث حد الائتمان"
+  }
+}

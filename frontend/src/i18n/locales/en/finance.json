@@ -1,0 +1,138 @@
+{
+  "customerLoanDetailsPage": {
+    "title": "{{name}} — Loan Details",
+    "defaultCustomerName": "Customer",
+    "backToLoans": "Back to Loans",
+    "stats": {
+      "creditLimit": "Credit limit",
+      "outstandingBalance": "Outstanding balance",
+      "availableCredit": "Available credit",
+      "walletBalance": "Wallet balance",
+      "totalLoanAmount": "Total loan amount",
+      "totalRepaid": "Total repaid",
+      "remainingBalance": "Remaining balance",
+      "activeLoans": "Active loans"
+    },
+    "loansCard": {
+      "title": "Loans",
+      "empty": "No loans for this customer.",
+      "setDueDate": "Set due date",
+      "recordRepayment": "Record repayment",
+      "columns": {
+        "orderNumber": "Order #",
+        "principal": "Principal",
+        "repaid": "Repaid",
+        "remaining": "Remaining",
+        "dueDate": "Due date"
+      }
+    },
+    "repaymentHistoryCard": {
+      "title": "Repayment history",
+      "empty": "No repayments recorded yet.",
+      "selfWallet": "Self (wallet)",
+      "columns": {
+        "method": "Method"
+      }
+    },
+    "repayDialog": {
+      "title": "Record repayment: {{orderNumber}}",
+      "remainingBalance": "Remaining balance: ${{amount}}",
+      "method": "Method",
+      "customerWalletBalance": "Customer's wallet balance: ${{amount}}"
+    },
+    "dueDateDialog": {
+      "title": "Set due date: {{orderNumber}}",
+      "save": "Save due date"
+    },
+    "paymentMethods": {
+      "cash": "Cash",
+      "card": "Card",
+      "mobileMoney": "Mobile Money",
+      "wallet": "Wallet"
+    },
+    "toasts": {
+      "repaymentRecorded": "Repayment recorded",
+      "dueDateUpdated": "Due date updated"
+    }
+  },
+  "expensesPage": {
+    "title": "Expenses",
+    "subtitle": "Track business expenses and receipts.",
+    "empty": "No expenses in this range.",
+    "filters": {
+      "from": "From",
+      "to": "To",
+      "total": "Total: ${{amount}}"
+    },
+    "columns": {
+      "category": "Category",
+      "paidTo": "Paid to",
+      "method": "Method",
+      "totalLabel": "Total"
+    },
+    "toasts": {
+      "expenseDeleted": "Expense deleted"
+    }
+  },
+  "financialReportsPage": {
+    "title": "Financial Reports",
+    "subtitle": "Revenue, profit, and cash flow over a date range.",
+    "filters": {
+      "from": "From",
+      "to": "To"
+    },
+    "stats": {
+      "salesRevenue": "Sales revenue",
+      "otherIncome": "Other income",
+      "totalRevenue": "Total revenue",
+      "costOfGoodsSold": "Cost of goods sold",
+      "totalExpenses": "Total expenses",
+      "netProfit": "Net profit"
+    },
+    "cashFlowCard": {
+      "title": "Cash flow",
+      "cashIn": "Cash in",
+      "cashOut": "Cash out",
+      "net": "Net"
+    },
+    "expensesByCategoryCard": {
+      "title": "Expenses by category"
+    }
+  },
+  "loansPage": {
+    "title": "Loans",
+    "subtitle": "Credit extended to customers at checkout, grouped by customer.",
+    "empty": "No customers found.",
+    "stats": {
+      "totalOutstanding": "Total outstanding",
+      "customersWithLoans": "Customers with loans",
+      "activeLoans": "Active loans"
+    },
+    "filters": {
+      "activeOnly": "Customers with active loans",
+      "all": "All customers with loan history"
+    },
+    "columns": {
+      "totalLoanAmount": "Total Loan Amount",
+      "totalRepaid": "Total Repaid",
+      "remainingBalance": "Remaining Balance",
+      "activeLoans": "Active Loans"
+    }
+  },
+  "createExpenseDialog": {
+    "trigger": "New expense",
+    "title": "Record an expense",
+    "save": "Save expense",
+    "fields": {
+      "category": "Category",
+      "categoryPlaceholder": "Rent, Utilities, Salaries...",
+      "paidTo": "Paid to",
+      "paymentMethod": "Payment method",
+      "attachReceipt": "Attach receipt (optional)",
+      "receiptAttached": "Receipt: {{name}}"
+    },
+    "toasts": {
+      "expenseRecorded": "Expense recorded"
+    }
+  }
+}

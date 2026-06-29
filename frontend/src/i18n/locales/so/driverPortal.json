@@ -1,0 +1,56 @@
+{
+  "statuses": {
+    "assigned": "La qoondeeyay",
+    "picked_up": "La qaaday",
+    "in_transit": "Socota",
+    "delivered": "La gaarsiiyay",
+    "failed": "Guul darraysatay"
+  },
+  "activePage": {
+    "loading": "Waa la soo rarayaa...",
+    "greeting": "Salaan, {{name}}",
+    "subtitle": "Gaarsiintaada firfircoon.",
+    "stats": {
+      "deliveredToday": "Maanta la gaarsiiyay",
+      "deliveredThisWeek": "Toddobaadkan la gaarsiiyay",
+      "deliveredThisMonth": "Bishan la gaarsiiyay",
+      "failedLast30Days": "Guuldarro (30 maalmood)"
+    },
+    "noActiveDelivery": {
+      "title": "Wax gaarsiin firfircoon ah ma jiro",
+      "body": "Halkan waxaad ka arki doontaa gaarsiintaada xigta ee lagu qoondeeyay."
+    },
+    "activeDelivery": {
+      "orderLabel": "Dalabka {{orderNumber}}",
+      "dropoffLabel": "Goobta la geynayo",
+      "notesLabel": "Faallooyin",
+      "photoSelected": "Sawirka la doortay: {{fileName}}",
+      "attachProof": "Ku lifaaq caddayn gaarsiineed (ikhtiyaari)",
+      "updating": "Waa la cusboonaysiinayaa...",
+      "reportFailed": "Soo warbixi gaarsiin guuldareysatay"
+    },
+    "nextAction": {
+      "assigned": "Calaamadi in la qaaday",
+      "picked_up": "Calaamadi inay socoto",
+      "in_transit": "Calaamadi in la gaarsiiyay"
+    },
+    "toasts": {
+      "statusUpdated": "Xaaladda waa la cusboonaysiiyay"
+    }
+  },
+  "historyPage": {
+    "title": "Taariikhda Gaarsiinta",
+    "stats": {
+      "totalDelivered": "Wadarta la gaarsiiyay",
+      "totalFailed": "Wadarta guuldarraysatay",
+      "successRate": "Heerka Guusha"
+    },
+    "table": {
+      "orderNumber": "Dalabka #",
+      "dropoff": "Goobta la geynayo",
+      "status": "Xaaladda"
+    },
+    "loading": "Waa la soo rarayaa...",
+    "empty": "Wali ma jiraan gaarsiino dhammaystiran."
+  }
+}

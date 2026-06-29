@@ -1,0 +1,66 @@
+{
+  "salariesPage": {
+    "title": "Staff Salaries",
+    "subtitle": "Set and manage the monthly salary for every staff member, manager, and driver.",
+    "totalPayroll": "Total monthly payroll",
+    "columns": {
+      "monthlySalary": "Monthly salary",
+      "effectiveDate": "Effective date"
+    },
+    "empty": "No staff, managers, or drivers found.",
+    "setSalary": "Set salary",
+    "dialog": {
+      "title": "Salary: {{name}}",
+      "save": "Save salary"
+    },
+    "toasts": {
+      "saved": "Salary saved",
+      "deleted": "Salary record deleted"
+    }
+  },
+  "attendancePage": {
+    "title": "Attendance",
+    "subtitle": "Mark and review daily attendance for every staff member, manager, and driver.",
+    "presentSummary": "{{count}} of {{total}} present",
+    "columns": {
+      "checkIn": "Check-in",
+      "checkOut": "Check-out"
+    },
+    "empty": "No staff, managers, or drivers found.",
+    "mark": "Mark",
+    "status": {
+      "present": "Present",
+      "late": "Late",
+      "half_day": "Half day",
+      "leave": "On leave",
+      "absent": "Absent",
+      "notMarked": "Not marked"
+    },
+    "dialog": {
+      "title": "Attendance: {{name}} — {{date}}",
+      "save": "Save attendance"
+    },
+    "toasts": {
+      "saved": "Attendance saved",
+      "deleted": "Attendance record deleted"
+    }
+  },
+  "myAttendancePage": {
+    "title": "My Attendance",
+    "subtitle": "Check yourself in when you arrive, and out when you leave.",
+    "todayCard": {
+      "title": "Today"
+    },
+    "notCheckedIn": "You haven't checked in today.",
+    "checkIn": "Check in",
+    "checkOut": "Check out",
+    "checkedInAt": "Checked in at {{time}}",
+    "checkedOutAt": "checked out at {{time}}",
+    "historyTitle": "Recent history",
+    "historyEmpty": "No attendance recorded yet.",
+    "toasts": {
+      "checkedIn": "Checked in",
+      "checkedOut": "Checked out"
+    }
+  }
+}

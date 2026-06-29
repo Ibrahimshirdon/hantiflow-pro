@@ -1,0 +1,66 @@
+{
+  "salariesPage": {
+    "title": "رواتب الموظفين",
+    "subtitle": "حدد وأدر الراتب الشهري لكل موظف ومدير وسائق.",
+    "totalPayroll": "إجمالي الرواتب الشهرية",
+    "columns": {
+      "monthlySalary": "الراتب الشهري",
+      "effectiveDate": "تاريخ السريان"
+    },
+    "empty": "لم يتم العثور على موظفين أو مديرين أو سائقين.",
+    "setSalary": "تحديد الراتب",
+    "dialog": {
+      "title": "الراتب: {{name}}",
+      "save": "حفظ الراتب"
+    },
+    "toasts": {
+      "saved": "تم حفظ الراتب",
+      "deleted": "تم حذف سجل الراتب"
+    }
+  },
+  "attendancePage": {
+    "title": "الحضور",
+    "subtitle": "سجّل واستعرض الحضور اليومي لكل موظف ومدير وسائق.",
+    "presentSummary": "{{count}} من {{total}} حاضر",
+    "columns": {
+      "checkIn": "وقت الحضور",
+      "checkOut": "وقت الانصراف"
+    },
+    "empty": "لم يتم العثور على موظفين أو مديرين أو سائقين.",
+    "mark": "تسجيل",
+    "status": {
+      "present": "حاضر",
+      "late": "متأخر",
+      "half_day": "نصف يوم",
+      "leave": "إجازة",
+      "absent": "غائب",
+      "notMarked": "لم يُسجَّل"
+    },
+    "dialog": {
+      "title": "الحضور: {{name}} — {{date}}",
+      "save": "حفظ الحضور"
+    },
+    "toasts": {
+      "saved": "تم حفظ الحضور",
+      "deleted": "تم حذف سجل الحضور"
+    }
+  },
+  "myAttendancePage": {
+    "title": "حضوري",
+    "subtitle": "سجّل حضورك عند وصولك، وانصرافك عند مغادرتك.",
+    "todayCard": {
+      "title": "اليوم"
+    },
+    "notCheckedIn": "لم تسجّل حضورك اليوم بعد.",
+    "checkIn": "تسجيل الحضور",
+    "checkOut": "تسجيل الانصراف",
+    "checkedInAt": "سجّلت الحضور في {{time}}",
+    "checkedOutAt": "سجّلت الانصراف في {{time}}",
+    "historyTitle": "السجل الأخير",
+    "historyEmpty": "لم يتم تسجيل أي حضور بعد.",
+    "toasts": {
+      "checkedIn": "تم تسجيل الحضور",
+      "checkedOut": "تم تسجيل الانصراف"
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "categoriesPage": {
+    "title": "الفئات",
+    "subtitle": "نظّم المنتجات في فئات.",
+    "newCategory": "فئة جديدة",
+    "dialogTitle": "إنشاء فئة",
+    "descriptionOptional": "الوصف (اختياري)",
+    "empty": "لا توجد فئات بعد.",
+    "deactivate": "إلغاء التفعيل",
+    "activate": "تفعيل",
+    "toasts": {
+      "created": "تم إنشاء الفئة",
+      "updated": "تم تحديث الفئة"
+    },
+    "editDialogTitle": "تعديل الفئة"
+  },
+  "productsPage": {
+    "title": "المنتجات",
+    "subtitle": "إدارة كتالوج منتجاتك ومخزونها.",
+    "searchPlaceholder": "الاسم، رمز المنتج (SKU)، أو الباركود",
+    "category": "الفئة",
+    "allCategories": "جميع الفئات",
+    "lowStockOnly": "المخزون المنخفض فقط",
+    "sku": "رمز المنتج",
+    "stock": "المخزون",
+    "sellingPrice": "سعر البيع",
+    "empty": "لم يتم العثور على منتجات.",
+    "lowStock": "مخزون منخفض",
+    "pendingApproval": "بانتظار الموافقة",
+    "unit": "الوحدة"
+  },
+  "productDetailPage": {
+    "noImage": "لا توجد صورة",
+    "lowStock": "مخزون منخفض",
+    "pendingApproval": "بانتظار الموافقة",
+    "approving": "جارٍ الموافقة...",
+    "approveProduct": "الموافقة على المنتج",
+    "deleteProduct": "حذف المنتج",
+    "skuLabel": "رمز المنتج {{sku}}",
+    "barcodeLabel": "· الباركود {{barcode}}",
+    "costLabel": "التكلفة ${{value}}",
+    "sellingLabel": "البيع ${{value}}",
+    "totalStockLabel": "إجمالي المخزون {{qty}} {{unit}}",
+    "reorderLevelLabel": "حد إعادة الطلب {{value}}",
+    "maxStockLabel": "أقصى مخزون {{value}}",
+    "taxLabel": "الضريبة",
+    "noTax": "لا يوجد",
+    "uploading": "جارٍ الرفع...",
+    "uploadImage": "رفع صورة",
+    "tabs": {
+      "batches": "الدفعات والصلاحية",
+      "adjustments": "التسويات"
+    },
+    "batchNumber": "رقم الدفعة",
+    "expiryDate": "تاريخ الانتهاء",
+    "noBatches": "لا توجد دفعات بعد.",
+    "expiringSoon": "ستنتهي صلاحيته قريبًا",
+    "type": "النوع",
+    "change": "التغيير",
+    "reason": "السبب",
+    "noAdjustments": "لا توجد تسويات بعد.",
+    "deleteDialogTitle": "حذف المنتج",
+    "deleteConfirmText": "سيتم حذف {{name}} بشكل نهائي. لا يمكن التراجع عن هذا الإجراء.",
+    "deleteStockWarning": "لا يزال هذا المنتج يحتوي على {{qty}} {{unit}} في المخزون — قم بتصفيره أولاً، أو قم بإلغاء تفعيل المنتج بدلاً من ذلك.",
+    "deletePermanently": "حذف نهائي",
+    "toasts": {
+      "imageUploaded": "تم رفع الصورة",
+      "deleted": "تم حذف المنتج",
+      "approved": "تمت الموافقة على المنتج — أصبح متاحًا للبيع الآن"
+    }
+  },
+  "adjustStockDialog": {
+    "trigger": "تسوية المخزون",
+    "title": "تسوية المخزون",
+    "batch": "الدفعة",
+    "selectBatchPlaceholder": "اختر دفعة",
+    "batchOption": "{{number}} · الكمية {{qty}}",
+    "type": "النوع",
+    "quantityChangeLabel": "تغيير الكمية (سالب للخسارة/التلف، موجب لزيادة إعادة الجرد)",
+    "reason": "السبب",
+    "saveAdjustment": "حفظ التسوية",
+    "selectBatchError": "اختر دفعة",
+    "types": {
+      "damage": "تلف",
+      "loss": "خسارة",
+      "correction": "تصحيح",
+      "recount": "إعادة جرد"
+    },
+    "toasts": {
+      "adjusted": "تم تعديل المخزون"
+    }
+  },
+  "editProductDialog": {
+    "trigger": "تعديل المنتج",
+    "title": "تعديل {{name}}",
+    "sku": "رمز المنتج",
+    "barcode": "الباركود",
+    "category": "الفئة",
+    "selectCategoryPlaceholder": "اختر فئة",
+    "unit": "الوحدة",
+    "costPrice": "سعر التكلفة",
+    "sellingPrice": "سعر البيع",
+    "taxRate": "نسبة الضريبة",
+    "noTax": "بدون ضريبة",
+    "reorderLevel": "حد إعادة الطلب",
+    "maxStockLevel": "أقصى مخزون (اختياري)",
+    "trackBatches": "تتبع الدفعات / الصلاحية",
+    "saveChanges": "حفظ التغييرات",
+    "selectCategoryError": "اختر فئة",
+    "toasts": {
+      "updated": "تم تحديث المنتج"
+    }
+  }
+}

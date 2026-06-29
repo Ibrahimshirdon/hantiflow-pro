@@ -1,0 +1,50 @@
+{
+  "salesReportPage": {
+    "title": "تقرير المبيعات",
+    "subtitle": "تقارير مبيعات يومية أو شهرية أو لفترة مخصصة.",
+    "from": "من",
+    "to": "إلى",
+    "exportPdf": "تصدير PDF",
+    "exportExcel": "تصدير Excel",
+    "presets": {
+      "today": "اليوم",
+      "thisMonth": "هذا الشهر",
+      "custom": "مخصص"
+    },
+    "summary": {
+      "orders": "الطلبات"
+    },
+    "table": {
+      "orderNumber": "رقم الطلب",
+      "customer": "العميل",
+      "items": "العناصر",
+      "payment": "الدفع",
+      "empty": "لا توجد مبيعات في هذه الفترة."
+    }
+  },
+  "inventoryReportPage": {
+    "title": "تقرير المخزون",
+    "subtitle": "لقطة للمخزون الحالي عبر جميع المنتجات.",
+    "exportPdf": "تصدير PDF",
+    "exportExcel": "تصدير Excel",
+    "summary": {
+      "totalProducts": "إجمالي المنتجات",
+      "inventoryValue": "قيمة المخزون",
+      "lowStockItems": "عناصر منخفضة المخزون"
+    },
+    "table": {
+      "sku": "رمز المنتج (SKU)",
+      "product": "المنتج",
+      "category": "الفئة",
+      "stock": "المخزون",
+      "reorderLevel": "مستوى إعادة الطلب",
+      "stockValue": "قيمة المخزون",
+      "unit": "الوحدة"
+    },
+    "status": {
+      "low": "مخزون منخفض",
+      "warning": "تحذير",
+      "good": "جيد"
+    }
+  }
+}

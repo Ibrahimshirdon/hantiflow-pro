@@ -1,0 +1,129 @@
+{
+  "posPage": {
+    "searchPlaceholder": "مسح الباركود أو البحث عن المنتجات...",
+    "inStock": "{{count}} {{unit}} متوفر في المخزون",
+    "walkInCustomer": "عميل بدون حساب",
+    "cartEmpty": "السلة فارغة",
+    "eachPrice": "${{price}} للوحدة",
+    "discountCodePlaceholder": "كود الخصم",
+    "apply": "تطبيق",
+    "paymentMethods": {
+      "cash": "نقدًا",
+      "card": "بطاقة",
+      "wallet": "المحفظة",
+      "mobile_money": "الدفع عبر الهاتف",
+      "loan": "قرض"
+    },
+    "processing": "جارٍ المعالجة...",
+    "charge": "تحصيل ${{total}}",
+    "toasts": {
+      "discountApplied": "تم تطبيق الخصم: -${{amount}}",
+      "saleCompleted": "تمت عملية البيع بنجاح",
+      "cartEmpty": "السلة فارغة",
+      "loanRequiresCustomer": "اختر عميلاً مسجلاً لاستخدام الدفع بالقرض"
+    }
+  },
+  "salesOrdersPage": {
+    "title": "طلبات المبيعات",
+    "subtitle": "جميع معاملات نقطة البيع.",
+    "soldBy": "البائع",
+    "everyone": "الجميع",
+    "walkIn": "بدون حساب",
+    "empty": "لا توجد مبيعات حتى الآن.",
+    "columns": {
+      "orderNumber": "رقم الطلب",
+      "customer": "العميل",
+      "completedBy": "تم الإنجاز بواسطة",
+      "items": "العناصر",
+      "payment": "طريقة الدفع"
+    }
+  },
+  "salesOrderDetailPage": {
+    "orderHeading": "الطلب {{orderNumber}}",
+    "soldBy": "البائع {{name}}",
+    "completedBy": "تم الإنجاز بواسطة {{name}}",
+    "items": "العناصر",
+    "deliveryFee": "رسوم التوصيل",
+    "grandTotal": "الإجمالي الكلي",
+    "invoiceHeading": "الفاتورة {{invoiceNumber}}",
+    "invoiceStatusLine": "الحالة: {{status}} · الإجمالي ${{total}}",
+    "receiptHeading": "الإيصال {{receiptNumber}}",
+    "receiptPaidLine": "تم دفع ${{amount}} عن طريق {{method}}",
+    "columns": {
+      "product": "المنتج",
+      "qty": "الكمية",
+      "unitPrice": "سعر الوحدة",
+      "taxRate": "نسبة الضريبة",
+      "lineTotal": "إجمالي السطر"
+    },
+    "receiptPaper": {
+      "orderNo": "رقم الطلب",
+      "cashier": "الكاشير",
+      "customer": "العميل",
+      "total": "الإجمالي",
+      "payment": "الدفع",
+      "paid": "المدفوع",
+      "change": "الباقي",
+      "thankYou": "شكرًا لشرائك!",
+      "paidStamp": "مدفوع"
+    }
+  },
+  "discountsPage": {
+    "title": "الخصومات",
+    "subtitle": "أكواد العروض التي تُطبّق عند الدفع.",
+    "newDiscount": "خصم جديد",
+    "dialogTitle": "إنشاء كود خصم",
+    "createDiscount": "إنشاء الخصم",
+    "creating": "جارٍ الإنشاء...",
+    "selectCategory": "اختر الفئة",
+    "selectProduct": "اختر المنتج",
+    "deactivate": "إيقاف",
+    "activate": "تفعيل",
+    "fields": {
+      "code": "الكود",
+      "type": "النوع",
+      "valuePercentage": "القيمة (مثال: 10 يعني 10%)",
+      "valueAmount": "القيمة (المبلغ)",
+      "appliesTo": "ينطبق على",
+      "validFrom": "ساري من",
+      "validTo": "ساري حتى",
+      "usageLimit": "حد الاستخدام (اختياري)"
+    },
+    "types": {
+      "percentage": "نسبة مئوية",
+      "fixed": "مبلغ ثابت"
+    },
+    "appliesToOptions": {
+      "all": "الطلب بالكامل",
+      "category": "فئة معينة",
+      "product": "منتج معين"
+    },
+    "columns": {
+      "value": "القيمة",
+      "used": "مرات الاستخدام"
+    },
+    "toasts": {
+      "created": "تم إنشاء الخصم",
+      "selectTarget": "اختر ما ينطبق عليه هذا الخصم"
+    }
+  },
+  "taxRatesPage": {
+    "title": "نسب الضريبة",
+    "subtitle": "تكوين نسب الضريبة المطبقة على المنتجات.",
+    "newTaxRate": "نسبة ضريبة جديدة",
+    "dialogTitle": "إنشاء نسبة ضريبة",
+    "creating": "جارٍ الإنشاء...",
+    "setAsDefault": "تعيين كافتراضي",
+    "default": "افتراضي",
+    "fields": {
+      "rate": "النسبة (كرقم عشري، مثال: 0.15 يعني 15%)"
+    },
+    "columns": {
+      "rate": "النسبة",
+      "default": "افتراضي"
+    },
+    "toasts": {
+      "created": "تم إنشاء نسبة الضريبة"
+    }
+  }
+}

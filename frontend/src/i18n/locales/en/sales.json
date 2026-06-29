@@ -1,0 +1,129 @@
+{
+  "posPage": {
+    "searchPlaceholder": "Scan barcode or search products...",
+    "inStock": "{{count}} {{unit}} in stock",
+    "walkInCustomer": "Walk-in customer",
+    "cartEmpty": "Cart is empty",
+    "eachPrice": "${{price}} each",
+    "discountCodePlaceholder": "Discount code",
+    "apply": "Apply",
+    "paymentMethods": {
+      "cash": "Cash",
+      "card": "Card",
+      "wallet": "Wallet",
+      "mobile_money": "Mobile Money",
+      "loan": "Loan"
+    },
+    "processing": "Processing...",
+    "charge": "Charge ${{total}}",
+    "toasts": {
+      "discountApplied": "Discount applied: -${{amount}}",
+      "saleCompleted": "Sale completed",
+      "cartEmpty": "Cart is empty",
+      "loanRequiresCustomer": "Select a registered customer to use loan payment"
+    }
+  },
+  "salesOrdersPage": {
+    "title": "Sales Orders",
+    "subtitle": "All point-of-sale transactions.",
+    "soldBy": "Sold by",
+    "everyone": "Everyone",
+    "walkIn": "Walk-in",
+    "empty": "No sales yet.",
+    "columns": {
+      "orderNumber": "Order #",
+      "customer": "Customer",
+      "completedBy": "Completed by",
+      "items": "Items",
+      "payment": "Payment"
+    }
+  },
+  "salesOrderDetailPage": {
+    "orderHeading": "Order {{orderNumber}}",
+    "soldBy": "Sold by {{name}}",
+    "completedBy": "Completed by {{name}}",
+    "items": "Items",
+    "deliveryFee": "Delivery fee",
+    "grandTotal": "Grand total",
+    "invoiceHeading": "Invoice {{invoiceNumber}}",
+    "invoiceStatusLine": "Status: {{status}} · Total ${{total}}",
+    "receiptHeading": "Receipt {{receiptNumber}}",
+    "receiptPaidLine": "Paid ${{amount}} via {{method}}",
+    "columns": {
+      "product": "Product",
+      "qty": "Qty",
+      "unitPrice": "Unit price",
+      "taxRate": "Tax rate",
+      "lineTotal": "Line total"
+    },
+    "receiptPaper": {
+      "orderNo": "Order #",
+      "cashier": "Cashier",
+      "customer": "Customer",
+      "total": "TOTAL",
+      "payment": "Payment",
+      "paid": "Paid",
+      "change": "Change",
+      "thankYou": "Thank you for your purchase!",
+      "paidStamp": "PAID"
+    }
+  },
+  "discountsPage": {
+    "title": "Discounts",
+    "subtitle": "Promo codes applied at checkout.",
+    "newDiscount": "New discount",
+    "dialogTitle": "Create discount code",
+    "createDiscount": "Create discount",
+    "creating": "Creating...",
+    "selectCategory": "Select category",
+    "selectProduct": "Select product",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "fields": {
+      "code": "Code",
+      "type": "Type",
+      "valuePercentage": "Value (e.g. 10 for 10%)",
+      "valueAmount": "Value (amount)",
+      "appliesTo": "Applies to",
+      "validFrom": "Valid from",
+      "validTo": "Valid to",
+      "usageLimit": "Usage limit (optional)"
+    },
+    "types": {
+      "percentage": "Percentage",
+      "fixed": "Fixed amount"
+    },
+    "appliesToOptions": {
+      "all": "Entire order",
+      "category": "A specific category",
+      "product": "A specific product"
+    },
+    "columns": {
+      "value": "Value",
+      "used": "Used"
+    },
+    "toasts": {
+      "created": "Discount created",
+      "selectTarget": "Select what this discount applies to"
+    }
+  },
+  "taxRatesPage": {
+    "title": "Tax Rates",
+    "subtitle": "Configure tax rates applied to products.",
+    "newTaxRate": "New tax rate",
+    "dialogTitle": "Create tax rate",
+    "creating": "Creating...",
+    "setAsDefault": "Set as default",
+    "default": "Default",
+    "fields": {
+      "rate": "Rate (as decimal, e.g. 0.15 for 15%)"
+    },
+    "columns": {
+      "rate": "Rate",
+      "default": "Default"
+    },
+    "toasts": {
+      "created": "Tax rate created"
+    }
+  }
+}

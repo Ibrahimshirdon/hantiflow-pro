@@ -1,0 +1,114 @@
+{
+  "categoriesPage": {
+    "title": "Qaybaha",
+    "subtitle": "Badeecadaha u qaybi qaybaha.",
+    "newCategory": "Qayb cusub",
+    "dialogTitle": "Samee qayb",
+    "descriptionOptional": "Sharaxaad (ikhtiyaari ah)",
+    "empty": "Wali ma jiraan qaybo.",
+    "deactivate": "Damin",
+    "activate": "Shaqaysii",
+    "toasts": {
+      "created": "Qaybta waa la sameeyay",
+      "updated": "Qaybta waa la cusboonaysiiyay"
+    },
+    "editDialogTitle": "Wax ka beddel qaybta"
+  },
+  "productsPage": {
+    "title": "Badeecadaha",
+    "subtitle": "Maamul liiska badeecadahaaga iyo kaydka.",
+    "searchPlaceholder": "Magaca, SKU, ama barcode-ka",
+    "category": "Qaybta",
+    "allCategories": "Dhammaan qaybaha",
+    "lowStockOnly": "Kaliya kaydka yar",
+    "sku": "SKU",
+    "stock": "Kaydka",
+    "sellingPrice": "Qiimaha iibka",
+    "empty": "Wax badeeco ah lama helin.",
+    "lowStock": "Kayd yar",
+    "pendingApproval": "Sugaya ansixin",
+    "unit": "Halbeegga"
+  },
+  "productDetailPage": {
+    "noImage": "Sawir ma jiro",
+    "lowStock": "Kayd yar",
+    "pendingApproval": "Sugaya ansixin",
+    "approving": "Waa la ansixinayaa...",
+    "approveProduct": "Ansixi badeecada",
+    "deleteProduct": "Tirtir badeecada",
+    "skuLabel": "SKU {{sku}}",
+    "barcodeLabel": "· Barcode {{barcode}}",
+    "costLabel": "Qiimaha iibsiga ${{value}}",
+    "sellingLabel": "Iibka ${{value}}",
+    "totalStockLabel": "Wadarta kaydka {{qty}} {{unit}}",
+    "reorderLevelLabel": "Heerka dalbashada {{value}}",
+    "maxStockLabel": "Kaydka ugu badan {{value}}",
+    "taxLabel": "Canshuurta",
+    "noTax": "Mid ma jiro",
+    "uploading": "Waa la soo gelinayaa...",
+    "uploadImage": "Soo geli sawir",
+    "tabs": {
+      "batches": "Hawlaha & dhicitaanka",
+      "adjustments": "Saamaynta"
+    },
+    "batchNumber": "Hawlaha #",
+    "expiryDate": "Taariikhda dhicitaanka",
+    "noBatches": "Wali ma jiraan hawlo.",
+    "expiringSoon": "Dhowaan way dhicaysaa",
+    "type": "Nooca",
+    "change": "Isbeddelka",
+    "reason": "Sababta",
+    "noAdjustments": "Wali ma jiraan saamayn.",
+    "deleteDialogTitle": "Tirtir badeecada",
+    "deleteConfirmText": "Tani si joogto ah ayay u tirtiri doontaa {{name}}. Tan lama soo celin karo.",
+    "deleteStockWarning": "Badeecadan weli waxay haysataa {{qty}} {{unit}} oo kaydka ah — marka hore u dhig eber, ama beddelkeeda damin badeecada.",
+    "deletePermanently": "Si joogto ah u tirtir",
+    "toasts": {
+      "imageUploaded": "Sawirka waa la geliyay",
+      "deleted": "Badeecada waa la tirtiray",
+      "approved": "Badeecada waa la ansixiyay — hadda waa la iibin karaa"
+    }
+  },
+  "adjustStockDialog": {
+    "trigger": "Saami kayd",
+    "title": "Saami kayd",
+    "batch": "Hawlaha",
+    "selectBatchPlaceholder": "Dooro hawl",
+    "batchOption": "{{number}} · tirada {{qty}}",
+    "type": "Nooca",
+    "quantityChangeLabel": "Isbeddelka tirada (taban haddii ay tahay khasaare/dhaawac, togan haddii ay tahay korodhsi tirinta)",
+    "reason": "Sababta",
+    "saveAdjustment": "Keydi saamaynta",
+    "selectBatchError": "Dooro hawl",
+    "types": {
+      "damage": "Dhaawac",
+      "loss": "Khasaare",
+      "correction": "Saxitaan",
+      "recount": "Dib u tirin"
+    },
+    "toasts": {
+      "adjusted": "Kaydka waa la saamayn"
+    }
+  },
+  "editProductDialog": {
+    "trigger": "Wax ka beddel badeecada",
+    "title": "Wax ka beddel {{name}}",
+    "sku": "SKU",
+    "barcode": "Barcode",
+    "category": "Qaybta",
+    "selectCategoryPlaceholder": "Dooro qayb",
+    "unit": "Cabbirka",
+    "costPrice": "Qiimaha iibsiga",
+    "sellingPrice": "Qiimaha iibka",
+    "taxRate": "Heerka canshuurta",
+    "noTax": "Canshuur ma jirto",
+    "reorderLevel": "Heerka dalbashada",
+    "maxStockLevel": "Kaydka ugu badan (ikhtiyaari ah)",
+    "trackBatches": "La socod hawlaha / dhicitaanka",
+    "saveChanges": "Keydi isbeddelladda",
+    "selectCategoryError": "Dooro qayb",
+    "toasts": {
+      "updated": "Badeecada waa la cusboonaysiiyay"
+    }
+  }
+}

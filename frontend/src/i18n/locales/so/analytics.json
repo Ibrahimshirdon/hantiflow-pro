@@ -1,0 +1,149 @@
+{
+  "dashboardPage": {
+    "welcome": "Soo dhowow, {{name}}",
+    "signedInAs": "Waxaad ku gashay sidaa {{role}}.",
+    "viewAll": "Eeg dhammaan",
+    "stats": {
+      "totalProducts": "Wadarta badeecadaha",
+      "inventoryValue": "Qiimaha kaydka",
+      "lowStockItems": "Alaabta kaydkeedu yaryahay",
+      "expiringBatches30d": "Kaydka dhici doona (30mln)",
+      "revenue30d": "Dakhliga (30mln)",
+      "expenses30d": "Kharashka (30mln)",
+      "netProfit30d": "Faa'iidada saafiga (30mln)",
+      "completedOrders30d": "Dalabaadka la dhammeeyay (30mln)",
+      "mySales24h": "Iibkayga (24sac)",
+      "mySales7d": "Iibkayga (7mln)",
+      "mySales30d": "Iibkayga (30mln)",
+      "stockReceived30d": "Kaydka la helay (30mln)",
+      "amountWithCount": "${{amount}} ({{count}})"
+    },
+    "yourWork": {
+      "title": "Shaqadaada",
+      "subtitle": "Iibkaaga gaarka ah iyo dhaqdhaqaaqa aad kaydka u heshay."
+    },
+    "mySalesTrend": {
+      "title": "Isbeddelka iibkayga (14kii maalmood ee la soo dhaafay)",
+      "legend": "Iibkayga"
+    },
+    "myRecentSales": {
+      "title": "Iibkayga dhowaan",
+      "empty": "Wali iib lama gaarin."
+    },
+    "stockReceived": {
+      "title": "Kaydka aan helay",
+      "empty": "Wali kaydna lama helin."
+    },
+    "table": {
+      "orderNumber": "Lambarka Dalabka",
+      "items": "Alaabta",
+      "product": "Badeecada",
+      "goodQty": "Tirada wanaagsan",
+      "issues": "Dhibaatooyinka",
+      "qtySold": "Tirada la iibiyay",
+      "revenue": "Dakhliga",
+      "customer": "Macmiilka",
+      "orders": "Dalabaadka",
+      "totalSpent": "Wadarta lacagta la bixiyay",
+      "damagedMissing": "{{count}} waa khasaaray/maqan",
+      "type": "Nooca",
+      "payment": "Lacag-bixinta"
+    },
+    "needsAttention": {
+      "title": "Waxa u baahan feejignaantaada",
+      "pendingApproval": "Badeecadaha sugaya ansixinta",
+      "unassignedDeliveries": "Gaarsiinta aan loo qoondeynin",
+      "openDeliveryIssues": "Dhibaatooyinka gaarsiinta ee furan",
+      "review": "Dib u eeg",
+      "dispatchBoard": "Bogga diridda"
+    },
+    "salesTrendForecast": {
+      "title": "Isbeddelka iibka & saadaasha 7 maalmood",
+      "actualSales": "Iibka dhabta ah",
+      "forecast": "Saadaasha",
+      "disclaimer": "Saadaashu waa isbeddel toosan oo laga soo qaatay 30kii maalmood ee la soo dhaafay, ma aha qaab la tababaray."
+    },
+    "topProducts": {
+      "title": "Badeecadaha ugu iibka badan (30kii maalmood ee la soo dhaafay)"
+    },
+    "bestCustomers": {
+      "title": "Macaamiisha ugu wanaagsan (30kii maalmood ee la soo dhaafay)",
+      "empty": "Wali macaamiil lama helin oo wax soo dalbaday."
+    },
+    "inventoryByCategory": {
+      "title": "Qiimaha kaydka ee qaybaha kala duwan",
+      "legend": "Qiimaha kaydka",
+      "empty": "Wali xog qaybood lama helin."
+    },
+    "lowStockAlerts": {
+      "title": "Digniinaha kaydka yar",
+      "emptyEmoji": "✅",
+      "emptyTitle": "Ma jirto badeeco aan kaydka lahayn.",
+      "emptySubtitle": "Heerarka kaydka oo dhan way caafimaad qabaan.",
+      "outOfStock": "Stock ma jiro",
+      "left": "{{count}} ayaa hadhay",
+      "outstandingDebt": "Deynta haray: ${{amount}}",
+      "unpaidCustomers_one": "{{count}} macmiil oo lacag aan la bixin lahayn",
+      "unpaidCustomers_other": "{{count}} macaamiil oo lacag aan la bixin lahayn"
+    },
+    "expiringBatches": {
+      "title": "Kaydka dhici doona 30 maalmood gudahood",
+      "emptyEmoji": "🎉",
+      "emptyTitle": "Wax badeeco ah kuma jirto dhicitaan 30 maalmood gudahood.",
+      "table": {
+        "product": "Badeecada",
+        "batch": "Kooxda",
+        "expiresIn": "Wuxuu Dhici Doonaa",
+        "qty": "Tirada"
+      },
+      "daysLeft_one": "{{count}} maalin",
+      "daysLeft_other": "{{count}} maalmood",
+      "expired": "Way dhacday"
+    },
+    "teamOverview": {
+      "title": "Guudmarka kooxda"
+    },
+    "recentActivity": {
+      "title": "Howlaha dhowaan",
+      "emptyEmoji": "📭",
+      "emptyTitle": "Wali wax howl ah lama diiwaangelin.",
+      "actions": {
+        "SUPPLIER_SUBMISSION_REQUESTED": "{{user}} wuxuu codsaday inuu gudbiyo {{quantity}} unug oo kaydka guud",
+        "SUPPLIER_SUBMISSION_APPROVED": "{{user}} wuxuu ansixiyay gudbinta alaab-qeybiyaha ee {{quantity}} unug",
+        "SUPPLIER_SUBMISSION_REJECTED": "{{user}} wuxuu diiday gudbinta alaab-qeybiyaha",
+        "SUPPLIER_PRODUCT_SUBMITTED_TO_INVENTORY": "{{user}} wuxuu kaydka guud ku daray {{quantity}} unug",
+        "DELIVERY_ISSUE_REPORTED": "{{user}} wuxuu soo sheegay dhibaato gaarsiin",
+        "DELIVERY_ISSUE_RESOLVED": "{{user}} wuxuu xaliyay dhibaato gaarsiin",
+        "DELIVERY_CONFIRMED_BY_CUSTOMER": "{{user}} wuxuu xaqiijiyay gaarsiinta ({{rating}}★)",
+        "SYSTEM_RESET": "{{user}} wuxuu fuliyay dib-u-dejin nidaam oo dhammaystiran",
+        "CUSTOMER_STATUS_CHANGED": "{{user}} wuxuu xaaladda macmiil ka beddelay {{status}}",
+        "CUSTOMER_WALLET_ADJUSTED": "{{user}} wuxuu diiwaan geliyay {{type}} boorso oo ${{amount}}",
+        "CUSTOMER_LOYALTY_ADJUSTED": "{{user}} wuxuu wax ka beddelay dhibcaha daacadnimada {{pointsChange}}",
+        "CUSTOMER_CREDIT_LIMIT_SET": "{{user}} wuxuu dejiyay heerka deynta macmiil ${{creditLimit}}",
+        "LOAN_REPAYMENT_RECORDED": "{{user}} wuxuu diiwaan geliyay bixin deyn oo ${{amount}}",
+        "LOAN_REPAID_FROM_WALLET": "{{user}} wuxuu boorsada ku bixiyay ${{amount}} oo deyn",
+        "LOAN_DUE_DATE_SET": "{{user}} wuxuu cusboonaysiiyay taariikhda dhammaadka deynta",
+        "STOCK_REQUEST_CREATED": "{{user}} wuxuu alaab-qeybiyaha ka codsaday {{quantity}} unug oo kayd",
+        "STOCK_REQUEST_APPROVED": "{{user}} wuxuu ansixiyay codsi kayd ({{quantity}} unug)",
+        "STOCK_REQUEST_REJECTED": "{{user}} wuxuu diiday codsi kayd",
+        "PRODUCT_APPROVED": "{{user}} wuxuu ansixiyay \"{{name}}\"",
+        "PRODUCT_DELETED": "{{user}} wuxuu tirtiray \"{{name}}\"",
+        "STOCK_ADJUSTED": "{{user}} wuxuu kaydka wax ka beddelay {{quantityChange}} ({{type}})",
+        "STOCK_RECEIVED": "{{user}} wuxuu kaydka guud ku daray {{goodQuantity}} unug",
+        "USER_CREATED": "{{user}} wuxuu sameeyay akoon cusub oo {{role}} ({{email}})",
+        "USER_STATUS_CHANGED": "{{user}} wuxuu xaaladda akoonka ka beddelay {{status}}",
+        "USER_DELETED": "{{user}} wuxuu tirtiray akoonka {{role}} {{email}}",
+        "USER_PASSWORD_RESET": "{{user}} wuxuu dib u dejiyay furaha sirta ah ee isticmaale",
+        "REPORT_EXPORTED": "{{user}} wuxuu soo saaray warbixin"
+      }
+    },
+    "recentOrders": {
+      "title": "Dalabaadkii Dhowaan",
+      "empty": "Wax dalabaad dhowaan ah lama helin."
+    },
+    "orderType": {
+      "pos": "POS",
+      "online": "Onlayn"
+    }
+  }
+}

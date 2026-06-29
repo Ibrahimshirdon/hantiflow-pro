@@ -1,0 +1,50 @@
+{
+  "salesReportPage": {
+    "title": "Sales Report",
+    "subtitle": "Daily, monthly, or custom-range sales reporting.",
+    "from": "From",
+    "to": "To",
+    "exportPdf": "Export PDF",
+    "exportExcel": "Export Excel",
+    "presets": {
+      "today": "Today",
+      "thisMonth": "This month",
+      "custom": "Custom"
+    },
+    "summary": {
+      "orders": "Orders"
+    },
+    "table": {
+      "orderNumber": "Order #",
+      "customer": "Customer",
+      "items": "Items",
+      "payment": "Payment",
+      "empty": "No sales in this range."
+    }
+  },
+  "inventoryReportPage": {
+    "title": "Inventory Report",
+    "subtitle": "Current stock snapshot across all products.",
+    "exportPdf": "Export PDF",
+    "exportExcel": "Export Excel",
+    "summary": {
+      "totalProducts": "Total products",
+      "inventoryValue": "Inventory value",
+      "lowStockItems": "Low stock items"
+    },
+    "table": {
+      "sku": "SKU",
+      "product": "Product",
+      "category": "Category",
+      "stock": "Stock",
+      "reorderLevel": "Reorder level",
+      "stockValue": "Stock value",
+      "unit": "Unit"
+    },
+    "status": {
+      "low": "Low stock",
+      "warning": "Warning",
+      "good": "Good"
+    }
+  }
+}

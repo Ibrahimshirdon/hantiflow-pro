@@ -1,0 +1,48 @@
+{
+  "stockPage": {
+    "title": "Kaydka Alaab-qeybiyaha",
+    "subtitle": "Eeg waxa alaab-qeybiye kastaa hadda haysto, kuna codso kayd haddii aad u baahan tahay.",
+    "empty": "Wali ma jiraan badeecado alaab-qeybiye.",
+    "inCatalog": "Ku jira liiska",
+    "notYetSubmitted": "Wali lama gudbin",
+    "requestStock": "Codso kayd",
+    "table": {
+      "product": "Badeecada",
+      "company": "Shirkadda",
+      "supplier": "Alaab-qeybiyaha",
+      "manager": "Maaraha",
+      "category": "Qaybta",
+      "available": "La heli karo",
+      "unit": "Cabbirka",
+      "wholesalePrice": "Qiimaha jumlada",
+      "sellingPrice": "Qiimaha iibka"
+    },
+    "requestsCard": {
+      "title": "Codsiyada kaydka",
+      "requestedBy": "Waxaa codsaday",
+      "empty": "Wali ma jiraan codsiyo kayd oo la diray."
+    },
+    "submissionsCard": {
+      "title": "Gudbinno sugaya",
+      "empty": "Wali ma jiraan gudbinno alaab-qeybiye."
+    },
+    "submissionsRejectDialog": {
+      "title": "Diid gudbinta: {{name}}",
+      "reasonLabel": "Sababta (ikhtiyaari ah)",
+      "submit": "Diid gudbinta",
+      "rejecting": "Waa la diidayaa..."
+    },
+    "dialog": {
+      "title": "Codso kayd: {{name}}",
+      "quantityLabel": "Tirada (alaab-qeybiyuhu wuxuu hadda haystaa {{count}})",
+      "messageLabel": "Fariin loogu talagalay alaab-qeybiyaha (ikhtiyaari ah)",
+      "send": "Dir codsiga",
+      "sending": "Waa la dirayaa..."
+    }
+  },
+  "toasts": {
+    "requestSent": "Codsigu wuxuu u dhacay alaab-qeybiyaha",
+    "submissionApproved": "Gudbinta waa la ansixiyay waana lagu daray kaydka guud",
+    "submissionRejected": "Gudbinta waa la diiday"
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "dashboardPage": {
+    "welcomeBack": "مرحبًا بعودتك، {{name}}",
+    "subtitle": "نظرة سريعة على طلباتك ومحفظتك ونشاطك.",
+    "stats": {
+      "walletBalance": "رصيد المحفظة",
+      "loyaltyPoints": "نقاط الولاء",
+      "activeOrders": "الطلبات النشطة",
+      "completedOrders": "الطلبات المكتملة",
+      "totalSpent": "إجمالي المصروفات",
+      "creditLimit": "حد الائتمان",
+      "outstandingLoan": "القرض المستحق",
+      "availableCredit": "الائتمان المتاح"
+    },
+    "spendingChart": {
+      "title": "مصروفاتي (آخر 30 يومًا)",
+      "seriesName": "المصروفات"
+    },
+    "recentOrders": {
+      "title": "الطلبات الأخيرة",
+      "viewAll": "عرض الكل",
+      "columnOrderNumber": "رقم الطلب",
+      "columnTotal": "الإجمالي",
+      "columnStatus": "الحالة",
+      "empty": "لم تقم بأي طلبات حتى الآن."
+    },
+    "recentWalletActivity": {
+      "title": "نشاط المحفظة الأخير",
+      "viewAll": "عرض الكل",
+      "columnReason": "السبب",
+      "columnAmount": "المبلغ",
+      "empty": "لا يوجد نشاط في المحفظة حتى الآن."
+    },
+    "loans": {
+      "title": "قروضي",
+      "columnOrderNumber": "رقم الطلب",
+      "columnPrincipal": "أصل القرض",
+      "columnRemaining": "المتبقي",
+      "columnDueDate": "تاريخ الاستحقاق",
+      "columnActions": "الإجراءات",
+      "overdueBadge": "متأخر",
+      "repayFromWallet": "السداد من المحفظة",
+      "noDueDate": "—"
+    },
+    "promo": {
+      "readyToOrder": "هل أنت جاهز لطلب شيء؟",
+      "goToShop": "اذهب إلى المتجر ←"
+    },
+    "repayDialog": {
+      "title": "سداد القرض: {{orderNumber}}",
+      "balanceSummary": "الرصيد المتبقي: {{remaining}} · رصيد المحفظة: {{walletBalance}}",
+      "amountLabel": "المبلغ",
+      "paying": "جارٍ السداد...",
+      "repay": "سداد"
+    },
+    "toasts": {
+      "loanRepaid": "تم سداد القرض من المحفظة"
+    }
+  },
+  "shopPage": {
+    "search": {
+      "placeholder": "البحث عن المنتجات...",
+      "allCategories": "كل الفئات"
+    },
+    "fulfillment": {
+      "pickup": "استلام من المتجر",
+      "delivery": "توصيل"
+    },
+    "paymentMethods": {
+      "wallet": "المحفظة",
+      "cash": "الدفع نقدًا عند التوصيل",
+      "card": "بطاقة",
+      "mobileMoney": "محفظة الهاتف المحمول",
+      "loan": "قرض (مقابل حد الائتمان الخاص بي)"
+    },
+    "product": {
+      "noImage": "لا توجد صورة",
+      "addToCart": "أضف إلى السلة"
+    },
+    "noProductsFound": "لم يتم العثور على منتجات.",
+    "cart": {
+      "title": "سلتك",
+      "empty": "السلة فارغة",
+      "unitPriceEach": "{{price}} للقطعة",
+      "discountCodePlaceholder": "كود الخصم",
+      "apply": "تطبيق",
+      "fulfillmentLabel": "طريقة التسليم",
+      "addressLabel": "العنوان",
+      "cityLabel": "المدينة",
+      "subtotal": "الإجمالي الفرعي",
+      "discount": "الخصم",
+      "tax": "الضريبة",
+      "deliveryFee": "رسوم التوصيل",
+      "total": "الإجمالي",
+      "placingOrder": "جارٍ تقديم الطلب...",
+      "placeOrder": "تقديم الطلب · {{total}}",
+      "codeApplied": "تم تطبيق الكود {{code}}"
+    },
+    "toasts": {
+      "addedToCart": "تمت إضافة {{name}} إلى السلة",
+      "discountApplied": "تم تطبيق الخصم: -{{amount}}",
+      "orderPlaced": "تم تقديم الطلب!",
+      "cartEmpty": "سلتك فارغة",
+      "enterDeliveryAddress": "أدخل عنوان التوصيل"
+    },
+    "deliveryAddressLabel": "عنوان التوصيل"
+  },
+  "ordersPage": {
+    "title": "طلباتك",
+    "subtitle": "تابع طلباتك واطّلع على سجل مشترياتك.",
+    "columnOrderNumber": "رقم الطلب",
+    "columnItems": "العناصر",
+    "columnTotal": "الإجمالي",
+    "columnStatus": "الحالة",
+    "columnDate": "التاريخ",
+    "loading": "جارٍ التحميل...",
+    "empty": "لم تقم بأي طلبات حتى الآن."
+  },
+  "orderDetailPage": {
+    "loading": "جارٍ التحميل...",
+    "orderTitle": "الطلب {{orderNumber}}",
+    "placedAt": "تم الطلب في {{date}}",
+    "items": {
+      "title": "العناصر",
+      "columnProduct": "المنتج",
+      "columnQty": "الكمية",
+      "columnUnitPrice": "سعر الوحدة",
+      "columnLineTotal": "إجمالي السطر"
+    },
+    "summary": {
+      "subtotal": "الإجمالي الفرعي",
+      "discount": "الخصم",
+      "tax": "الضريبة",
+      "deliveryFee": "رسوم التوصيل",
+      "total": "الإجمالي"
+    },
+    "delivery": {
+      "title": "تتبع التوصيل",
+      "deliveringTo": "يتم التوصيل إلى {{address}}",
+      "confirmedReceipt": "لقد أكدت استلام هذا الطلب",
+      "iReceivedDelivery": "لقد استلمت طلبي",
+      "issueReported": "تم الإبلاغ عن مشكلة: \"{{description}}\"",
+      "reportAnIssue": "الإبلاغ عن مشكلة"
+    },
+    "invoice": {
+      "title": "الفاتورة {{invoiceNumber}}",
+      "summary": "الحالة: {{status}} · الإجمالي {{total}}"
+    },
+    "receipt": {
+      "title": "الإيصال {{receiptNumber}}",
+      "summary": "تم دفع {{amount}} عبر {{method}}"
+    },
+    "reportDialog": {
+      "title": "الإبلاغ عن مشكلة في التوصيل",
+      "description": "أخبرنا بما حدث من خطأ — سيتابع معك المسؤول أو المدير.",
+      "placeholder": "مثال: تأخر الطلب، تلف المنتج، تم توصيل منتج خاطئ...",
+      "sending": "جارٍ الإرسال...",
+      "sendReport": "إرسال البلاغ"
+    },
+    "confirmDialog": {
+      "title": "تأكيد الاستلام",
+      "description": "أخبرنا أنك استلمت طلبك، وقيّم كيف كانت تجربة التوصيل.",
+      "submitting": "جارٍ الإرسال...",
+      "submit": "إرسال"
+    },
+    "toasts": {
+      "issueReported": "تم الإبلاغ عن المشكلة — سيتابع فريقنا الأمر",
+      "deliveryConfirmed": "شكرًا لتأكيدك!"
+    }
+  },
+  "walletPage": {
+    "title": "المحفظة",
+    "subtitle": "ادفع ثمن طلباتك من رصيد محفظتك. يمكن فقط للمسؤول أو المدير إضافة أموال إلى محفظتك.",
+    "currentBalance": "الرصيد الحالي",
+    "columnDate": "التاريخ",
+    "columnType": "النوع",
+    "columnReason": "السبب",
+    "columnOrder": "الطلب",
+    "columnBy": "بواسطة",
+    "columnAmount": "المبلغ",
+    "columnBalanceAfter": "الرصيد بعد العملية",
+    "empty": "لا توجد معاملات حتى الآن.",
+    "viewOrder": "عرض الطلب",
+    "noValue": "—"
+  }
+}

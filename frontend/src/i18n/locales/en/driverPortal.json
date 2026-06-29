@@ -1,0 +1,56 @@
+{
+  "statuses": {
+    "assigned": "Assigned",
+    "picked_up": "Picked up",
+    "in_transit": "In transit",
+    "delivered": "Delivered",
+    "failed": "Failed"
+  },
+  "activePage": {
+    "loading": "Loading...",
+    "greeting": "Hi, {{name}}",
+    "subtitle": "Your active delivery.",
+    "stats": {
+      "deliveredToday": "Delivered today",
+      "deliveredThisWeek": "Delivered this week",
+      "deliveredThisMonth": "Delivered this month",
+      "failedLast30Days": "Failed (30d)"
+    },
+    "noActiveDelivery": {
+      "title": "No active delivery",
+      "body": "You'll see your next assigned delivery here."
+    },
+    "activeDelivery": {
+      "orderLabel": "Order {{orderNumber}}",
+      "dropoffLabel": "Dropoff",
+      "notesLabel": "Notes",
+      "photoSelected": "Photo selected: {{fileName}}",
+      "attachProof": "Attach proof of delivery (optional)",
+      "updating": "Updating...",
+      "reportFailed": "Report failed delivery"
+    },
+    "nextAction": {
+      "assigned": "Mark picked up",
+      "picked_up": "Mark in transit",
+      "in_transit": "Mark delivered"
+    },
+    "toasts": {
+      "statusUpdated": "Status updated"
+    }
+  },
+  "historyPage": {
+    "title": "Delivery history",
+    "stats": {
+      "totalDelivered": "Total delivered",
+      "totalFailed": "Total failed",
+      "successRate": "Success rate"
+    },
+    "table": {
+      "orderNumber": "Order #",
+      "dropoff": "Dropoff",
+      "status": "Status"
+    },
+    "loading": "Loading...",
+    "empty": "No completed deliveries yet."
+  }
+}

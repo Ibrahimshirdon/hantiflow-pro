@@ -1,0 +1,35 @@
+import "dotenv/config";
+
+function required(key: string): string {
+  const value = process.env[key];
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${key}`);
+  }
+  return value;
+}
+
+export const env = {
+  port: Number(process.env.PORT ?? 5000),
+  nodeEnv: process.env.NODE_ENV ?? "development",
+  corsOrigin: process.env.CORS_ORIGIN ?? "http://localhost:5173",
+  procurementApprovalThreshold: Number(process.env.PROCUREMENT_APPROVAL_THRESHOLD ?? 1000),
+  deliveryFee: Number(process.env.DELIVERY_FEE ?? 5),
+  // Pickup point used as the dropoff-to-pickup leg's origin when a delivery
+  // is auto-created for an online order — not a real GPS pickup workflow,
+  // just the address shown to the driver as "where to collect the order."
+  storePickupAddress: {
+    label: process.env.STORE_PICKUP_LABEL ?? "Main Store",
+    line1: process.env.STORE_PICKUP_LINE1 ?? "Store address not configured",
+    city: process.env.STORE_PICKUP_CITY ?? "—",
+  },
+  firebase: {
+    projectId: required("FIREBASE_PROJECT_ID"),
+    clientEmail: required("FIREBASE_CLIENT_EMAIL"),
+    privateKey: required("FIREBASE_PRIVATE_KEY").replace(/\\n/g, "\n"),
+  },
+  cloudinary: {
+    cloudName: required("CLOUDINARY_CLOUD_NAME"),
+    apiKey: required("CLOUDINARY_API_KEY"),
+    apiSecret: required("CLOUDINARY_API_SECRET"),
+  },
+};

@@ -1,0 +1,192 @@
+{
+  "dashboardPage": {
+    "welcome": "Soo dhowow, {{name}}",
+    "subtitle": "Hal eeg oo ku saabsan liiskaaga, codsiyada kaydka, iyo shirkadaha.",
+    "viewBreakdown": "Eeg faahfaahinta",
+    "viewAll": "Eeg dhammaan",
+    "stats": {
+      "totalProducts": "Wadarta badeecadaha",
+      "companies": "Shirkadaha",
+      "wholesaleValue": "Qiimaha jumlada ee kaydka",
+      "unitsShippedOut": "Unugyada la diray (wakhtiga oo dhan)",
+      "pendingRequests": "Codsiyada sugaya",
+      "valueShippedOut": "Qiimaha la diray (wakhtiga oo dhan)",
+      "submitted": "Lagu daray kaydka guud",
+      "notSubmitted": "Wali lama gudbin"
+    },
+    "charts": {
+      "requestsByStatus": "Codsiyada kaydka sida xaaladdoodu tahay",
+      "requests": "Codsiyada",
+      "topProductsByValue": "Badeecadaha sare ee qiimaha jumlada kaydka",
+      "wholesaleValue": "Qiimaha jumlada",
+      "catalogValueByCompany": "Qiimaha liiska sida shirkad kasta tahay"
+    },
+    "yourCompanies": {
+      "title": "Shirkadahaaga",
+      "location": "Goobta",
+      "manager": "Maaraha",
+      "empty": "Wali ma jiraan shirkado."
+    },
+    "recentRequests": {
+      "title": "Codsiyadii kaydka ee dhowaa",
+      "empty": "Wali ma jiraan codsiyo kayd."
+    },
+    "table": {
+      "product": "Badeecada",
+      "qty": "Tirada",
+      "qtyInStock": "Tirada kaydka",
+      "wholesalePrice": "Qiimaha jumlada",
+      "currentWholesalePrice": "Qiimaha jumlada hadda"
+    },
+    "lowStock": {
+      "title": "Kaydka yar ee liiskaaga",
+      "empty": "Ma jiraan badeecado ka hooseeya heerka kaydka ugu yar."
+    },
+    "breakdown": {
+      "totalCompanies": "Wadarta shirkadaha",
+      "totalWholesaleValue": "Wadarta qiimaha jumlada",
+      "wholesaleValueHint": "Isku darka (tirada kaydka x qiimaha jumlada) ee badeecad kasta oo liiskaaga ku jirta.",
+      "subtotal": "Wadarta hoose",
+      "unitsShippedOutHint": "Isku darka tirada codsiyada kaydka ee la ansixiyay oo dhan.",
+      "noApprovedRequests": "Wali ma jiraan codsiyo la ansixiyay.",
+      "requestedBy": "Waxaa codsaday",
+      "noPendingRequests": "Ma jiraan codsiyo sugaya.",
+      "valueShippedOutHint": "Isku darka (tirada x qiimaha jumlada hadda) ee codsi kasta oo la ansixiyay. Wuxuu isticmaalaa qiimaha jumlada hadda ee badeecada, ee maahan qiimihii markii la ansixiyay.",
+      "linkedProductId": "Aqoonsiga badeecada ee la xiriira",
+      "noSubmittedProducts": "Wali ma jiraan badeecado lagu daray kaydka guud.",
+      "allSubmitted": "Dhammaan badeecadaha waa lagu daray kaydka guud."
+    }
+  },
+  "companiesPage": {
+    "title": "Shirkadahayga",
+    "subtitle": "Shirkadaha aad maamulayso oo aad badeecadaha hoos ka qaybiso.",
+    "newCompany": "Shirkad cusub",
+    "empty": "Wali ma jiraan shirkado. Samee mid si aad u bilowdo inaad badeecado ku darto.",
+    "fields": {
+      "companyName": "Magaca shirkadda",
+      "descriptionOptional": "Sharaxaad (ikhtiyaari ah)",
+      "location": "Goobta",
+      "managerName": "Magaca maaraha",
+      "manager": "Maaraha",
+      "contactPhone": "Taleefanka xiriirka",
+      "contactEmail": "Iimaylka xiriirka"
+    },
+    "table": {
+      "contact": "Xiriirka"
+    },
+    "createDialog": {
+      "title": "Samee shirkad",
+      "submit": "Samee shirkad",
+      "creating": "Waa la samaynayaa..."
+    },
+    "editDialog": {
+      "title": "Wax ka beddel {{name}}",
+      "submit": "Keydi isbeddellada"
+    },
+    "deleteDialog": {
+      "title": "Tirtir shirkadda",
+      "bodyPrefix": "Tani si joogto ah ayay u tirtiri doontaa",
+      "bodySuffix": ". Tan lama soo celin karo. Haddii badeecado weli ka hoos jiraan, tirtiriddu way joogsan doontaa.",
+      "submit": "Si joogto ah u tirtir"
+    },
+    "toasts": {
+      "created": "Shirkadda waa la abuuray",
+      "updated": "Shirkadda waa la cusboonaysiiyay",
+      "deleted": "Shirkadda waa la tirtiray"
+    }
+  },
+  "productsPage": {
+    "title": "Badeecadayda",
+    "subtitle": "Badeecadaha aad qeybiso, oo loo kala saaray shirkadahaaga. Gudbinta kaydka waxay u dirtaa codsi ansixin maamul ka hor inta aan lagu darin kaydka guud.",
+    "addProduct": "Ku dar badeeco",
+    "empty": "Wali ma jiraan badeecado.",
+    "submit": "Gudbi",
+    "statusSubmitted": "La gudbiyay",
+    "statusNotSubmitted": "Lama gudbin",
+    "statusPendingApproval": "Sugaya ansixin",
+    "fields": {
+      "company": "Shirkadda",
+      "selectCompanyPlaceholder": "Dooro shirkad",
+      "brandOptional": "Sumadda (ikhtiyaari ah)",
+      "descriptionOptional": "Sharaxaad (ikhtiyaari ah)",
+      "category": "Qaybta",
+      "unitType": "Nooca cabbirka (kg, pcs, sanduuq...)",
+      "quantityInStock": "Tirada kaydka",
+      "wholesalePrice": "Qiimaha jumlada",
+      "sellingPrice": "Qiimaha iibka",
+      "minimumStockLevel": "Heerka kaydka ugu yar",
+      "expiryDateOptional": "Taariikhda dhicitaanka (ikhtiyaari ah)",
+      "purchaseSource": "Isha gadashada",
+      "purchasePrice": "Qiimaha gadashada",
+      "batchNumber": "Lambarka kooxda",
+      "warehouseLocation": "Goobta bakhaarka (diiwaankaaga gaarka ah)",
+      "taxRate": "Heerka Canshuurta",
+      "noTax": "Canshuur ma jirto"
+    },
+    "table": {
+      "product": "Badeecada",
+      "company": "Shirkadda",
+      "unit": "Cabbirka",
+      "wholesale": "Jumlada",
+      "selling": "Iibka"
+    },
+    "createDialog": {
+      "submit": "Samee badeeco",
+      "creating": "Waa la samaynayaa..."
+    },
+    "editDialog": {
+      "title": "Wax ka beddel {{name}}",
+      "submit": "Keydi isbeddellada"
+    },
+    "deleteDialog": {
+      "title": "Tirtir badeecada",
+      "bodyPrefix": "Tani si joogto ah ayay u tirtiri doontaa",
+      "bodySuffix": " liiska badeecadaada gaarka ah. Tani ma saamayso kaydka horey loogu gudbiyay.",
+      "submit": "Si joogto ah u tirtir"
+    },
+    "submitDialog": {
+      "title": "Codso gudbinta {{name}}",
+      "quantityLabel": "Tirada (waxaad haysataa {{count}})",
+      "submit": "Codso gudbinta",
+      "submitting": "Waa la codsanayaa..."
+    },
+    "submissionsCard": {
+      "title": "Gudbinnadayda",
+      "empty": "Wali ma jiraan gudbinno.",
+      "reason": "Sababta"
+    },
+    "toasts": {
+      "created": "Badeecada waa la abuuray",
+      "updated": "Badeecada waa la cusboonaysiiyay",
+      "deleted": "Badeecada waa la tirtiray",
+      "submissionRequested": "Gudbinta waa la codsaday — waxay sugaysaa ansixinta maamulka",
+      "selectCompany": "Dooro shirkad"
+    }
+  },
+  "stockRequestsPage": {
+    "title": "Codsiyada Kaydka",
+    "subtitle": "Codsiyada maamulaha iyo maarayaha ee kaydka laga doonayo badeecadahaaga. Ansixintu si toos ah ayay tirada la codsaday ugu gudbisaa kaydka guud.",
+    "empty": "Wali ma jiraan codsiyo kayd.",
+    "table": {
+      "product": "Badeecada",
+      "company": "Shirkadda",
+      "requestedBy": "Waxaa codsaday",
+      "message": "Fariinta"
+    },
+    "rejectDialog": {
+      "title": "Diid codsiga: {{name}}",
+      "reasonLabel": "Sababta (ikhtiyaari ah)",
+      "submit": "Diid codsiga",
+      "rejecting": "Waa la diidayaa..."
+    },
+    "toasts": {
+      "approved": "Codsiga waa la ansixiyay waana lagu daray kaydka guud",
+      "rejected": "Codsiga waa la diiday"
+    }
+  },
+  "categoriesPage": {
+    "title": "Qaybaha",
+    "subtitle": "Eeg qaybaha lagu isticmaalo kaydka guud.",
+    "empty": "Wali ma jiraan qaybo."
+  }
+}

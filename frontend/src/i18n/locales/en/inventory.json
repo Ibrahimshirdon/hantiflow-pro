@@ -1,0 +1,114 @@
+{
+  "categoriesPage": {
+    "title": "Categories",
+    "subtitle": "Organize products into categories.",
+    "newCategory": "New category",
+    "dialogTitle": "Create category",
+    "descriptionOptional": "Description (optional)",
+    "empty": "No categories yet.",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "toasts": {
+      "created": "Category created",
+      "updated": "Category updated"
+    },
+    "editDialogTitle": "Edit category"
+  },
+  "productsPage": {
+    "title": "Products",
+    "subtitle": "Manage your product catalog and stock.",
+    "searchPlaceholder": "Name, SKU, or barcode",
+    "category": "Category",
+    "allCategories": "All categories",
+    "lowStockOnly": "Low stock only",
+    "sku": "SKU",
+    "stock": "Stock",
+    "sellingPrice": "Selling price",
+    "empty": "No products found.",
+    "lowStock": "Low stock",
+    "pendingApproval": "Pending approval",
+    "unit": "Unit"
+  },
+  "productDetailPage": {
+    "noImage": "No image",
+    "lowStock": "Low stock",
+    "pendingApproval": "Pending approval",
+    "approving": "Approving...",
+    "approveProduct": "Approve product",
+    "deleteProduct": "Delete product",
+    "skuLabel": "SKU {{sku}}",
+    "barcodeLabel": "· Barcode {{barcode}}",
+    "costLabel": "Cost ${{value}}",
+    "sellingLabel": "Selling ${{value}}",
+    "totalStockLabel": "Total stock {{qty}} {{unit}}",
+    "reorderLevelLabel": "Reorder level {{value}}",
+    "maxStockLabel": "Max stock {{value}}",
+    "taxLabel": "Tax",
+    "noTax": "None",
+    "uploading": "Uploading...",
+    "uploadImage": "Upload image",
+    "tabs": {
+      "batches": "Batches & expiry",
+      "adjustments": "Adjustments"
+    },
+    "batchNumber": "Batch #",
+    "expiryDate": "Expiry date",
+    "noBatches": "No batches yet.",
+    "expiringSoon": "Expiring soon",
+    "type": "Type",
+    "change": "Change",
+    "reason": "Reason",
+    "noAdjustments": "No adjustments yet.",
+    "deleteDialogTitle": "Delete product",
+    "deleteConfirmText": "This will permanently delete {{name}}. This cannot be undone.",
+    "deleteStockWarning": "This product still has {{qty}} {{unit}} in stock — bring it to zero first, or deactivate the product instead.",
+    "deletePermanently": "Delete permanently",
+    "toasts": {
+      "imageUploaded": "Image uploaded",
+      "deleted": "Product deleted",
+      "approved": "Product approved — now live for sale"
+    }
+  },
+  "adjustStockDialog": {
+    "trigger": "Adjust stock",
+    "title": "Adjust stock",
+    "batch": "Batch",
+    "selectBatchPlaceholder": "Select a batch",
+    "batchOption": "{{number}} · qty {{qty}}",
+    "type": "Type",
+    "quantityChangeLabel": "Quantity change (negative for loss/damage, positive for recount up)",
+    "reason": "Reason",
+    "saveAdjustment": "Save adjustment",
+    "selectBatchError": "Select a batch",
+    "types": {
+      "damage": "Damage",
+      "loss": "Loss",
+      "correction": "Correction",
+      "recount": "Recount"
+    },
+    "toasts": {
+      "adjusted": "Stock adjusted"
+    }
+  },
+  "editProductDialog": {
+    "trigger": "Edit product",
+    "title": "Edit {{name}}",
+    "sku": "SKU",
+    "barcode": "Barcode",
+    "category": "Category",
+    "selectCategoryPlaceholder": "Select a category",
+    "unit": "Unit",
+    "costPrice": "Cost price",
+    "sellingPrice": "Selling price",
+    "taxRate": "Tax rate",
+    "noTax": "No tax",
+    "reorderLevel": "Reorder level",
+    "maxStockLevel": "Max stock level (optional)",
+    "trackBatches": "Track batches / expiry",
+    "saveChanges": "Save changes",
+    "selectCategoryError": "Select a category",
+    "toasts": {
+      "updated": "Product updated"
+    }
+  }
+}
