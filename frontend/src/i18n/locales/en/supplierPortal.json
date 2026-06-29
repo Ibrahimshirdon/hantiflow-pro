@@ -109,6 +109,8 @@
       "selectCompanyPlaceholder": "Select a company",
       "brandOptional": "Brand (optional)",
       "descriptionOptional": "Description (optional)",
+      "existingCategory": "Pick an existing category (optional)",
+      "existingCategoryPlaceholder": "Choose from the admin's catalog",
       "category": "Category",
       "unitType": "Unit type (kg, pcs, box...)",
       "quantityInStock": "Quantity in stock",

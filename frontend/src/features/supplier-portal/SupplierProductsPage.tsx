@@ -12,6 +12,7 @@ import {
   updateSupplierProduct,
   type CreateSupplierProductInput,
 } from "@/api/supplier.api";
+import { listCategories } from "@/api/inventory.api";
 import { listTaxRates } from "@/api/sales.api";
 import { getApiErrorMessage } from "@/api/client";
 import type { SupplierProduct } from "@/types/supplier.types";
@@ -82,6 +83,10 @@ export function SupplierProductsPage() {
   const { data: companies } = useQuery({
     queryKey: ["supplierCompanies", "mine"],
     queryFn: () => listSupplierCompanies(),
+  });
+  const { data: categories } = useQuery({
+    queryKey: ["categories"],
+    queryFn: listCategories,
   });
   const { data: products, isLoading } = useQuery({
     queryKey: ["supplierProducts", "mine"],
@@ -220,7 +225,12 @@ export function SupplierProductsPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("common:fields.name")}</Label>
-                  <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                  <Input
+                    required
+                    minLength={2}
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  />
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("productsPage.fields.brandOptional")}</Label>
@@ -234,10 +244,33 @@ export function SupplierProductsPage() {
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                 />
               </div>
+              {categories && categories.filter((c) => c.isActive).length > 0 && (
+                <div className="flex flex-col gap-1.5">
+                  <Label>{t("productsPage.fields.existingCategory")}</Label>
+                  <Select
+                    value=""
+                    onValueChange={(v) => setForm({ ...form, category: v })}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder={t("productsPage.fields.existingCategoryPlaceholder")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories
+                        .filter((c) => c.isActive)
+                        .map((c) => (
+                          <SelectItem key={c.id} value={c.name}>
+                            {c.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("productsPage.fields.category")}</Label>
                   <Input
+                    required
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                   />
@@ -245,6 +278,7 @@ export function SupplierProductsPage() {
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("productsPage.fields.unitType")}</Label>
                   <Input
+                    required
                     value={form.unitType}
                     onChange={(e) => setForm({ ...form, unitType: e.target.value })}
                   />
@@ -336,6 +370,7 @@ export function SupplierProductsPage() {
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("productsPage.fields.batchNumber")}</Label>
                   <Input
+                    required
                     value={form.batchNumber}
                     onChange={(e) => setForm({ ...form, batchNumber: e.target.value })}
                   />
@@ -344,6 +379,7 @@ export function SupplierProductsPage() {
               <div className="flex flex-col gap-1.5">
                 <Label>{t("productsPage.fields.warehouseLocation")}</Label>
                 <Input
+                  required
                   value={form.warehouseLocation}
                   onChange={(e) => setForm({ ...form, warehouseLocation: e.target.value })}
                 />

@@ -109,6 +109,8 @@
       "selectCompanyPlaceholder": "Dooro shirkad",
       "brandOptional": "Sumadda (ikhtiyaari ah)",
       "descriptionOptional": "Sharaxaad (ikhtiyaari ah)",
+      "existingCategory": "Dooro qayb horey u jirta (ikhtiyaari ah)",
+      "existingCategoryPlaceholder": "Ka dooro liiska maamulaha",
       "category": "Qaybta",
       "unitType": "Nooca cabbirka (kg, pcs, sanduuq...)",
       "quantityInStock": "Tirada kaydka",

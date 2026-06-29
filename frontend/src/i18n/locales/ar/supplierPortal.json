@@ -109,6 +109,8 @@
       "selectCompanyPlaceholder": "اختر شركة",
       "brandOptional": "العلامة التجارية (اختياري)",
       "descriptionOptional": "الوصف (اختياري)",
+      "existingCategory": "اختر فئة موجودة (اختياري)",
+      "existingCategoryPlaceholder": "اختر من كتالوج المسؤول",
       "category": "الفئة",
       "unitType": "نوع الوحدة (كجم، قطعة، صندوق...)",
       "quantityInStock": "الكمية في المخزون",
