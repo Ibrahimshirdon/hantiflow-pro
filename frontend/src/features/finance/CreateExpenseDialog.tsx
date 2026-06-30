@@ -64,7 +64,7 @@ export function CreateExpenseDialog() {
           <DialogTitle>{t("createExpenseDialog.title")}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="category">{t("createExpenseDialog.fields.category")}</Label>
               <Input
@@ -96,7 +96,7 @@ export function CreateExpenseDialog() {
               onChange={(e) => set("description", e.target.value)}
             />
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="paidTo">{t("createExpenseDialog.fields.paidTo")}</Label>
               <Input id="paidTo" value={form.paidTo} onChange={(e) => set("paidTo", e.target.value)} />

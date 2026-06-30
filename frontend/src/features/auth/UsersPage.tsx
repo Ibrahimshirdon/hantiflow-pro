@@ -284,7 +284,7 @@ export function UsersPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                 <div>
                   <p className="text-muted-foreground">{t("common:fields.email")}</p>
                   <p>{viewingUser.email}</p>
@@ -310,7 +310,7 @@ export function UsersPage() {
                   return (
                     <div className="border-t border-border pt-3">
                       <p className="mb-2 text-sm font-medium">{t("users.viewDialog.customerDetails")}</p>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                         <div>
                           <p className="text-muted-foreground">{t("users.viewDialog.walletBalance")}</p>
                           <p>${p.walletBalance.toFixed(2)}</p>
@@ -349,7 +349,7 @@ export function UsersPage() {
                   return (
                     <div className="border-t border-border pt-3">
                       <p className="mb-2 text-sm font-medium">{t("users.viewDialog.supplierDetails")}</p>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                         <div>
                           <p className="text-muted-foreground">{t("users.viewDialog.companyName")}</p>
                           <p>{p.companyName}</p>
@@ -386,7 +386,7 @@ export function UsersPage() {
                   return (
                     <div className="border-t border-border pt-3">
                       <p className="mb-2 text-sm font-medium">{t("users.viewDialog.driverDetails")}</p>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                         <div>
                           <p className="text-muted-foreground">{t("users.viewDialog.vehicleType")}</p>
                           <p>{p.vehicleType}</p>
@@ -421,7 +421,7 @@ export function UsersPage() {
                   return (
                     <div className="border-t border-border pt-3">
                       <p className="mb-2 text-sm font-medium">{t("users.viewDialog.staffDetails")}</p>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                         <div>
                           <p className="text-muted-foreground">{t("users.viewDialog.employeeId")}</p>
                           <p>{p.employeeId}</p>

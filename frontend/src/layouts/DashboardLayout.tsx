@@ -1,12 +1,15 @@
 
+import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { Menu, X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { listDeliveryIssues } from "@/api/delivery.api";
 import { UserMenu } from "@/components/shared/UserMenu";
 import { NotificationBell } from "@/components/shared/NotificationBell";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { dashboardNavSections } from "./nav-config";
 
@@ -14,6 +17,7 @@ export function DashboardLayout() {
   const { profile } = useAuth();
   const { t } = useTranslation("common");
   const canSeeDeliveryIssues = profile?.role === "admin" || profile?.role === "manager";
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const { data: openIssues } = useQuery({
     queryKey: ["deliveryIssues", "open"],
@@ -34,12 +38,31 @@ export function DashboardLayout() {
 
   return (
     <div className="flex h-screen">
-      <nav className="flex w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground print:hidden">
+      {mobileNavOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={() => setMobileNavOpen(false)}
+        />
+      )}
+      <nav
+        className={cn(
+          "fixed inset-y-0 start-0 z-50 flex w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground transition-transform duration-200 lg:static lg:translate-x-0 print:hidden",
+          mobileNavOpen ? "translate-x-0" : "-translate-x-full rtl:translate-x-full",
+        )}
+      >
         <div className="flex h-16 shrink-0 items-center gap-2 px-4">
           <div className="flex size-8 items-center justify-center rounded-lg bg-sidebar-primary-foreground p-1">
             <img src="/favicon.png" alt="" className="size-full object-contain" />
           </div>
           <span className="text-base font-semibold">{t("appName")}</span>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="ms-auto text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground lg:hidden"
+            onClick={() => setMobileNavOpen(false)}
+          >
+            <X className="size-4" />
+          </Button>
         </div>
         <div className="flex-1 overflow-y-auto px-3 pb-4">
           {sections.map((section) => (
@@ -52,6 +75,7 @@ export function DashboardLayout() {
                   <NavLink
                     key={item.path}
                     to={item.path}
+                    onClick={() => setMobileNavOpen(false)}
                     className={({ isActive }) =>
                       cn(
                         "flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition-colors",
@@ -84,10 +108,20 @@ export function DashboardLayout() {
         </div>
       </nav>
       <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex h-16 shrink-0 items-center justify-end gap-2 border-b border-border bg-card px-6 print:hidden">
-          <NotificationBell />
+        <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-border bg-card px-4 sm:px-6 print:hidden">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="lg:hidden"
+            onClick={() => setMobileNavOpen(true)}
+          >
+            <Menu className="size-5" />
+          </Button>
+          <div className="flex flex-1 items-center justify-end gap-2">
+            <NotificationBell />
+          </div>
         </header>
-        <main className="flex-1 overflow-y-auto bg-background p-6 print:p-0">
+        <main className="flex-1 overflow-y-auto bg-background p-4 sm:p-6 print:p-0">
           <Outlet />
         </main>
       </div>

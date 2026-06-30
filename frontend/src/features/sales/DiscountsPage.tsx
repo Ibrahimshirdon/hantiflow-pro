@@ -110,7 +110,7 @@ export function DiscountsPage() {
                   onChange={(e) => set("code", e.target.value.toUpperCase())}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
                   <Label htmlFor="type">{t("discountsPage.fields.type")}</Label>
                   <Select value={form.type} onValueChange={(v) => set("type", v as DiscountInput["type"])}>
@@ -186,7 +186,7 @@ export function DiscountsPage() {
                   </SelectContent>
                 </Select>
               )}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
                   <Label htmlFor="validFrom">{t("discountsPage.fields.validFrom")}</Label>
                   <Input

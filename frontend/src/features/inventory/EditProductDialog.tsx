@@ -99,7 +99,7 @@ export function EditProductDialog({
           <DialogTitle>{t("editProductDialog.title", { name: product.name })}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex max-h-[70vh] flex-col gap-3 overflow-y-auto pe-1">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="edit-sku">{t("editProductDialog.sku")}</Label>
               <Input id="edit-sku" required value={form.sku} onChange={(e) => set("sku", e.target.value)} />
@@ -140,7 +140,7 @@ export function EditProductDialog({
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="edit-unit">{t("editProductDialog.unit")}</Label>
               <Input id="edit-unit" required value={form.unit} onChange={(e) => set("unit", e.target.value)} />

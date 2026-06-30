@@ -222,7 +222,7 @@ export function SupplierProductsPage() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("common:fields.name")}</Label>
                   <Input
@@ -266,7 +266,7 @@ export function SupplierProductsPage() {
                   </Select>
                 </div>
               )}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("productsPage.fields.category")}</Label>
                   <Input
@@ -284,7 +284,7 @@ export function SupplierProductsPage() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("productsPage.fields.quantityInStock")}</Label>
                   <Input
@@ -315,7 +315,7 @@ export function SupplierProductsPage() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("productsPage.fields.minimumStockLevel")}</Label>
                   <Input
@@ -356,7 +356,7 @@ export function SupplierProductsPage() {
               <p className="text-xs font-medium text-muted-foreground">
                 {t("productsPage.fields.purchaseSource")}
               </p>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
                   <Label>{t("productsPage.fields.purchasePrice")}</Label>
                   <Input
@@ -527,7 +527,7 @@ export function SupplierProductsPage() {
             onSubmit={handleEditSubmit}
             className="flex max-h-[70vh] flex-col gap-3 overflow-y-auto pe-1"
           >
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="flex flex-col gap-1.5">
                 <Label>{t("common:fields.name")}</Label>
                 <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
@@ -537,7 +537,7 @@ export function SupplierProductsPage() {
                 <Input value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} />
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="flex flex-col gap-1.5">
                 <Label>{t("productsPage.fields.quantityInStock")}</Label>
                 <Input

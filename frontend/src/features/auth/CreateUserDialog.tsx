@@ -134,7 +134,7 @@ export function CreateUserDialog() {
           </div>
 
           {(form.role === "admin" || form.role === "manager" || form.role === "staff") && (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="employeeId">{t("createUserDialog.employeeIdLabel")}</Label>
                 <Input
@@ -166,7 +166,7 @@ export function CreateUserDialog() {
           )}
 
           {form.role === "driver" && (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="vehicleType">{t("createUserDialog.vehicleTypeLabel")}</Label>
                 <Input
