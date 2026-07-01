@@ -122,6 +122,15 @@ export function CreateUserDialog() {
             />
           </div>
           <div className="flex flex-col gap-1.5">
+            <Label htmlFor="phone">{t("common:fields.phone")}</Label>
+            <Input
+              id="phone"
+              type="tel"
+              value={form.phone}
+              onChange={(e) => set("phone", e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
             <Label htmlFor="password">{t("createUserDialog.passwordLabel")}</Label>
             <Input
               id="password"
