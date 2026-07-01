@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import {
+  ChevronRight,
   CreditCard,
-  MoreHorizontal,
+  Mail,
+  Phone,
+  TrendingUp,
+  UserCheck,
   Users,
   Wallet,
-  UserCheck,
-  TrendingUp,
 } from "lucide-react";
 import {
   adjustCustomerLoyalty,
@@ -32,13 +34,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -74,7 +69,6 @@ function StatCard({ label, value, icon: Icon, tone = "default" }: StatCardProps)
     warning: "bg-warning/10 text-warning",
     destructive: "bg-destructive/10 text-destructive",
   }[tone];
-
   return (
     <Card>
       <CardContent className="flex items-center gap-4 p-5">
@@ -93,14 +87,20 @@ function StatCard({ label, value, icon: Icon, tone = "default" }: StatCardProps)
 export function CustomersPage() {
   const { t } = useTranslation(["customers", "common"]);
   const queryClient = useQueryClient();
+
   const [search, setSearch] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState<CustomerSummary | null>(null);
+
+  // sub-dialogs
   const [walletTarget, setWalletTarget] = useState<CustomerSummary | null>(null);
   const [walletType, setWalletType] = useState<"credit" | "debit">("credit");
   const [walletAmount, setWalletAmount] = useState(0);
   const [walletReason, setWalletReason] = useState("");
+
   const [loyaltyTarget, setLoyaltyTarget] = useState<CustomerSummary | null>(null);
   const [loyaltyPointsChange, setLoyaltyPointsChange] = useState(0);
   const [loyaltyReason, setLoyaltyReason] = useState("");
+
   const [creditTarget, setCreditTarget] = useState<CustomerSummary | null>(null);
   const [creditLimitValue, setCreditLimitValue] = useState(0);
 
@@ -108,6 +108,13 @@ export function CustomersPage() {
     queryKey: ["customers"],
     queryFn: listCustomers,
   });
+
+  // keep selectedCustomer in sync after any mutation refreshes the list
+  useEffect(() => {
+    if (!selectedCustomer || !customers) return;
+    const updated = customers.find((c) => c.uid === selectedCustomer.uid);
+    if (updated) setSelectedCustomer(updated);
+  }, [customers]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const statusMutation = useMutation({
     mutationFn: ({ uid, status }: { uid: string; status: "active" | "suspended" }) =>
@@ -121,11 +128,7 @@ export function CustomersPage() {
 
   const walletMutation = useMutation({
     mutationFn: () =>
-      adjustCustomerWallet(walletTarget!.uid, {
-        type: walletType,
-        amount: walletAmount,
-        reason: walletReason,
-      }),
+      adjustCustomerWallet(walletTarget!.uid, { type: walletType, amount: walletAmount, reason: walletReason }),
     onSuccess: () => {
       toast.success(t("toasts.walletAdjusted"));
       queryClient.invalidateQueries({ queryKey: ["customers"] });
@@ -136,10 +139,7 @@ export function CustomersPage() {
 
   const loyaltyMutation = useMutation({
     mutationFn: () =>
-      adjustCustomerLoyalty(loyaltyTarget!.uid, {
-        pointsChange: loyaltyPointsChange,
-        reason: loyaltyReason,
-      }),
+      adjustCustomerLoyalty(loyaltyTarget!.uid, { pointsChange: loyaltyPointsChange, reason: loyaltyReason }),
     onSuccess: () => {
       toast.success(t("toasts.loyaltyAdjusted"));
       queryClient.invalidateQueries({ queryKey: ["customers"] });
@@ -198,23 +198,9 @@ export function CustomersPage() {
 
       {/* Stat cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          label={t("page.totalCustomers")}
-          value={String(customers?.length ?? "—")}
-          icon={Users}
-        />
-        <StatCard
-          label={t("page.activeCustomers")}
-          value={String(activeCount)}
-          icon={UserCheck}
-          tone="success"
-        />
-        <StatCard
-          label={t("page.totalWallet")}
-          value={`$${totalWallet.toFixed(2)}`}
-          icon={Wallet}
-          tone="primary"
-        />
+        <StatCard label={t("page.totalCustomers")} value={String(customers?.length ?? "—")} icon={Users} />
+        <StatCard label={t("page.activeCustomers")} value={String(activeCount)} icon={UserCheck} tone="success" />
+        <StatCard label={t("page.totalWallet")} value={`$${totalWallet.toFixed(2)}`} icon={Wallet} tone="primary" />
         <StatCard
           label={t("page.outstandingLoans")}
           value={`$${totalLoans.toFixed(2)}`}
@@ -244,7 +230,7 @@ export function CustomersPage() {
               <TableHead>{t("page.creditLimit")}</TableHead>
               <TableHead>{t("page.outstandingLoan")}</TableHead>
               <TableHead>{t("common:fields.status")}</TableHead>
-              <TableHead className="w-12" />
+              <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -263,27 +249,30 @@ export function CustomersPage() {
               </TableRow>
             )}
             {filtered?.map((customer) => (
-              <TableRow key={customer.uid} className="group">
+              <TableRow
+                key={customer.uid}
+                className="cursor-pointer hover:bg-primary/5"
+                onClick={() => setSelectedCustomer(customer)}
+              >
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <Avatar className="size-8 shrink-0">
                       <AvatarFallback className="text-xs">{initials(customer.displayName)}</AvatarFallback>
                     </Avatar>
                     <div className="min-w-0">
-                      <p className="truncate font-medium">{customer.displayName}</p>
-                      <p className="truncate text-xs text-muted-foreground">{customer.addressCount} {t("page.addresses")}</p>
+                      <p className="truncate font-medium text-primary underline-offset-2 hover:underline">
+                        {customer.displayName}
+                      </p>
+                      <p className="truncate text-xs text-muted-foreground">
+                        {customer.addressCount} {t("page.addresses")}
+                      </p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell className="text-muted-foreground">{customer.email}</TableCell>
                 <TableCell className="text-muted-foreground">{customer.phone ?? "—"}</TableCell>
                 <TableCell className="font-medium">${customer.walletBalance.toFixed(2)}</TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-1.5">
-                    <CreditCard className="size-3.5 text-muted-foreground" />
-                    <span>{customer.loyaltyPoints}</span>
-                  </div>
-                </TableCell>
+                <TableCell>{customer.loyaltyPoints}</TableCell>
                 <TableCell className="text-muted-foreground">${customer.creditLimit.toFixed(2)}</TableCell>
                 <TableCell>
                   {customer.outstandingLoanBalance > 0 ? (
@@ -297,44 +286,8 @@ export function CustomersPage() {
                     {customer.status === "active" ? t("common:status.active") : t("page.suspended")}
                   </Badge>
                 </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon-sm"
-                        className="opacity-0 group-hover:opacity-100"
-                      >
-                        <MoreHorizontal className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => openWalletAdjust(customer)}>
-                        <Wallet className="size-4" />
-                        {t("page.adjustWallet")}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => openLoyaltyAdjust(customer)}>
-                        <TrendingUp className="size-4" />
-                        {t("page.adjustLoyalty")}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => openCreditAdjust(customer)}>
-                        <CreditCard className="size-4" />
-                        {t("page.setCreditLimit")}
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        onClick={() =>
-                          statusMutation.mutate({
-                            uid: customer.uid,
-                            status: customer.status === "active" ? "suspended" : "active",
-                          })
-                        }
-                      >
-                        <UserCheck className="size-4" />
-                        {customer.status === "active" ? t("page.suspend") : t("page.activate")}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                <TableCell className="text-muted-foreground">
+                  <ChevronRight className="size-4" />
                 </TableCell>
               </TableRow>
             ))}
@@ -342,7 +295,121 @@ export function CustomersPage() {
         </Table>
       </Card>
 
-      {/* Wallet dialog */}
+      {/* ── Customer profile dialog ── */}
+      <Dialog open={selectedCustomer !== null} onOpenChange={(next) => !next && setSelectedCustomer(null)}>
+        <DialogContent className="sm:max-w-md">
+          {selectedCustomer && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="sr-only">{selectedCustomer.displayName}</DialogTitle>
+              </DialogHeader>
+
+              {/* Profile header */}
+              <div className="flex flex-col items-center gap-3 pb-4 pt-2">
+                <Avatar className="size-20 ring-4 ring-border ring-offset-2 ring-offset-background">
+                  <AvatarFallback className="text-2xl font-bold">
+                    {initials(selectedCustomer.displayName)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="text-center">
+                  <h2 className="text-xl font-bold">{selectedCustomer.displayName}</h2>
+                  <div className="mt-1 flex flex-col items-center gap-0.5 text-sm text-muted-foreground">
+                    <span className="flex items-center gap-1.5">
+                      <Mail className="size-3.5" /> {selectedCustomer.email}
+                    </span>
+                    {selectedCustomer.phone && (
+                      <span className="flex items-center gap-1.5">
+                        <Phone className="size-3.5" /> {selectedCustomer.phone}
+                      </span>
+                    )}
+                  </div>
+                  <Badge
+                    variant={selectedCustomer.status === "active" ? "success" : "destructive"}
+                    className="mt-2"
+                  >
+                    {selectedCustomer.status === "active" ? t("common:status.active") : t("page.suspended")}
+                  </Badge>
+                </div>
+              </div>
+
+              {/* Stats grid */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col gap-0.5 rounded-xl bg-primary/5 p-3">
+                  <p className="text-xs text-muted-foreground">{t("page.wallet")}</p>
+                  <p className="text-xl font-bold text-primary">
+                    ${selectedCustomer.walletBalance.toFixed(2)}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-0.5 rounded-xl bg-muted/60 p-3">
+                  <p className="text-xs text-muted-foreground">{t("page.loyaltyPoints")}</p>
+                  <p className="text-xl font-bold">{selectedCustomer.loyaltyPoints}</p>
+                </div>
+                <div className="flex flex-col gap-0.5 rounded-xl bg-muted/60 p-3">
+                  <p className="text-xs text-muted-foreground">{t("page.creditLimit")}</p>
+                  <p className="text-xl font-bold">${selectedCustomer.creditLimit.toFixed(2)}</p>
+                </div>
+                <div
+                  className={`flex flex-col gap-0.5 rounded-xl p-3 ${
+                    selectedCustomer.outstandingLoanBalance > 0
+                      ? "bg-destructive/10"
+                      : "bg-muted/60"
+                  }`}
+                >
+                  <p className="text-xs text-muted-foreground">{t("page.outstandingLoan")}</p>
+                  <p
+                    className={`text-xl font-bold ${
+                      selectedCustomer.outstandingLoanBalance > 0 ? "text-destructive" : ""
+                    }`}
+                  >
+                    ${selectedCustomer.outstandingLoanBalance.toFixed(2)}
+                  </p>
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex flex-col gap-2 pt-1">
+                <Button
+                  variant="outline"
+                  className="justify-start gap-2"
+                  onClick={() => openWalletAdjust(selectedCustomer)}
+                >
+                  <Wallet className="size-4" /> {t("page.adjustWallet")}
+                </Button>
+                <Button
+                  variant="outline"
+                  className="justify-start gap-2"
+                  onClick={() => openLoyaltyAdjust(selectedCustomer)}
+                >
+                  <TrendingUp className="size-4" /> {t("page.adjustLoyalty")}
+                </Button>
+                <Button
+                  variant="outline"
+                  className="justify-start gap-2"
+                  onClick={() => openCreditAdjust(selectedCustomer)}
+                >
+                  <CreditCard className="size-4" /> {t("page.setCreditLimit")}
+                </Button>
+                <Button
+                  variant={selectedCustomer.status === "active" ? "destructive" : "default"}
+                  className="justify-start gap-2"
+                  disabled={statusMutation.isPending}
+                  onClick={() =>
+                    statusMutation.mutate({
+                      uid: selectedCustomer.uid,
+                      status: selectedCustomer.status === "active" ? "suspended" : "active",
+                    })
+                  }
+                >
+                  <UserCheck className="size-4" />
+                  {selectedCustomer.status === "active" ? t("page.suspend") : t("page.activate")}
+                </Button>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Wallet sub-dialog */}
       <Dialog open={walletTarget !== null} onOpenChange={(next) => !next && setWalletTarget(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -357,9 +424,7 @@ export function CustomersPage() {
             <div className="flex flex-col gap-1.5">
               <Label>{t("dialogs.type")}</Label>
               <Select value={walletType} onValueChange={(v) => setWalletType(v as typeof walletType)}>
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
+                <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="credit">{t("dialogs.topUp")}</SelectItem>
                   <SelectItem value="debit">{t("dialogs.debit")}</SelectItem>
@@ -369,9 +434,7 @@ export function CustomersPage() {
             <div className="flex flex-col gap-1.5">
               <Label>{t("common:fields.amount")}</Label>
               <Input
-                type="number"
-                min={0}
-                step="0.01"
+                type="number" min={0} step="0.01"
                 value={walletAmount}
                 onChange={(e) => setWalletAmount(Number(e.target.value))}
               />
@@ -392,7 +455,7 @@ export function CustomersPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Loyalty dialog */}
+      {/* Loyalty sub-dialog */}
       <Dialog open={loyaltyTarget !== null} onOpenChange={(next) => !next && setLoyaltyTarget(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -428,7 +491,7 @@ export function CustomersPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Credit limit dialog */}
+      {/* Credit limit sub-dialog */}
       <Dialog open={creditTarget !== null} onOpenChange={(next) => !next && setCreditTarget(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -446,9 +509,7 @@ export function CustomersPage() {
             <div className="flex flex-col gap-1.5">
               <Label>{t("dialogs.newCreditLimit")}</Label>
               <Input
-                type="number"
-                min={0}
-                step="0.01"
+                type="number" min={0} step="0.01"
                 value={creditLimitValue}
                 onChange={(e) => setCreditLimitValue(Number(e.target.value))}
               />
