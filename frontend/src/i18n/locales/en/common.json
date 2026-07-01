@@ -47,7 +47,8 @@
   },
   "userMenu": {
     "accountSettings": "Account settings",
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "viewPhoto": "View profile photo"
   },
   "notifications": {
     "title": "Notifications",

@@ -47,7 +47,8 @@
   },
   "userMenu": {
     "accountSettings": "إعدادات الحساب",
-    "logOut": "تسجيل الخروج"
+    "logOut": "تسجيل الخروج",
+    "viewPhoto": "عرض صورة الملف الشخصي"
   },
   "notifications": {
     "title": "الإشعارات",
