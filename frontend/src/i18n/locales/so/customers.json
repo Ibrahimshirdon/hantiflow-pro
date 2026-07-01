@@ -2,6 +2,11 @@
   "page": {
     "title": "Macaamiisha",
     "subtitle": "Eeg faahfaahinta macaamiisha oo maamul akoonadooda, boorsada, iyo dhibcaha daacadnimada.",
+    "totalCustomers": "Wadarta macaamiisha",
+    "activeCustomers": "Macaamiisha firfircoon",
+    "totalWallet": "Wadarta runta boorsadaha",
+    "outstandingLoans": "Deymaha haray",
+    "searchPlaceholder": "Raadi magac, email ama taleefan…",
     "wallet": "Boorsada",
     "loyaltyPoints": "Dhibcaha daacadnimada",
     "addresses": "Cinwaannada",

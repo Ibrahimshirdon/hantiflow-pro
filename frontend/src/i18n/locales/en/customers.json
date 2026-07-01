@@ -2,6 +2,11 @@
   "page": {
     "title": "Customers",
     "subtitle": "View customer details and manage their accounts, wallet, and loyalty points.",
+    "totalCustomers": "Total customers",
+    "activeCustomers": "Active customers",
+    "totalWallet": "Total wallet balance",
+    "outstandingLoans": "Outstanding loans",
+    "searchPlaceholder": "Search by name, email or phone…",
     "wallet": "Wallet",
     "loyaltyPoints": "Loyalty points",
     "addresses": "Addresses",

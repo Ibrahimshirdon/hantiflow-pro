@@ -2,6 +2,11 @@
   "page": {
     "title": "العملاء",
     "subtitle": "عرض تفاصيل العملاء وإدارة حساباتهم ومحافظهم ونقاط الولاء الخاصة بهم.",
+    "totalCustomers": "إجمالي العملاء",
+    "activeCustomers": "العملاء النشطون",
+    "totalWallet": "إجمالي رصيد المحافظ",
+    "outstandingLoans": "القروض المستحقة",
+    "searchPlaceholder": "ابحث بالاسم أو البريد الإلكتروني أو الهاتف…",
     "wallet": "المحفظة",
     "loyaltyPoints": "نقاط الولاء",
     "addresses": "العناوين",
