@@ -29,6 +29,11 @@ export async function getUserById(req: Request, res: Response) {
   res.json({ success: true, data: profile });
 }
 
+export async function updateUserByAdmin(req: Request, res: Response) {
+  const result = await authService.updateUserByAdmin(req.params.uid as string, req.body, req.user!);
+  res.json({ success: true, data: result });
+}
+
 export async function updateUserStatus(req: Request, res: Response) {
   await authService.setUserStatus(req.params.uid as string, req.body.status, req.user!);
   res.json({ success: true, data: { uid: req.params.uid, status: req.body.status } });

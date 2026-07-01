@@ -9,6 +9,7 @@ import {
   resetUserPasswordSchema,
   setUserStatusSchema,
   updateMyProfileSchema,
+  updateUserByAdminSchema,
 } from "./auth.types.js";
 import * as authController from "./auth.controller.js";
 
@@ -35,6 +36,13 @@ authRouter.get(
   verifyToken,
   requireRole(["admin"]),
   authController.getUserById,
+);
+authRouter.patch(
+  "/users/:uid",
+  verifyToken,
+  requireRole(["admin"]),
+  validate(updateUserByAdminSchema),
+  authController.updateUserByAdmin,
 );
 authRouter.patch(
   "/users/:uid/status",

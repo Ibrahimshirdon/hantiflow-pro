@@ -45,6 +45,18 @@ export const updateMyProfileSchema = z.object({
 });
 export type UpdateMyProfileInput = z.infer<typeof updateMyProfileSchema>;
 
+export const updateUserByAdminSchema = z.object({
+  displayName: z.string().min(2).optional(),
+  phone: z.string().optional(),
+  username: usernameSchema.optional(),
+  employeeId: z.string().optional(),
+  department: z.string().optional(),
+  companyName: z.string().optional(),
+  vehicleType: z.string().optional(),
+  licensePlate: z.string().optional(),
+});
+export type UpdateUserByAdminInput = z.infer<typeof updateUserByAdminSchema>;
+
 export const resetUserPasswordSchema = z.object({
   newPassword: z.string().min(8),
 });

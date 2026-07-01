@@ -72,6 +72,7 @@
     "refresh": "Refresh",
     "export": "Export",
     "print": "Print",
+    "saveChanges": "Save changes",
     "viewDetails": "View Details",
     "loading": "Loading...",
     "noResults": "No results found.",

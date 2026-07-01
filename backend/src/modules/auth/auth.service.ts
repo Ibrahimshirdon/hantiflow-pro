@@ -11,6 +11,7 @@ import type {
   RegisterCustomerInput,
   ResetUserPasswordInput,
   UpdateMyProfileInput,
+  UpdateUserByAdminInput,
 } from "./auth.types.js";
 
 function normalizeUsername(username: string) {
@@ -260,6 +261,57 @@ export async function uploadMyPhoto(uid: string, fileBuffer: Buffer) {
   await auth.updateUser(uid, { photoURL: url });
 
   return { photoURL: url };
+}
+
+export async function updateUserByAdmin(
+  uid: string,
+  input: UpdateUserByAdminInput,
+  actor: AuthenticatedUser,
+) {
+  const ref = db.collection("users").doc(uid);
+  const snap = await ref.get();
+  if (!snap.exists) throw new AppError(404, "User not found");
+  const user = snap.data() as UserDoc;
+
+  const userUpdates: Record<string, unknown> = { updatedAt: FieldValue.serverTimestamp() };
+  if (input.displayName !== undefined) userUpdates.displayName = input.displayName;
+  if (input.phone !== undefined) userUpdates.phone = input.phone;
+  if (input.username !== undefined) {
+    await assertUsernameAvailable(input.username, uid);
+    userUpdates.username = normalizeUsername(input.username);
+  }
+  await ref.update(userUpdates);
+  if (input.displayName) await auth.updateUser(uid, { displayName: input.displayName });
+
+  const profileRef = db.collection(PROFILE_COLLECTION[user.role]).doc(uid);
+  const profileUpdates: Record<string, unknown> = { updatedAt: FieldValue.serverTimestamp() };
+  let hasProfileUpdates = false;
+
+  if (user.role === "admin" || user.role === "manager" || user.role === "staff") {
+    if (input.employeeId !== undefined) { profileUpdates.employeeId = input.employeeId; hasProfileUpdates = true; }
+    if (input.department !== undefined) { profileUpdates.department = input.department; hasProfileUpdates = true; }
+  }
+  if (user.role === "supplier" && input.companyName !== undefined) {
+    profileUpdates.companyName = input.companyName;
+    hasProfileUpdates = true;
+  }
+  if (user.role === "driver") {
+    if (input.vehicleType !== undefined) { profileUpdates.vehicleType = input.vehicleType; hasProfileUpdates = true; }
+    if (input.licensePlate !== undefined) { profileUpdates.licensePlate = input.licensePlate; hasProfileUpdates = true; }
+  }
+  if (hasProfileUpdates) await profileRef.update(profileUpdates);
+
+  await recordAuditLog({
+    userId: actor.uid,
+    userName: actor.email,
+    role: actor.role,
+    action: "USER_UPDATED",
+    entityType: "user",
+    entityId: uid,
+    after: input,
+  });
+
+  return { uid };
 }
 
 export async function deleteUser(uid: string, actor: AuthenticatedUser) {

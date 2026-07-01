@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { deleteUser, getUser, listUsers, resetUserPassword, setUserStatus } from "@/api/auth.api";
+import {
+  deleteUser,
+  getUser,
+  listUsers,
+  resetUserPassword,
+  setUserStatus,
+  updateUserByAdmin,
+  type UpdateUserByAdminInput,
+} from "@/api/auth.api";
 import { getApiErrorMessage } from "@/api/client";
 import { useAuth } from "@/context/AuthContext";
 import type {
@@ -16,6 +24,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -70,6 +79,8 @@ export function UsersPage() {
   const [deletingUid, setDeletingUid] = useState<string | null>(null);
   const [resettingUid, setResettingUid] = useState<string | null>(null);
   const [viewingUid, setViewingUid] = useState<string | null>(null);
+  const [editingUid, setEditingUid] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState<UpdateUserByAdminInput>({});
   const [newPassword, setNewPassword] = useState("");
   const queryClient = useQueryClient();
 
@@ -82,6 +93,38 @@ export function UsersPage() {
     queryKey: ["user", viewingUid],
     queryFn: () => getUser(viewingUid!),
     enabled: viewingUid !== null,
+  });
+
+  const { data: editingUser } = useQuery({
+    queryKey: ["user", editingUid],
+    queryFn: () => getUser(editingUid!),
+    enabled: editingUid !== null,
+  });
+
+  useEffect(() => {
+    if (!editingUser) return;
+    const p = editingUser.profile as Record<string, string> | null;
+    setEditForm({
+      displayName: editingUser.displayName,
+      phone: editingUser.phone ?? "",
+      username: editingUser.username ?? "",
+      employeeId: p?.employeeId ?? "",
+      department: p?.department ?? "",
+      companyName: p?.companyName ?? "",
+      vehicleType: p?.vehicleType ?? "",
+      licensePlate: p?.licensePlate ?? "",
+    });
+  }, [editingUser]);
+
+  const updateMutation = useMutation({
+    mutationFn: () => updateUserByAdmin(editingUid!, editForm),
+    onSuccess: () => {
+      toast.success(t("users.toasts.updated"));
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["user", editingUid] });
+      setEditingUid(null);
+    },
+    onError: (error) => toast.error(getApiErrorMessage(error)),
   });
 
   const statusMutation = useMutation({
@@ -195,6 +238,13 @@ export function UsersPage() {
                     >
                       {user.status === "active" ? t("users.suspend") : t("users.activate")}
                     </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setEditingUid(user.uid)}
+                    >
+                      {t("common:actions.edit")}
+                    </Button>
                     <Button variant="outline" size="sm" onClick={() => setResettingUid(user.uid)}>
                       {t("users.resetPassword")}
                     </Button>
@@ -210,6 +260,100 @@ export function UsersPage() {
           })}
         </TableBody>
       </Table>
+
+      {/* Edit user dialog */}
+      <Dialog open={editingUid !== null} onOpenChange={(next) => !next && setEditingUid(null)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{t("users.editDialog.title", { name: editingUser?.displayName })}</DialogTitle>
+          </DialogHeader>
+          <form
+            onSubmit={(e) => { e.preventDefault(); updateMutation.mutate(); }}
+            className="flex flex-col gap-3"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="flex flex-col gap-1.5">
+                <Label>{t("common:fields.name")}</Label>
+                <Input
+                  required
+                  minLength={2}
+                  value={editForm.displayName ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, displayName: e.target.value }))}
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label>{t("common:fields.phone")}</Label>
+                <Input
+                  type="tel"
+                  value={editForm.phone ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, phone: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>{t("createUserDialog.usernameLabel")}</Label>
+              <Input
+                value={editForm.username ?? ""}
+                onChange={(e) => setEditForm((f) => ({ ...f, username: e.target.value }))}
+              />
+            </div>
+
+            {(editingUser?.role === "admin" || editingUser?.role === "manager" || editingUser?.role === "staff") && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="flex flex-col gap-1.5">
+                  <Label>{t("createUserDialog.employeeIdLabel")}</Label>
+                  <Input
+                    value={editForm.employeeId ?? ""}
+                    onChange={(e) => setEditForm((f) => ({ ...f, employeeId: e.target.value }))}
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label>{t("createUserDialog.departmentLabel")}</Label>
+                  <Input
+                    value={editForm.department ?? ""}
+                    onChange={(e) => setEditForm((f) => ({ ...f, department: e.target.value }))}
+                  />
+                </div>
+              </div>
+            )}
+
+            {editingUser?.role === "supplier" && (
+              <div className="flex flex-col gap-1.5">
+                <Label>{t("createUserDialog.companyNameLabel")}</Label>
+                <Input
+                  value={editForm.companyName ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, companyName: e.target.value }))}
+                />
+              </div>
+            )}
+
+            {editingUser?.role === "driver" && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="flex flex-col gap-1.5">
+                  <Label>{t("createUserDialog.vehicleTypeLabel")}</Label>
+                  <Input
+                    value={editForm.vehicleType ?? ""}
+                    onChange={(e) => setEditForm((f) => ({ ...f, vehicleType: e.target.value }))}
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label>{t("createUserDialog.licensePlateLabel")}</Label>
+                  <Input
+                    value={editForm.licensePlate ?? ""}
+                    onChange={(e) => setEditForm((f) => ({ ...f, licensePlate: e.target.value }))}
+                  />
+                </div>
+              </div>
+            )}
+
+            <DialogFooter>
+              <Button type="submit" disabled={updateMutation.isPending}>
+                {updateMutation.isPending ? t("common:actions.saving") : t("common:actions.saveChanges")}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={deletingUid !== null} onOpenChange={(next) => !next && setDeletingUid(null)}>
         <DialogContent className="sm:max-w-md">
