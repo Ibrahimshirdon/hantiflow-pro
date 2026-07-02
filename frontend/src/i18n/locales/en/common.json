@@ -53,7 +53,9 @@
   "notifications": {
     "title": "Notifications",
     "markAllRead": "Mark all read",
-    "empty": "No notifications yet."
+    "empty": "You're all caught up!",
+    "emptySubtitle": "No new notifications right now.",
+    "andMore": "+{{count}} more notifications"
   },
   "actions": {
     "save": "Save",

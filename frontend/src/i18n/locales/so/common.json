@@ -53,7 +53,9 @@
   "notifications": {
     "title": "Ogeysiisyada",
     "markAllRead": "Calaamadi dhammaan in la akhriyay",
-    "empty": "Wali ma jiraan ogeysiisyo."
+    "empty": "Wax cusub kuma jiraan!",
+    "emptySubtitle": "Hadda ogeysiis cusub ma jiro.",
+    "andMore": "+{{count}} ogeysiis oo kale"
   },
   "actions": {
     "save": "Keydi",
