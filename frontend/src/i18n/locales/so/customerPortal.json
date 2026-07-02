@@ -96,6 +96,15 @@
       "placeOrder": "Dir dalabka · {{total}}",
       "codeApplied": "Koodhka {{code}} waa la codsaday"
     },
+    "confirmDialog": {
+      "title": "Dib u eeg dalabkaaga",
+      "subtitle": "Fadlan hubi faahfaahinta dalabkaaga ka hor xaqiijinta.",
+      "items": "Alaabada",
+      "payment": "Lacag bixinta",
+      "fulfillment": "Gaarsiinta",
+      "goBack": "Ku noqo",
+      "confirm": "Xaqiiji oo Dir Dalabka"
+    },
     "toasts": {
       "addedToCart": "{{name}} waxaa lagu daray gaadiga",
       "discountApplied": "Dhimis waa la codsaday: -{{amount}}",

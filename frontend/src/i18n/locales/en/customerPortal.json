@@ -96,6 +96,15 @@
       "placeOrder": "Place order · {{total}}",
       "codeApplied": "Code {{code}} applied"
     },
+    "confirmDialog": {
+      "title": "Review your order",
+      "subtitle": "Please check your order details before confirming.",
+      "items": "Items",
+      "payment": "Payment",
+      "fulfillment": "Fulfillment",
+      "goBack": "Go back",
+      "confirm": "Confirm & Place Order"
+    },
     "toasts": {
       "addedToCart": "{{name}} added to cart",
       "discountApplied": "Discount applied: -{{amount}}",

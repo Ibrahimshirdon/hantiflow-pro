@@ -96,6 +96,15 @@
       "placeOrder": "تقديم الطلب · {{total}}",
       "codeApplied": "تم تطبيق الكود {{code}}"
     },
+    "confirmDialog": {
+      "title": "مراجعة طلبك",
+      "subtitle": "يرجى التحقق من تفاصيل طلبك قبل التأكيد.",
+      "items": "المنتجات",
+      "payment": "الدفع",
+      "fulfillment": "التسليم",
+      "goBack": "العودة",
+      "confirm": "تأكيد وتقديم الطلب"
+    },
     "toasts": {
       "addedToCart": "تمت إضافة {{name}} إلى السلة",
       "discountApplied": "تم تطبيق الخصم: -{{amount}}",

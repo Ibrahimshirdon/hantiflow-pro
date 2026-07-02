@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { CheckCircle2, CreditCard, MapPin, Package, ShoppingBag, Truck } from "lucide-react";
 import { listCategories, listProducts } from "@/api/inventory.api";
 import { listTaxRates, previewDiscount } from "@/api/sales.api";
 import { customerCheckout, getDeliveryFee, type CustomerCheckoutInput } from "@/api/customer.api";
@@ -13,6 +14,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -57,6 +65,7 @@ export function ShopPage() {
     useState<CustomerCheckoutInput["fulfillmentType"]>("pickup");
   const [deliveryLine1, setDeliveryLine1] = useState("");
   const [deliveryCity, setDeliveryCity] = useState("");
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const { data: categories } = useQuery({ queryKey: ["categories"], queryFn: listCategories });
   const { data: products } = useQuery({
@@ -144,10 +153,22 @@ export function ShopPage() {
   const effectiveDeliveryFee = fulfillmentType === "delivery" ? deliveryFee : 0;
   const grandTotal = subtotal - discountTotal + taxTotal + effectiveDeliveryFee;
 
+  const checkoutPayload: CustomerCheckoutInput = {
+    items: cart.map((line) => ({ productId: line.productId, quantity: line.quantity })),
+    discountCode: appliedDiscount?.code,
+    paymentMethod,
+    fulfillmentType,
+    deliveryAddress:
+      fulfillmentType === "delivery"
+        ? { label: t("shopPage.deliveryAddressLabel"), line1: deliveryLine1, city: deliveryCity }
+        : undefined,
+  };
+
   const checkoutMutation = useMutation({
     mutationFn: customerCheckout,
     onSuccess: (result) => {
       toast.success(t("shopPage.toasts.orderPlaced"));
+      setConfirmOpen(false);
       setCart([]);
       setDiscountCode("");
       setAppliedDiscount(null);
@@ -167,16 +188,7 @@ export function ShopPage() {
       toast.error(t("shopPage.toasts.enterDeliveryAddress"));
       return;
     }
-    checkoutMutation.mutate({
-      items: cart.map((line) => ({ productId: line.productId, quantity: line.quantity })),
-      discountCode: appliedDiscount?.code,
-      paymentMethod,
-      fulfillmentType,
-      deliveryAddress:
-        fulfillmentType === "delivery"
-          ? { label: t("shopPage.deliveryAddressLabel"), line1: deliveryLine1, city: deliveryCity }
-          : undefined,
-    });
+    setConfirmOpen(true);
   }
 
   return (
@@ -359,9 +371,7 @@ export function ShopPage() {
           </Select>
 
           <Button disabled={cart.length === 0 || checkoutMutation.isPending} onClick={handleCheckout}>
-            {checkoutMutation.isPending
-              ? t("shopPage.cart.placingOrder")
-              : t("shopPage.cart.placeOrder", { total: `$${grandTotal.toFixed(2)}` })}
+            {t("shopPage.cart.placeOrder", { total: `$${grandTotal.toFixed(2)}` })}
           </Button>
           {appliedDiscount && (
             <Badge variant="success">
@@ -370,6 +380,126 @@ export function ShopPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* ── Order confirmation dialog ── */}
+      <Dialog open={confirmOpen} onOpenChange={(open) => !checkoutMutation.isPending && setConfirmOpen(open)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="mx-auto mb-2 flex size-12 items-center justify-center rounded-full bg-primary/10">
+              <ShoppingBag className="size-6 text-primary" />
+            </div>
+            <DialogTitle className="text-center text-lg">
+              {t("shopPage.confirmDialog.title")}
+            </DialogTitle>
+            <p className="text-center text-sm text-muted-foreground">
+              {t("shopPage.confirmDialog.subtitle")}
+            </p>
+          </DialogHeader>
+
+          {/* Items */}
+          <div className="max-h-40 overflow-y-auto rounded-lg border bg-muted/30 p-3">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              {t("shopPage.confirmDialog.items")}
+            </p>
+            <div className="flex flex-col gap-1.5">
+              {cart.map((line) => (
+                <div key={line.productId} className="flex items-center justify-between gap-2 text-sm">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Package className="size-3.5 shrink-0 text-muted-foreground" />
+                    <span className="truncate">{line.name}</span>
+                    <span className="shrink-0 text-muted-foreground">×{line.quantity}</span>
+                  </div>
+                  <span className="shrink-0 font-medium">
+                    ${(line.unitPrice * line.quantity).toFixed(2)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Price breakdown */}
+          <div className="flex flex-col gap-1 rounded-lg border bg-muted/30 p-3 text-sm">
+            <div className="flex justify-between text-muted-foreground">
+              <span>{t("shopPage.cart.subtotal")}</span>
+              <span>${subtotal.toFixed(2)}</span>
+            </div>
+            {discountTotal > 0 && (
+              <div className="flex justify-between text-emerald-600">
+                <span>{t("shopPage.cart.discount")}</span>
+                <span>-${discountTotal.toFixed(2)}</span>
+              </div>
+            )}
+            {taxTotal > 0 && (
+              <div className="flex justify-between text-muted-foreground">
+                <span>{t("shopPage.cart.tax")}</span>
+                <span>${taxTotal.toFixed(2)}</span>
+              </div>
+            )}
+            {fulfillmentType === "delivery" && (
+              <div className="flex justify-between text-muted-foreground">
+                <span>{t("shopPage.cart.deliveryFee")}</span>
+                <span>${effectiveDeliveryFee.toFixed(2)}</span>
+              </div>
+            )}
+            <div className="mt-1 flex justify-between border-t pt-2 text-base font-bold">
+              <span>{t("shopPage.cart.total")}</span>
+              <span className="text-primary">${grandTotal.toFixed(2)}</span>
+            </div>
+          </div>
+
+          {/* Meta row: payment + fulfillment */}
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col gap-1 rounded-lg border bg-muted/30 p-3">
+              <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                <CreditCard className="size-3.5" />
+                {t("shopPage.confirmDialog.payment")}
+              </div>
+              <span className="text-sm font-medium">
+                {t(`shopPage.paymentMethods.${paymentMethod === "mobile_money" ? "mobileMoney" : paymentMethod}`)}
+              </span>
+            </div>
+            <div className="flex flex-col gap-1 rounded-lg border bg-muted/30 p-3">
+              <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                {fulfillmentType === "delivery" ? <Truck className="size-3.5" /> : <MapPin className="size-3.5" />}
+                {t("shopPage.confirmDialog.fulfillment")}
+              </div>
+              <span className="text-sm font-medium">
+                {t(`shopPage.fulfillment.${fulfillmentType}`)}
+              </span>
+              {fulfillmentType === "delivery" && deliveryLine1 && (
+                <span className="text-xs text-muted-foreground">
+                  {deliveryLine1}, {deliveryCity}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <DialogFooter className="gap-2 sm:gap-2">
+            <Button
+              variant="outline"
+              className="flex-1"
+              disabled={checkoutMutation.isPending}
+              onClick={() => setConfirmOpen(false)}
+            >
+              {t("shopPage.confirmDialog.goBack")}
+            </Button>
+            <Button
+              className="flex-1 gap-2"
+              disabled={checkoutMutation.isPending}
+              onClick={() => checkoutMutation.mutate(checkoutPayload)}
+            >
+              {checkoutMutation.isPending ? (
+                t("shopPage.cart.placingOrder")
+              ) : (
+                <>
+                  <CheckCircle2 className="size-4" />
+                  {t("shopPage.confirmDialog.confirm")}
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
