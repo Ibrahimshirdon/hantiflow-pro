@@ -53,7 +53,7 @@ export interface SalesOrder {
   deliveryAddress: Address | null;
   grandTotal: number;
   paymentStatus: "paid" | "partial" | "unpaid";
-  paymentMethod: "cash" | "card" | "wallet" | "mobile_money" | "loan";
+  paymentMethod: "cash" | "wallet" | "evc_plus" | "sahal" | "edahab" | "loan";
   status: "pending" | "confirmed" | "completed" | "cancelled";
   createdBy: string;
   createdByName: string;

@@ -45,9 +45,10 @@ interface CartLine {
 
 const PAYMENT_METHODS = [
   { value: "wallet", labelKey: "shopPage.paymentMethods.wallet" },
+  { value: "evc_plus", labelKey: "shopPage.paymentMethods.evc_plus" },
+  { value: "sahal", labelKey: "shopPage.paymentMethods.sahal" },
+  { value: "edahab", labelKey: "shopPage.paymentMethods.edahab" },
   { value: "cash", labelKey: "shopPage.paymentMethods.cash" },
-  { value: "card", labelKey: "shopPage.paymentMethods.card" },
-  { value: "mobile_money", labelKey: "shopPage.paymentMethods.mobileMoney" },
   { value: "loan", labelKey: "shopPage.paymentMethods.loan" },
 ] as const;
 
@@ -455,7 +456,7 @@ export function ShopPage() {
                 {t("shopPage.confirmDialog.payment")}
               </div>
               <span className="text-sm font-medium">
-                {t(`shopPage.paymentMethods.${paymentMethod === "mobile_money" ? "mobileMoney" : paymentMethod}`)}
+                {t(`shopPage.paymentMethods.${paymentMethod}`)}
               </span>
             </div>
             <div className="flex flex-col gap-1 rounded-lg border bg-muted/30 p-3">

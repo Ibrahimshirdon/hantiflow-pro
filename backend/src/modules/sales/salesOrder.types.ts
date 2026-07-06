@@ -11,6 +11,6 @@ export const createSalesOrderSchema = z.object({
     )
     .min(1),
   discountCode: z.string().optional(),
-  paymentMethod: z.enum(["cash", "card", "wallet", "mobile_money", "loan"]),
+  paymentMethod: z.enum(["cash", "wallet", "evc_plus", "sahal", "edahab", "loan"]),
 });
 export type CreateSalesOrderInput = z.infer<typeof createSalesOrderSchema>;

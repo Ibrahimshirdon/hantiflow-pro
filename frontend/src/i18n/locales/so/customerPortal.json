@@ -68,9 +68,10 @@
     },
     "paymentMethods": {
       "wallet": "Boorsada",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
       "cash": "Lacag goor gaarsiinta",
-      "card": "Kaarka",
-      "mobileMoney": "Lacagta Mobile",
       "loan": "Deyn (xadka deynta lagu xisaabiyo)"
     },
     "product": {

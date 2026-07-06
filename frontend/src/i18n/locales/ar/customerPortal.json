@@ -68,9 +68,10 @@
     },
     "paymentMethods": {
       "wallet": "المحفظة",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
       "cash": "الدفع نقدًا عند التوصيل",
-      "card": "بطاقة",
-      "mobileMoney": "محفظة الهاتف المحمول",
       "loan": "قرض (مقابل حد الائتمان الخاص بي)"
     },
     "product": {

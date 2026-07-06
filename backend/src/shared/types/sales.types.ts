@@ -51,7 +51,7 @@ export interface SalesOrder {
   deliveryAddress: Address | null;
   grandTotal: number;
   paymentStatus: "paid" | "partial" | "unpaid";
-  paymentMethod: "cash" | "card" | "wallet" | "mobile_money" | "loan";
+  paymentMethod: "cash" | "wallet" | "evc_plus" | "sahal" | "edahab" | "loan";
   // "pending" only ever applies to online orders with fulfillmentType
   // "delivery" — they sit pending until the assigned driver actually marks
   // the delivery "delivered". Every other order (pos, online pickup) goes

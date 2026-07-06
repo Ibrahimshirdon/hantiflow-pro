@@ -9,9 +9,10 @@
     "apply": "Codso",
     "paymentMethods": {
       "cash": "Lacag caddaan ah",
-      "card": "Kaarka",
       "wallet": "Boorsada",
-      "mobile_money": "Lacagta Mobilada",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
       "loan": "Deyn"
     },
     "processing": "Waa la habeynayaa...",

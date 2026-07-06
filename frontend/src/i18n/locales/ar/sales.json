@@ -9,9 +9,10 @@
     "apply": "تطبيق",
     "paymentMethods": {
       "cash": "نقدًا",
-      "card": "بطاقة",
       "wallet": "المحفظة",
-      "mobile_money": "الدفع عبر الهاتف",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
       "loan": "قرض"
     },
     "processing": "جارٍ المعالجة...",

@@ -18,7 +18,7 @@ export const customerCheckoutSchema = z
       )
       .min(1),
     discountCode: z.string().optional(),
-    paymentMethod: z.enum(["cash", "card", "wallet", "mobile_money", "loan"]),
+    paymentMethod: z.enum(["cash", "wallet", "evc_plus", "sahal", "edahab", "loan"]),
     fulfillmentType: z.enum(["pickup", "delivery"]),
     deliveryAddress: deliveryAddressSchema.optional(),
   })

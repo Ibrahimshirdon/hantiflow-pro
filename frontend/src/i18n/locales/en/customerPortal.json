@@ -68,9 +68,10 @@
     },
     "paymentMethods": {
       "wallet": "Wallet",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
       "cash": "Cash on delivery",
-      "card": "Card",
-      "mobileMoney": "Mobile Money",
       "loan": "Loan (against my credit limit)"
     },
     "product": {

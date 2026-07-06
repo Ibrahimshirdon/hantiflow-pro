@@ -9,9 +9,10 @@
     "apply": "Apply",
     "paymentMethods": {
       "cash": "Cash",
-      "card": "Card",
       "wallet": "Wallet",
-      "mobile_money": "Mobile Money",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
       "loan": "Loan"
     },
     "processing": "Processing...",
