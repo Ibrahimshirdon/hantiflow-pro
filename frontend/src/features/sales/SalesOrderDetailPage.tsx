@@ -113,32 +113,22 @@ export function SalesOrderDetailPage() {
           </Badge>
 
           {/* Action buttons — only for online orders that aren't done */}
-          {order.type === "online" && order.status === "pending" && (
+          {order.type === "online" && (order.status === "pending" || order.status === "confirmed") && (
             <>
-              <Button
-                size="sm"
-                className="gap-1.5"
-                disabled={approveMutation.isPending}
-                onClick={() => approveMutation.mutate()}
-              >
-                <CheckCircle2 className="size-4" />
-                {approveMutation.isPending
-                  ? t("salesOrderDetailPage.approving")
-                  : t("salesOrderDetailPage.approveOrder")}
-              </Button>
-              <Button
-                size="sm"
-                variant="destructive"
-                className="gap-1.5"
-                onClick={() => setCancelOpen(true)}
-              >
-                <XCircle className="size-4" />
-                {t("salesOrderDetailPage.cancelOrder")}
-              </Button>
-            </>
-          )}
-          {order.type === "online" && order.status === "confirmed" && (
-            <>
+              {order.status === "pending" && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-1.5"
+                  disabled={approveMutation.isPending}
+                  onClick={() => approveMutation.mutate()}
+                >
+                  <CheckCircle2 className="size-4" />
+                  {approveMutation.isPending
+                    ? t("salesOrderDetailPage.approving")
+                    : t("salesOrderDetailPage.approveOrder")}
+                </Button>
+              )}
               <Button
                 size="sm"
                 className="gap-1.5"
