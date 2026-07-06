@@ -46,8 +46,9 @@
     },
     "paymentMethods": {
       "cash": "Cash",
-      "card": "Card",
-      "mobileMoney": "Mobile Money",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
       "wallet": "Wallet"
     },
     "toasts": {

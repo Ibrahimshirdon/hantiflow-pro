@@ -96,7 +96,7 @@ export function CustomerLoanDetailsPage() {
   const queryClient = useQueryClient();
   const [repayTarget, setRepayTarget] = useState<Loan | null>(null);
   const [repayAmount, setRepayAmount] = useState(0);
-  const [repayMethod, setRepayMethod] = useState<"cash" | "card" | "mobile_money" | "wallet">("cash");
+  const [repayMethod, setRepayMethod] = useState<"cash" | "wallet" | "evc_plus" | "sahal" | "edahab">("cash");
   const [dueDateTarget, setDueDateTarget] = useState<Loan | null>(null);
   const [dueDateValue, setDueDateValue] = useState("");
 
@@ -389,10 +389,9 @@ export function CustomerLoanDetailsPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="cash">{t("customerLoanDetailsPage.paymentMethods.cash")}</SelectItem>
-                  <SelectItem value="card">{t("customerLoanDetailsPage.paymentMethods.card")}</SelectItem>
-                  <SelectItem value="mobile_money">
-                    {t("customerLoanDetailsPage.paymentMethods.mobileMoney")}
-                  </SelectItem>
+                  <SelectItem value="evc_plus">{t("customerLoanDetailsPage.paymentMethods.evc_plus")}</SelectItem>
+                  <SelectItem value="sahal">{t("customerLoanDetailsPage.paymentMethods.sahal")}</SelectItem>
+                  <SelectItem value="edahab">{t("customerLoanDetailsPage.paymentMethods.edahab")}</SelectItem>
                   <SelectItem value="wallet">{t("customerLoanDetailsPage.paymentMethods.wallet")}</SelectItem>
                 </SelectContent>
               </Select>

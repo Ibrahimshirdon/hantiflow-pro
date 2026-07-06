@@ -45,9 +45,10 @@
       "save": "Keydi taariikhda dhammaadka"
     },
     "paymentMethods": {
-      "cash": "Cash",
-      "card": "Kaarka",
-      "mobileMoney": "Lacagta Mobilka",
+      "cash": "Lacag caddaan ah",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
       "wallet": "Boorsada"
     },
     "toasts": {

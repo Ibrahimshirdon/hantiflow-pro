@@ -116,6 +116,12 @@ export function CustomersPage() {
     queryFn: listCustomers,
   });
 
+  const { data: outstandingLoans } = useQuery({
+    queryKey: ["loans", loanTarget?.uid, "outstanding"],
+    queryFn: () => listLoans({ customerId: loanTarget!.uid, status: "outstanding" }),
+    enabled: !!loanTarget,
+  });
+
   // keep selectedCustomer in sync after any mutation refreshes the list
   useEffect(() => {
     if (!selectedCustomer || !customers) return;
@@ -171,12 +177,6 @@ export function CustomersPage() {
       setCreditTarget(null);
     },
     onError: (error) => toast.error(getApiErrorMessage(error)),
-  });
-
-  const { data: outstandingLoans } = useQuery({
-    queryKey: ["loans", loanTarget?.uid, "outstanding"],
-    queryFn: () => listLoans({ customerId: loanTarget!.uid, status: "outstanding" }),
-    enabled: !!loanTarget,
   });
 
   const loanMutation = useMutation({

@@ -46,8 +46,9 @@
     },
     "paymentMethods": {
       "cash": "نقدًا",
-      "card": "بطاقة",
-      "mobileMoney": "محفظة الهاتف",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
       "wallet": "المحفظة"
     },
     "toasts": {
