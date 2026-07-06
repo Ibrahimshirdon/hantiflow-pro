@@ -29,7 +29,7 @@ interface CartLine {
   quantity: number;
 }
 
-const PAYMENT_METHOD_VALUES = ["cash", "card", "wallet", "mobile_money", "loan"] as const;
+const PAYMENT_METHOD_VALUES = ["cash", "wallet", "evc_plus", "sahal", "edahab", "loan"] as const;
 
 export function POSPage() {
   const { t } = useTranslation(["sales", "common"]);
