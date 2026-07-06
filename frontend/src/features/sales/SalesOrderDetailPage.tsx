@@ -280,7 +280,7 @@ export function SalesOrderDetailPage() {
           <CardContent className="text-sm text-muted-foreground">
             {t("salesOrderDetailPage.receiptPaidLine", {
               amount: receipt?.amountPaid.toFixed(2),
-              method: receipt?.paymentMethod.replace("_", " "),
+              method: receipt ? t(`posPage.paymentMethods.${receipt.paymentMethod}`) : "",
             })}
           </CardContent>
         </Card>
@@ -385,7 +385,7 @@ function ReceiptPaper({
       <div className="flex flex-col gap-0.5 py-3">
         <div className="flex justify-between">
           <span className="text-muted-foreground">{t("salesOrderDetailPage.receiptPaper.payment")}</span>
-          <span className="capitalize">{order.paymentMethod.replace("_", " ")}</span>
+          <span>{t(`posPage.paymentMethods.${order.paymentMethod}`)}</span>
         </div>
         {receipt && (
           <div className="flex justify-between">

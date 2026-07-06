@@ -33,6 +33,8 @@
     "empty": "لا توجد مبيعات حتى الآن.",
     "statusFilter": "الحالة",
     "allStatuses": "جميع الحالات",
+    "paymentFilter": "طريقة الدفع",
+    "allPayments": "جميع الطرق",
     "statuses": {
       "pending": "قيد الانتظار",
       "confirmed": "مؤكد",

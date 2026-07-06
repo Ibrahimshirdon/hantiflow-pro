@@ -33,6 +33,8 @@
     "empty": "Wali iib lama gaarin.",
     "statusFilter": "Xaaladda",
     "allStatuses": "Dhammaan xaaladaha",
+    "paymentFilter": "Habka lacag-bixinta",
+    "allPayments": "Dhammaan hababka",
     "statuses": {
       "pending": "Sugaya",
       "confirmed": "La xaqiijiyay",

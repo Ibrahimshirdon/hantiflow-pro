@@ -33,6 +33,8 @@
     "empty": "No sales yet.",
     "statusFilter": "Status",
     "allStatuses": "All statuses",
+    "paymentFilter": "Payment method",
+    "allPayments": "All methods",
     "statuses": {
       "pending": "Pending",
       "confirmed": "Confirmed",

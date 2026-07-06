@@ -70,7 +70,7 @@ export interface CreateSalesOrderInput {
   customerId?: string;
   items: { productId: string; quantity: number }[];
   discountCode?: string;
-  paymentMethod: "cash" | "card" | "wallet" | "mobile_money" | "loan";
+  paymentMethod: "cash" | "wallet" | "evc_plus" | "sahal" | "edahab" | "loan";
 }
 
 export async function createSalesOrder(input: CreateSalesOrderInput) {

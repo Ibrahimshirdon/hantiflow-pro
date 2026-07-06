@@ -29,6 +29,7 @@ export function SalesOrdersPage() {
   const navigate = useNavigate();
   const [createdBy, setCreatedBy] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [paymentFilter, setPaymentFilter] = useState("all");
 
   const { data: orders, isLoading } = useQuery({
     queryKey: ["salesOrders", createdBy, statusFilter],
@@ -43,6 +44,14 @@ export function SalesOrdersPage() {
   const salespeople = useMemo(
     () => users?.filter((u) => SALESPERSON_ROLES.includes(u.role as (typeof SALESPERSON_ROLES)[number])) ?? [],
     [users],
+  );
+
+  const filteredOrders = useMemo(
+    () =>
+      paymentFilter === "all"
+        ? (orders ?? [])
+        : (orders ?? []).filter((o) => o.paymentMethod === paymentFilter),
+    [orders, paymentFilter],
   );
 
   return (
@@ -84,6 +93,23 @@ export function SalesOrdersPage() {
             </SelectContent>
           </Select>
         </div>
+        <div className="flex flex-col gap-1.5">
+          <Label>{t("salesOrdersPage.paymentFilter")}</Label>
+          <Select value={paymentFilter} onValueChange={setPaymentFilter}>
+            <SelectTrigger className="w-44">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("salesOrdersPage.allPayments")}</SelectItem>
+              <SelectItem value="cash">{t("posPage.paymentMethods.cash")}</SelectItem>
+              <SelectItem value="wallet">{t("posPage.paymentMethods.wallet")}</SelectItem>
+              <SelectItem value="evc_plus">{t("posPage.paymentMethods.evc_plus")}</SelectItem>
+              <SelectItem value="sahal">{t("posPage.paymentMethods.sahal")}</SelectItem>
+              <SelectItem value="edahab">{t("posPage.paymentMethods.edahab")}</SelectItem>
+              <SelectItem value="loan">{t("posPage.paymentMethods.loan")}</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <Table>
@@ -108,14 +134,14 @@ export function SalesOrdersPage() {
               </TableCell>
             </TableRow>
           )}
-          {!isLoading && orders?.length === 0 && (
+          {!isLoading && filteredOrders.length === 0 && (
             <TableRow>
               <TableCell colSpan={9} className="text-center text-muted-foreground">
                 {t("salesOrdersPage.empty")}
               </TableCell>
             </TableRow>
           )}
-          {orders?.map((order) => (
+          {filteredOrders.map((order) => (
             <TableRow
               key={order.id}
               className="cursor-pointer"
@@ -132,7 +158,7 @@ export function SalesOrdersPage() {
               </TableCell>
               <TableCell>{order.items.length}</TableCell>
               <TableCell>${order.grandTotal.toFixed(2)}</TableCell>
-              <TableCell className="capitalize">{order.paymentMethod.replace("_", " ")}</TableCell>
+              <TableCell>{t(`posPage.paymentMethods.${order.paymentMethod}`)}</TableCell>
               <TableCell>
                 <Badge
                   variant={
