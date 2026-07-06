@@ -91,6 +91,7 @@ function StatCard({
 
 const STATUS_VARIANT = {
   pending: "warning",
+  confirmed: "secondary",
   completed: "success",
   cancelled: "destructive",
 } as const;
