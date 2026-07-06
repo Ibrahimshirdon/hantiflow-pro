@@ -16,7 +16,7 @@ export async function listRepayments(filters?: { loanId?: string; customerId?: s
 export async function recordRepayment(
   loanId: string,
   amount: number,
-  method: "cash" | "card" | "mobile_money" | "wallet",
+  method: "cash" | "wallet" | "evc_plus" | "sahal" | "edahab",
 ) {
   const { data } = await apiClient.post<ApiSuccess<{ id: string; balanceRemaining: number; status: string }>>(
     `/loans/${loanId}/repay`,

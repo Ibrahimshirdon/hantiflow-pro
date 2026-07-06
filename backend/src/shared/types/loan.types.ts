@@ -25,7 +25,7 @@ export interface LoanRepayment {
   loanId: string;
   customerId: string;
   amount: number;
-  method: "wallet" | "cash" | "card" | "mobile_money";
+  method: "wallet" | "cash" | "evc_plus" | "sahal" | "edahab";
   // null when the customer repaid themselves from their own wallet —
   // there's no human "performer" for that, same convention as
   // WalletTransaction.performedBy for a system-driven purchase debit.

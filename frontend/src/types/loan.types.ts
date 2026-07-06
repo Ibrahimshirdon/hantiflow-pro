@@ -24,7 +24,7 @@ export interface LoanRepayment {
   loanId: string;
   customerId: string;
   amount: number;
-  method: "wallet" | "cash" | "card" | "mobile_money";
+  method: "wallet" | "cash" | "evc_plus" | "sahal" | "edahab";
   recordedBy: string | null;
   recordedByName: string | null;
   createdAt: FirestoreTimestampLike;

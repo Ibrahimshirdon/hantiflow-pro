@@ -35,8 +35,17 @@ async function notifyOverdueLoans(loans: Loan[]) {
   );
   if (overdue.length === 0) return;
 
+  // Fetch all staff/manager/admin uids once for the whole batch
+  const staffSnaps = await Promise.all(
+    (["admin", "manager", "staff"] as const).map((role) =>
+      db.collection("users").where("role", "==", role).select().get(),
+    ),
+  );
+  const staffUids = staffSnaps.flatMap((snap) => snap.docs.map((d) => d.id));
+
   await Promise.all(
     overdue.map(async (loan) => {
+      // Notify the customer
       await createNotification({
         userId: loan.customerId,
         title: "Loan payment overdue",
@@ -44,6 +53,18 @@ async function notifyOverdueLoans(loans: Loan[]) {
         type: "wallet",
         relatedEntityId: loan.id,
       });
+      // Notify every admin/manager/staff member
+      await Promise.all(
+        staffUids.map((uid) =>
+          createNotification({
+            userId: uid,
+            title: "Loan overdue — action required",
+            message: `${loan.customerName}'s loan for order ${loan.orderNumber} is overdue. Balance remaining: $${loan.balanceRemaining.toFixed(2)}.`,
+            type: "wallet",
+            relatedEntityId: loan.id,
+          }),
+        ),
+      );
       await collection().doc(loan.id).update({ overdueNotifiedAt: FieldValue.serverTimestamp() });
       loan.overdueNotifiedAt = loan.dueDate; // best-effort local mark so the same response doesn't re-notify
     }),

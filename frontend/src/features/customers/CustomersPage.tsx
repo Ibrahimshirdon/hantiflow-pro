@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import {
+  Banknote,
   ChevronRight,
   CreditCard,
   Mail,
@@ -19,6 +20,7 @@ import {
   setCustomerCreditLimit,
   setCustomerStatus,
 } from "@/api/customers.api";
+import { listLoans, recordRepayment } from "@/api/loans.api";
 import { getApiErrorMessage } from "@/api/client";
 import type { CustomerSummary } from "@/types/customer.types";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -104,6 +106,11 @@ export function CustomersPage() {
   const [creditTarget, setCreditTarget] = useState<CustomerSummary | null>(null);
   const [creditLimitValue, setCreditLimitValue] = useState(0);
 
+  const [loanTarget, setLoanTarget] = useState<CustomerSummary | null>(null);
+  const [selectedLoanId, setSelectedLoanId] = useState("");
+  const [collectAmount, setCollectAmount] = useState(0);
+  const [collectMethod, setCollectMethod] = useState<"cash" | "wallet" | "evc_plus" | "sahal" | "edahab">("cash");
+
   const { data: customers, isLoading } = useQuery({
     queryKey: ["customers"],
     queryFn: listCustomers,
@@ -115,6 +122,14 @@ export function CustomersPage() {
     const updated = customers.find((c) => c.uid === selectedCustomer.uid);
     if (updated) setSelectedCustomer(updated);
   }, [customers]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // auto-select first outstanding loan and pre-fill amount when dialog opens
+  useEffect(() => {
+    if (!outstandingLoans || outstandingLoans.length === 0) return;
+    const first = outstandingLoans[0];
+    setSelectedLoanId(first.id);
+    setCollectAmount(first.balanceRemaining);
+  }, [outstandingLoans]);
 
   const statusMutation = useMutation({
     mutationFn: ({ uid, status }: { uid: string; status: "active" | "suspended" }) =>
@@ -154,6 +169,23 @@ export function CustomersPage() {
       toast.success(t("toasts.creditLimitUpdated"));
       queryClient.invalidateQueries({ queryKey: ["customers"] });
       setCreditTarget(null);
+    },
+    onError: (error) => toast.error(getApiErrorMessage(error)),
+  });
+
+  const { data: outstandingLoans } = useQuery({
+    queryKey: ["loans", loanTarget?.uid, "outstanding"],
+    queryFn: () => listLoans({ customerId: loanTarget!.uid, status: "outstanding" }),
+    enabled: !!loanTarget,
+  });
+
+  const loanMutation = useMutation({
+    mutationFn: () => recordRepayment(selectedLoanId, collectAmount, collectMethod),
+    onSuccess: () => {
+      toast.success(t("toasts.loanCollected"));
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({ queryKey: ["loans", loanTarget?.uid] });
+      setLoanTarget(null);
     },
     onError: (error) => toast.error(getApiErrorMessage(error)),
   });
@@ -389,6 +421,20 @@ export function CustomersPage() {
                 >
                   <CreditCard className="size-4" /> {t("page.setCreditLimit")}
                 </Button>
+                {selectedCustomer.outstandingLoanBalance > 0 && (
+                  <Button
+                    variant="outline"
+                    className="justify-start gap-2 border-destructive/40 text-destructive hover:bg-destructive/5"
+                    onClick={() => {
+                      setCollectMethod("cash");
+                      setSelectedLoanId("");
+                      setCollectAmount(0);
+                      setLoanTarget(selectedCustomer);
+                    }}
+                  >
+                    <Banknote className="size-4" /> {t("page.collectLoan")}
+                  </Button>
+                )}
                 <Button
                   variant={selectedCustomer.status === "active" ? "destructive" : "default"}
                   className="justify-start gap-2"
@@ -486,6 +532,73 @@ export function CustomersPage() {
               onClick={() => loyaltyMutation.mutate()}
             >
               {loyaltyMutation.isPending ? t("common:actions.saving") : t("dialogs.saveAdjustment")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Collect loan sub-dialog */}
+      <Dialog open={loanTarget !== null} onOpenChange={(next) => !next && setLoanTarget(null)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {t("dialogs.collectLoanTitle", { name: loanTarget?.displayName })}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-3">
+            <p className="text-sm text-muted-foreground">
+              {t("dialogs.outstandingBalance", { value: loanTarget?.outstandingLoanBalance.toFixed(2) })}
+            </p>
+            {outstandingLoans && outstandingLoans.length > 1 && (
+              <div className="flex flex-col gap-1.5">
+                <Label>{t("dialogs.selectLoan")}</Label>
+                <Select
+                  value={selectedLoanId}
+                  onValueChange={(v) => {
+                    setSelectedLoanId(v);
+                    const loan = outstandingLoans.find((l) => l.id === v);
+                    if (loan) setCollectAmount(loan.balanceRemaining);
+                  }}
+                >
+                  <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {outstandingLoans.map((l) => (
+                      <SelectItem key={l.id} value={l.id}>
+                        {l.orderNumber} — ${l.balanceRemaining.toFixed(2)} remaining
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+            <div className="flex flex-col gap-1.5">
+              <Label>{t("common:fields.amount")}</Label>
+              <Input
+                type="number" min={0.01} step="0.01"
+                value={collectAmount}
+                onChange={(e) => setCollectAmount(Number(e.target.value))}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>{t("dialogs.paymentMethod")}</Label>
+              <Select value={collectMethod} onValueChange={(v) => setCollectMethod(v as typeof collectMethod)}>
+                <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="cash">{t("dialogs.methods.cash")}</SelectItem>
+                  <SelectItem value="evc_plus">{t("dialogs.methods.evc_plus")}</SelectItem>
+                  <SelectItem value="sahal">{t("dialogs.methods.sahal")}</SelectItem>
+                  <SelectItem value="edahab">{t("dialogs.methods.edahab")}</SelectItem>
+                  <SelectItem value="wallet">{t("dialogs.methods.wallet")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              disabled={loanMutation.isPending || collectAmount <= 0 || !selectedLoanId}
+              onClick={() => loanMutation.mutate()}
+            >
+              {loanMutation.isPending ? t("common:actions.saving") : t("dialogs.recordPayment")}
             </Button>
           </DialogFooter>
         </DialogContent>

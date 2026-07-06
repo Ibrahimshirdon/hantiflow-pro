@@ -18,7 +18,8 @@
     "adjustLoyalty": "Adjust loyalty",
     "setCreditLimit": "Set credit limit",
     "suspend": "Suspend",
-    "activate": "Activate"
+    "activate": "Activate",
+    "collectLoan": "Collect loan payment"
   },
   "dialogs": {
     "adjustWalletTitle": "Adjust wallet: {{name}}",
@@ -34,12 +35,25 @@
     "setCreditLimitTitle": "Set credit limit: {{name}}",
     "currentLimitAndOutstanding": "Current limit: ${{limit}} · Outstanding: ${{outstanding}}",
     "newCreditLimit": "New credit limit",
-    "saveLimit": "Save limit"
+    "saveLimit": "Save limit",
+    "collectLoanTitle": "Collect loan payment: {{name}}",
+    "outstandingBalance": "Outstanding loan balance: ${{value}}",
+    "selectLoan": "Select loan",
+    "paymentMethod": "Payment method",
+    "recordPayment": "Record payment",
+    "methods": {
+      "cash": "Cash",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
+      "wallet": "Wallet"
+    }
   },
   "toasts": {
     "statusUpdated": "Customer status updated",
     "walletAdjusted": "Wallet adjusted",
     "loyaltyAdjusted": "Loyalty points adjusted",
-    "creditLimitUpdated": "Credit limit updated"
+    "creditLimitUpdated": "Credit limit updated",
+    "loanCollected": "Loan payment recorded"
   }
 }

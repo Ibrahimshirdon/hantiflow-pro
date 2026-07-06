@@ -18,7 +18,8 @@
     "adjustLoyalty": "Saami daacadnimada",
     "setCreditLimit": "Dejii xadka deynta",
     "suspend": "Joojii",
-    "activate": "Shaqaysii"
+    "activate": "Shaqaysii",
+    "collectLoan": "Ɗib u qaad lacagta deynta"
   },
   "dialogs": {
     "adjustWalletTitle": "Saami boorsada: {{name}}",
@@ -34,12 +35,25 @@
     "setCreditLimitTitle": "Dejii xadka deynta: {{name}}",
     "currentLimitAndOutstanding": "Xadka hadda: ${{limit}} · Haray: ${{outstanding}}",
     "newCreditLimit": "Xadka deynta cusub",
-    "saveLimit": "Keydi xadka"
+    "saveLimit": "Keydi xadka",
+    "collectLoanTitle": "Ɗib u qaad lacagta deynta: {{name}}",
+    "outstandingBalance": "Hadhaaga deynta haray: ${{value}}",
+    "selectLoan": "Dooro deynta",
+    "paymentMethod": "Habka lacag-bixinta",
+    "recordPayment": "Diiwaan gelii lacag-bixinta",
+    "methods": {
+      "cash": "Lacag caddaan ah",
+      "evc_plus": "EVC Plus",
+      "sahal": "Sahal",
+      "edahab": "eDahab",
+      "wallet": "Boorsada"
+    }
   },
   "toasts": {
     "statusUpdated": "Xaaladda macmiilka waa la cusboonaysiiyay",
     "walletAdjusted": "Boorsada waa la saamayn",
     "loyaltyAdjusted": "Dhibcaha daacadnimada waa la saamayn",
-    "creditLimitUpdated": "Xadka deynta waa la cusboonaysiiyay"
+    "creditLimitUpdated": "Xadka deynta waa la cusboonaysiiyay",
+    "loanCollected": "Lacag-bixinta deynta waa la diiwaan geliyay"
   }
 }

@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const recordRepaymentSchema = z.object({
   amount: z.coerce.number().positive(),
-  method: z.enum(["cash", "card", "mobile_money", "wallet"]),
+  method: z.enum(["cash", "wallet", "evc_plus", "sahal", "edahab"]),
 });
 export type RecordRepaymentInput = z.infer<typeof recordRepaymentSchema>;
 
