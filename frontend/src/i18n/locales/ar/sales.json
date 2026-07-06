@@ -30,6 +30,14 @@
     "everyone": "الجميع",
     "walkIn": "بدون حساب",
     "empty": "لا توجد مبيعات حتى الآن.",
+    "statusFilter": "الحالة",
+    "allStatuses": "جميع الحالات",
+    "statuses": {
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
+    },
     "columns": {
       "orderNumber": "رقم الطلب",
       "customer": "العميل",
@@ -49,6 +57,28 @@
     "invoiceStatusLine": "الحالة: {{status}} · الإجمالي ${{total}}",
     "receiptHeading": "الإيصال {{receiptNumber}}",
     "receiptPaidLine": "تم دفع ${{amount}} عن طريق {{method}}",
+    "approveOrder": "الموافقة على الطلب",
+    "approving": "جارٍ الموافقة...",
+    "completeOrder": "تعيين كمكتمل",
+    "completing": "جارٍ الإكمال...",
+    "cancelOrder": "إلغاء الطلب",
+    "cancelling": "جارٍ الإلغاء...",
+    "statuses": {
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
+    },
+    "cancelDialog": {
+      "title": "إلغاء هذا الطلب؟",
+      "description": "سيتم إلغاء الطلب {{orderNumber}} وإشعار العميل.",
+      "confirm": "نعم، إلغاؤه"
+    },
+    "toasts": {
+      "approved": "تمت الموافقة على الطلب — تم إشعار العميل",
+      "completed": "تم تعيين الطلب كمكتمل",
+      "cancelled": "تم إلغاء الطلب — تم إشعار العميل"
+    },
     "columns": {
       "product": "المنتج",
       "qty": "الكمية",

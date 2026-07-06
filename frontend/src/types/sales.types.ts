@@ -54,7 +54,7 @@ export interface SalesOrder {
   grandTotal: number;
   paymentStatus: "paid" | "partial" | "unpaid";
   paymentMethod: "cash" | "card" | "wallet" | "mobile_money" | "loan";
-  status: "pending" | "completed" | "cancelled";
+  status: "pending" | "confirmed" | "completed" | "cancelled";
   createdBy: string;
   createdByName: string;
   createdByRole: string;

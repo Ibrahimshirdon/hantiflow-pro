@@ -30,6 +30,14 @@
     "everyone": "Dhammaan qofka",
     "walkIn": "Aan diiwaangashanayn",
     "empty": "Wali iib lama gaarin.",
+    "statusFilter": "Xaaladda",
+    "allStatuses": "Dhammaan xaaladaha",
+    "statuses": {
+      "pending": "Sugaya",
+      "confirmed": "La xaqiijiyay",
+      "completed": "La dhammaystiray",
+      "cancelled": "La joojiyay"
+    },
     "columns": {
       "orderNumber": "Lambarka Dalabka",
       "customer": "Macmiilka",
@@ -49,6 +57,28 @@
     "invoiceStatusLine": "Xaaladda: {{status}} · Wadarta ${{total}}",
     "receiptHeading": "Rasiidka {{receiptNumber}}",
     "receiptPaidLine": "La bixiyay ${{amount}} iyadoo loo marayo {{method}}",
+    "approveOrder": "Ogolow Dalabka",
+    "approving": "Waa la ogolaanahaa...",
+    "completeOrder": "Calaamadi Dhammays",
+    "completing": "Waa la dhammaynahaa...",
+    "cancelOrder": "Jooji Dalabka",
+    "cancelling": "Waa la joojinayaa...",
+    "statuses": {
+      "pending": "Sugaya",
+      "confirmed": "La xaqiijiyay",
+      "completed": "La dhammaystiray",
+      "cancelled": "La joojiyay"
+    },
+    "cancelDialog": {
+      "title": "Jooji dalabkan?",
+      "description": "Tani waxay joojin doontaa dalabka {{orderNumber}} oo macmiilka waa lagu ogeysiinayaa.",
+      "confirm": "Haa, jooji"
+    },
+    "toasts": {
+      "approved": "Dalabka waa la ogolaaday — macmiilka waa lagu ogeysiiyay",
+      "completed": "Dalabka waa loo calaamadiyay dhammays",
+      "cancelled": "Dalabka waa la joojiyay — macmiilka waa lagu ogeysiiyay"
+    },
     "columns": {
       "product": "Badeecada",
       "qty": "Tirada",

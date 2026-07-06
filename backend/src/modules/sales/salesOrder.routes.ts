@@ -13,3 +13,6 @@ salesOrderRouter.post("/", validate(createSalesOrderSchema), salesController.cre
 salesOrderRouter.get("/:id", salesController.getById);
 salesOrderRouter.get("/:id/invoice", salesController.getInvoice);
 salesOrderRouter.get("/:id/receipt", salesController.getReceipt);
+salesOrderRouter.patch("/:id/approve", salesController.approve);
+salesOrderRouter.patch("/:id/complete", salesController.complete);
+salesOrderRouter.patch("/:id/cancel", salesController.cancel);

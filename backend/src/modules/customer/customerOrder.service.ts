@@ -54,18 +54,14 @@ export async function customerCheckout(
     );
   }
 
-  const fulfillmentMessage =
-    input.fulfillmentType === "delivery"
-      ? "Your order has been placed and is awaiting dispatch."
-      : "Your order has been placed and is being prepared.";
-
+  const baseMessage = "Your order has been placed and is awaiting approval from our team.";
   await createNotification({
     userId: customerId,
-    title: "Order placed",
+    title: "Order placed — awaiting approval",
     message:
       input.paymentMethod === "loan"
-        ? `${fulfillmentMessage} This order was financed as a loan against your account.`
-        : fulfillmentMessage,
+        ? `${baseMessage} This order was financed as a loan against your account.`
+        : baseMessage,
     type: "order",
     relatedEntityId: result.id,
   });

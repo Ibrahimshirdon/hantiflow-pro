@@ -30,6 +30,14 @@
     "everyone": "Everyone",
     "walkIn": "Walk-in",
     "empty": "No sales yet.",
+    "statusFilter": "Status",
+    "allStatuses": "All statuses",
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
     "columns": {
       "orderNumber": "Order #",
       "customer": "Customer",
@@ -49,6 +57,28 @@
     "invoiceStatusLine": "Status: {{status}} · Total ${{total}}",
     "receiptHeading": "Receipt {{receiptNumber}}",
     "receiptPaidLine": "Paid ${{amount}} via {{method}}",
+    "approveOrder": "Approve Order",
+    "approving": "Approving...",
+    "completeOrder": "Mark as Completed",
+    "completing": "Completing...",
+    "cancelOrder": "Cancel Order",
+    "cancelling": "Cancelling...",
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "cancelDialog": {
+      "title": "Cancel this order?",
+      "description": "This will cancel order {{orderNumber}} and notify the customer.",
+      "confirm": "Yes, cancel it"
+    },
+    "toasts": {
+      "approved": "Order approved — customer has been notified",
+      "completed": "Order marked as completed",
+      "cancelled": "Order cancelled — customer has been notified"
+    },
     "columns": {
       "product": "Product",
       "qty": "Qty",

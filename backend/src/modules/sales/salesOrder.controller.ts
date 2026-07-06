@@ -29,3 +29,18 @@ export async function getReceipt(req: Request, res: Response) {
   const receipt = await salesService.getReceiptForOrder(req.params.id as string);
   res.json({ success: true, data: receipt });
 }
+
+export async function approve(req: Request, res: Response) {
+  await salesService.approveOrder(req.params.id as string, req.user!);
+  res.json({ success: true });
+}
+
+export async function complete(req: Request, res: Response) {
+  await salesService.completeOrder(req.params.id as string, req.user!);
+  res.json({ success: true });
+}
+
+export async function cancel(req: Request, res: Response) {
+  await salesService.cancelOrder(req.params.id as string, req.user!);
+  res.json({ success: true });
+}

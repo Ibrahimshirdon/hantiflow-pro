@@ -100,3 +100,15 @@ export async function getReceiptForOrder(orderId: string) {
   const { data } = await apiClient.get<ApiSuccess<Receipt>>(`/sales/orders/${orderId}/receipt`);
   return data.data;
 }
+
+export async function approveOrder(id: string) {
+  await apiClient.patch(`/sales/orders/${id}/approve`);
+}
+
+export async function completeOrder(id: string) {
+  await apiClient.patch(`/sales/orders/${id}/complete`);
+}
+
+export async function cancelOrder(id: string) {
+  await apiClient.patch(`/sales/orders/${id}/cancel`);
+}

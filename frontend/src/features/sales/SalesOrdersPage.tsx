@@ -28,10 +28,15 @@ export function SalesOrdersPage() {
   const { t } = useTranslation(["sales", "common"]);
   const navigate = useNavigate();
   const [createdBy, setCreatedBy] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const { data: orders, isLoading } = useQuery({
-    queryKey: ["salesOrders", createdBy],
-    queryFn: () => listSalesOrders({ createdBy: createdBy === "all" ? undefined : createdBy }),
+    queryKey: ["salesOrders", createdBy, statusFilter],
+    queryFn: () =>
+      listSalesOrders({
+        createdBy: createdBy === "all" ? undefined : createdBy,
+        status: statusFilter === "all" ? undefined : statusFilter,
+      }),
   });
   const { data: users } = useQuery({ queryKey: ["users", "all"], queryFn: () => listUsers() });
 
@@ -47,21 +52,38 @@ export function SalesOrdersPage() {
         <p className="text-muted-foreground">{t("salesOrdersPage.subtitle")}</p>
       </div>
 
-      <div className="flex flex-col gap-1.5">
-        <Label>{t("salesOrdersPage.soldBy")}</Label>
-        <Select value={createdBy} onValueChange={setCreatedBy}>
-          <SelectTrigger className="w-56">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t("salesOrdersPage.everyone")}</SelectItem>
-            {salespeople.map((person) => (
-              <SelectItem key={person.uid} value={person.uid}>
-                {person.displayName} ({person.role})
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="flex flex-wrap gap-4">
+        <div className="flex flex-col gap-1.5">
+          <Label>{t("salesOrdersPage.soldBy")}</Label>
+          <Select value={createdBy} onValueChange={setCreatedBy}>
+            <SelectTrigger className="w-56">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("salesOrdersPage.everyone")}</SelectItem>
+              {salespeople.map((person) => (
+                <SelectItem key={person.uid} value={person.uid}>
+                  {person.displayName} ({person.role})
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Label>{t("salesOrdersPage.statusFilter")}</Label>
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="w-44">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("salesOrdersPage.allStatuses")}</SelectItem>
+              <SelectItem value="pending">{t("salesOrdersPage.statuses.pending")}</SelectItem>
+              <SelectItem value="confirmed">{t("salesOrdersPage.statuses.confirmed")}</SelectItem>
+              <SelectItem value="completed">{t("salesOrdersPage.statuses.completed")}</SelectItem>
+              <SelectItem value="cancelled">{t("salesOrdersPage.statuses.cancelled")}</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <Table>
@@ -114,14 +136,14 @@ export function SalesOrdersPage() {
               <TableCell>
                 <Badge
                   variant={
-                    order.status === "completed"
-                      ? "success"
-                      : order.status === "pending"
-                        ? "warning"
-                        : "destructive"
+                    order.status === "completed" ? "success"
+                    : order.status === "confirmed" ? "secondary"
+                    : order.status === "pending" ? "warning"
+                    : "destructive"
                   }
+                  className="capitalize"
                 >
-                  {order.status}
+                  {t(`salesOrdersPage.statuses.${order.status}`)}
                 </Badge>
               </TableCell>
               <TableCell>{new Date(order.createdAt._seconds * 1000).toLocaleString()}</TableCell>

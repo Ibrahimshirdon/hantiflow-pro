@@ -1,12 +1,30 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import type { TFunction } from "i18next";
-import { getInvoiceForOrder, getReceiptForOrder, getSalesOrder } from "@/api/sales.api";
+import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import {
+  approveOrder,
+  cancelOrder,
+  completeOrder,
+  getInvoiceForOrder,
+  getReceiptForOrder,
+  getSalesOrder,
+} from "@/api/sales.api";
+import { getApiErrorMessage } from "@/api/client";
 import type { Receipt, SalesOrder } from "@/types/sales.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -20,6 +38,8 @@ export function SalesOrderDetailPage() {
   const { t } = useTranslation(["sales", "common"]);
   const { id } = useParams<{ id: string }>();
   const orderId = id!;
+  const queryClient = useQueryClient();
+  const [cancelOpen, setCancelOpen] = useState(false);
 
   const { data: order } = useQuery({
     queryKey: ["salesOrder", orderId],
@@ -34,13 +54,42 @@ export function SalesOrderDetailPage() {
     queryFn: () => getReceiptForOrder(orderId),
   });
 
+  function invalidate() {
+    queryClient.invalidateQueries({ queryKey: ["salesOrder", orderId] });
+    queryClient.invalidateQueries({ queryKey: ["salesOrders"] });
+  }
+
+  const approveMutation = useMutation({
+    mutationFn: () => approveOrder(orderId),
+    onSuccess: () => { toast.success(t("salesOrderDetailPage.toasts.approved")); invalidate(); },
+    onError: (e) => toast.error(getApiErrorMessage(e)),
+  });
+
+  const completeMutation = useMutation({
+    mutationFn: () => completeOrder(orderId),
+    onSuccess: () => { toast.success(t("salesOrderDetailPage.toasts.completed")); invalidate(); },
+    onError: (e) => toast.error(getApiErrorMessage(e)),
+  });
+
+  const cancelMutation = useMutation({
+    mutationFn: () => cancelOrder(orderId),
+    onSuccess: () => { toast.success(t("salesOrderDetailPage.toasts.cancelled")); setCancelOpen(false); invalidate(); },
+    onError: (e) => toast.error(getApiErrorMessage(e)),
+  });
+
   if (!order) {
     return <p className="text-muted-foreground">{t("common:actions.loading")}</p>;
   }
 
+  const statusVariant =
+    order.status === "completed" ? "success"
+    : order.status === "confirmed" ? "secondary"
+    : order.status === "pending" ? "warning"
+    : "destructive";
+
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between print:hidden">
+      <div className="flex items-start justify-between gap-4 print:hidden">
         <div>
           <h1 className="text-2xl font-semibold">
             {t("salesOrderDetailPage.orderHeading", { orderNumber: order.orderNumber })}
@@ -57,24 +106,106 @@ export function SalesOrderDetailPage() {
             )}
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-end gap-2">
           {order.fulfillmentType && <Badge variant="secondary">{order.fulfillmentType}</Badge>}
-          <Badge
-            variant={
-              order.status === "completed"
-                ? "success"
-                : order.status === "pending"
-                  ? "warning"
-                  : "destructive"
-            }
-          >
-            {order.status}
+          <Badge variant={statusVariant} className="capitalize">
+            {t(`salesOrderDetailPage.statuses.${order.status}`)}
           </Badge>
-          <Button variant="outline" onClick={() => window.print()}>
+
+          {/* Action buttons — only for online orders that aren't done */}
+          {order.type === "online" && order.status === "pending" && (
+            <>
+              <Button
+                size="sm"
+                className="gap-1.5"
+                disabled={approveMutation.isPending}
+                onClick={() => approveMutation.mutate()}
+              >
+                <CheckCircle2 className="size-4" />
+                {approveMutation.isPending
+                  ? t("salesOrderDetailPage.approving")
+                  : t("salesOrderDetailPage.approveOrder")}
+              </Button>
+              <Button
+                size="sm"
+                variant="destructive"
+                className="gap-1.5"
+                onClick={() => setCancelOpen(true)}
+              >
+                <XCircle className="size-4" />
+                {t("salesOrderDetailPage.cancelOrder")}
+              </Button>
+            </>
+          )}
+          {order.type === "online" && order.status === "confirmed" && (
+            <>
+              <Button
+                size="sm"
+                className="gap-1.5"
+                disabled={completeMutation.isPending}
+                onClick={() => completeMutation.mutate()}
+              >
+                <CheckCircle2 className="size-4" />
+                {completeMutation.isPending
+                  ? t("salesOrderDetailPage.completing")
+                  : t("salesOrderDetailPage.completeOrder")}
+              </Button>
+              <Button
+                size="sm"
+                variant="destructive"
+                className="gap-1.5"
+                onClick={() => setCancelOpen(true)}
+              >
+                <XCircle className="size-4" />
+                {t("salesOrderDetailPage.cancelOrder")}
+              </Button>
+            </>
+          )}
+
+          <Button variant="outline" size="sm" onClick={() => window.print()}>
             {t("common:actions.print")}
           </Button>
         </div>
       </div>
+
+      {/* Cancel confirmation dialog */}
+      <Dialog open={cancelOpen} onOpenChange={(o) => !cancelMutation.isPending && setCancelOpen(o)}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <div className="mx-auto mb-2 flex size-12 items-center justify-center rounded-full bg-destructive/10">
+              <AlertTriangle className="size-6 text-destructive" />
+            </div>
+            <DialogTitle className="text-center">
+              {t("salesOrderDetailPage.cancelDialog.title")}
+            </DialogTitle>
+            <p className="text-center text-sm text-muted-foreground">
+              {t("salesOrderDetailPage.cancelDialog.description", {
+                orderNumber: order.orderNumber,
+              })}
+            </p>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:gap-2">
+            <Button
+              variant="outline"
+              className="flex-1"
+              disabled={cancelMutation.isPending}
+              onClick={() => setCancelOpen(false)}
+            >
+              {t("common:actions.cancel")}
+            </Button>
+            <Button
+              variant="destructive"
+              className="flex-1"
+              disabled={cancelMutation.isPending}
+              onClick={() => cancelMutation.mutate()}
+            >
+              {cancelMutation.isPending
+                ? t("salesOrderDetailPage.cancelling")
+                : t("salesOrderDetailPage.cancelDialog.confirm")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <Card className="print:hidden">
         <CardHeader>

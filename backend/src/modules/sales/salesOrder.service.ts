@@ -1,6 +1,7 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../../config/firebase.js";
 import { AppError } from "../../shared/utils/AppError.js";
+import { createNotification } from "../../shared/utils/notifications.js";
 import { counterRef, formatSequence, readCounterValue } from "../../shared/utils/counters.js";
 import type { AuthenticatedUser } from "../../shared/types/auth.types.js";
 import type { Batch, Product } from "../../shared/types/inventory.types.js";
@@ -52,11 +53,10 @@ export async function createSalesOrder(
   orderType: "pos" | "online" = "pos",
   fulfillment: { fulfillmentType?: "pickup" | "delivery"; deliveryFee?: number; deliveryAddress?: Address } = {},
 ) {
-  // Only an online order with delivery fulfillment waits for an actual
-  // driver to deliver it before counting as "completed" — pos sales and
-  // online pickup orders are fulfilled the moment they're created, same as
-  // every order before this distinction existed.
-  const isOnlineDelivery = orderType === "online" && fulfillment.fulfillmentType === "delivery";
+  // All online (customer portal) orders start as "pending" — they require
+  // explicit approval by staff/manager/admin before being processed. POS
+  // sales are fulfilled in-person immediately and go straight to "completed".
+  const isOnlineOrder = orderType === "online";
 
   const orderRef = db.collection("salesOrders").doc();
   const invoiceRef = db.collection("invoices").doc();
@@ -369,13 +369,13 @@ export async function createSalesOrder(
       grandTotal,
       paymentStatus: "paid" as const,
       paymentMethod: input.paymentMethod,
-      status: isOnlineDelivery ? ("pending" as const) : ("completed" as const),
+      status: isOnlineOrder ? ("pending" as const) : ("completed" as const),
       createdBy: actor.uid,
       createdByName,
       createdByRole: actor.role,
-      completedBy: isOnlineDelivery ? null : actor.uid,
-      completedByName: isOnlineDelivery ? null : createdByName,
-      completedAt: isOnlineDelivery ? null : FieldValue.serverTimestamp(),
+      completedBy: isOnlineOrder ? null : actor.uid,
+      completedByName: isOnlineOrder ? null : createdByName,
+      completedAt: isOnlineOrder ? null : FieldValue.serverTimestamp(),
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     };
@@ -433,8 +433,8 @@ export async function getSalesOrderById(id: string) {
 }
 
 // Called when a delivery actually gets marked "delivered" — flips the
-// pending online-delivery order over to completed, attributing it to
-// whoever delivered it (the driver) rather than the customer who placed it.
+// pending/confirmed online-delivery order over to completed, attributing
+// it to whoever delivered it (the driver).
 export async function markOrderCompleted(id: string, actor: AuthenticatedUser) {
   const ref = db.collection("salesOrders").doc(id);
   const snap = await ref.get();
@@ -442,7 +442,7 @@ export async function markOrderCompleted(id: string, actor: AuthenticatedUser) {
     throw new AppError(404, "Sales order not found");
   }
   const order = snap.data() as SalesOrder;
-  if (order.status !== "pending") {
+  if (order.status !== "pending" && order.status !== "confirmed") {
     return;
   }
 
@@ -476,4 +476,78 @@ export async function getReceiptForOrder(orderId: string) {
   }
   const doc = snap.docs[0]!;
   return { id: doc.id, ...doc.data() };
+}
+
+async function getActorName(uid: string, fallback: string): Promise<string> {
+  const snap = await db.collection("users").doc(uid).get();
+  return snap.exists ? (snap.data() as { displayName: string }).displayName : fallback;
+}
+
+export async function approveOrder(id: string, _actor: AuthenticatedUser) {
+  const ref = db.collection("salesOrders").doc(id);
+  const snap = await ref.get();
+  if (!snap.exists) throw new AppError(404, "Sales order not found");
+  const order = snap.data() as SalesOrder;
+  if (order.status !== "pending") throw new AppError(400, "Only pending orders can be approved");
+
+  await ref.update({ status: "confirmed", updatedAt: FieldValue.serverTimestamp() });
+
+  if (order.customerId) {
+    await createNotification({
+      userId: order.customerId,
+      title: "Order Approved",
+      message: `Your order ${order.orderNumber} has been approved and is now being processed.`,
+      type: "order",
+      relatedEntityId: id,
+    });
+  }
+}
+
+export async function completeOrder(id: string, actor: AuthenticatedUser) {
+  const ref = db.collection("salesOrders").doc(id);
+  const snap = await ref.get();
+  if (!snap.exists) throw new AppError(404, "Sales order not found");
+  const order = snap.data() as SalesOrder;
+  if (order.status === "completed") return;
+  if (order.status === "cancelled") throw new AppError(400, "Cannot complete a cancelled order");
+
+  const completedByName = await getActorName(actor.uid, actor.email);
+  await ref.update({
+    status: "completed",
+    completedBy: actor.uid,
+    completedByName,
+    completedAt: FieldValue.serverTimestamp(),
+    updatedAt: FieldValue.serverTimestamp(),
+  });
+
+  if (order.customerId) {
+    await createNotification({
+      userId: order.customerId,
+      title: "Order Completed",
+      message: `Your order ${order.orderNumber} has been fulfilled. Thank you for your purchase!`,
+      type: "order",
+      relatedEntityId: id,
+    });
+  }
+}
+
+export async function cancelOrder(id: string, _actor: AuthenticatedUser) {
+  const ref = db.collection("salesOrders").doc(id);
+  const snap = await ref.get();
+  if (!snap.exists) throw new AppError(404, "Sales order not found");
+  const order = snap.data() as SalesOrder;
+  if (order.status === "completed") throw new AppError(400, "Cannot cancel a completed order");
+  if (order.status === "cancelled") return;
+
+  await ref.update({ status: "cancelled", updatedAt: FieldValue.serverTimestamp() });
+
+  if (order.customerId) {
+    await createNotification({
+      userId: order.customerId,
+      title: "Order Cancelled",
+      message: `Your order ${order.orderNumber} has been cancelled. Please contact us if you have questions.`,
+      type: "order",
+      relatedEntityId: id,
+    });
+  }
 }

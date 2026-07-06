@@ -56,7 +56,7 @@ export interface SalesOrder {
   // "delivery" — they sit pending until the assigned driver actually marks
   // the delivery "delivered". Every other order (pos, online pickup) goes
   // straight to "completed" at creation, same as before this field existed.
-  status: "pending" | "completed" | "cancelled";
+  status: "pending" | "confirmed" | "completed" | "cancelled";
   createdBy: string;
   createdByName: string;
   createdByRole: string;
