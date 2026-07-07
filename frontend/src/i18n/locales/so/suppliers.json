@@ -20,17 +20,13 @@
     "requestsCard": {
       "title": "Codsiyada kaydka",
       "requestedBy": "Waxaa codsaday",
-      "empty": "Wali ma jiraan codsiyo kayd oo la diray."
-    },
-    "submissionsCard": {
-      "title": "Gudbinno sugaya",
-      "empty": "Wali ma jiraan gudbinno alaab-qeybiye."
-    },
-    "submissionsRejectDialog": {
-      "title": "Diid gudbinta: {{name}}",
-      "reasonLabel": "Sababta (ikhtiyaari ah)",
-      "submit": "Diid gudbinta",
-      "rejecting": "Waa la diidayaa..."
+      "empty": "Codsi kayd kuma jiro shaandhayada la doortay.",
+      "filterFrom": "Taariikhda bilawga",
+      "filterTo": "Taariikhda dhammaadka",
+      "filterRole": "Waxaa codsaday",
+      "allRoles": "Dhammaan doorkooda",
+      "roleAdmin": "Maamulka",
+      "roleManager": "Maareeyaha"
     },
     "dialog": {
       "title": "Codso kayd: {{name}}",
@@ -41,8 +37,6 @@
     }
   },
   "toasts": {
-    "requestSent": "Codsigu wuxuu u dhacay alaab-qeybiyaha",
-    "submissionApproved": "Gudbinta waa la ansixiyay waana lagu daray kaydka guud",
-    "submissionRejected": "Gudbinta waa la diiday"
+    "requestSent": "Codsigu wuxuu u dhacay alaab-qeybiyaha"
   }
 }

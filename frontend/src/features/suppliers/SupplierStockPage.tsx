@@ -1,18 +1,15 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import {
-  approveSupplierSubmission,
   createStockRequest,
   listStockRequests,
   listSupplierProducts,
-  listSupplierSubmissions,
-  rejectSupplierSubmission,
 } from "@/api/supplier.api";
 import { getApiErrorMessage } from "@/api/client";
 import { useAuth } from "@/context/AuthContext";
-import type { SupplierProduct, SupplierSubmission } from "@/types/supplier.types";
+import type { SupplierProduct } from "@/types/supplier.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +23,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -45,12 +49,14 @@ export function SupplierStockPage() {
   const { t } = useTranslation(["suppliers", "common"]);
   const queryClient = useQueryClient();
   const { profile } = useAuth();
-  const canReview = profile?.role === "admin" || profile?.role === "manager";
   const [requesting, setRequesting] = useState<SupplierProduct | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState("");
-  const [rejecting, setRejecting] = useState<SupplierSubmission | null>(null);
-  const [reason, setReason] = useState("");
+
+  // Filters for stock requests history
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["supplierProducts", "all"],
@@ -59,10 +65,6 @@ export function SupplierStockPage() {
   const { data: stockRequests } = useQuery({
     queryKey: ["stockRequests", "all"],
     queryFn: () => listStockRequests(),
-  });
-  const { data: submissions } = useQuery({
-    queryKey: ["supplierSubmissions", "all"],
-    queryFn: () => listSupplierSubmissions(),
   });
 
   const requestMutation = useMutation({
@@ -80,36 +82,22 @@ export function SupplierStockPage() {
     onError: (error) => toast.error(getApiErrorMessage(error)),
   });
 
-  const approveSubmissionMutation = useMutation({
-    mutationFn: (id: string) => approveSupplierSubmission(id),
-    onSuccess: () => {
-      toast.success(t("toasts.submissionApproved"));
-      queryClient.invalidateQueries({ queryKey: ["supplierSubmissions"] });
-      queryClient.invalidateQueries({ queryKey: ["supplierProducts"] });
-    },
-    onError: (error) => toast.error(getApiErrorMessage(error)),
-  });
-
-  const rejectSubmissionMutation = useMutation({
-    mutationFn: () => rejectSupplierSubmission(rejecting!.id, { reason: reason || undefined }),
-    onSuccess: () => {
-      toast.success(t("toasts.submissionRejected"));
-      queryClient.invalidateQueries({ queryKey: ["supplierSubmissions"] });
-      setRejecting(null);
-    },
-    onError: (error) => toast.error(getApiErrorMessage(error)),
-  });
-
   function openRequest(product: SupplierProduct) {
     setQuantity(Math.min(1, product.quantityInStock));
     setMessage("");
     setRequesting(product);
   }
 
-  function openReject(submission: SupplierSubmission) {
-    setReason("");
-    setRejecting(submission);
-  }
+  const filteredRequests = useMemo(() => {
+    if (!stockRequests) return [];
+    return stockRequests.filter((r) => {
+      const date = new Date(r.createdAt._seconds * 1000);
+      if (dateFrom && date < new Date(dateFrom)) return false;
+      if (dateTo && date > new Date(dateTo + "T23:59:59")) return false;
+      if (roleFilter !== "all" && r.requestedByRole !== roleFilter) return false;
+      return true;
+    });
+  }, [stockRequests, dateFrom, dateTo, roleFilter]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -118,6 +106,7 @@ export function SupplierStockPage() {
         <p className="text-muted-foreground">{t("stockPage.subtitle")}</p>
       </div>
 
+      {/* Supplier products table */}
       <Table>
         <TableHeader>
           <TableRow>
@@ -185,11 +174,57 @@ export function SupplierStockPage() {
         </TableBody>
       </Table>
 
+      {/* Stock requests history with filters */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-base">{t("stockPage.requestsCard.title")}</CardTitle>
+        <CardHeader className="pb-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <CardTitle className="text-base">{t("stockPage.requestsCard.title")}</CardTitle>
+            <div className="flex flex-wrap items-end gap-3">
+              <div className="flex flex-col gap-1">
+                <Label className="text-xs text-muted-foreground">{t("stockPage.requestsCard.filterFrom")}</Label>
+                <Input
+                  type="date"
+                  className="h-8 w-36 text-sm"
+                  value={dateFrom}
+                  onChange={(e) => setDateFrom(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <Label className="text-xs text-muted-foreground">{t("stockPage.requestsCard.filterTo")}</Label>
+                <Input
+                  type="date"
+                  className="h-8 w-36 text-sm"
+                  value={dateTo}
+                  onChange={(e) => setDateTo(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <Label className="text-xs text-muted-foreground">{t("stockPage.requestsCard.filterRole")}</Label>
+                <Select value={roleFilter} onValueChange={setRoleFilter}>
+                  <SelectTrigger className="h-8 w-36 text-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t("stockPage.requestsCard.allRoles")}</SelectItem>
+                    <SelectItem value="admin">{t("stockPage.requestsCard.roleAdmin")}</SelectItem>
+                    <SelectItem value="manager">{t("stockPage.requestsCard.roleManager")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {(dateFrom || dateTo || roleFilter !== "all") && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 text-xs"
+                  onClick={() => { setDateFrom(""); setDateTo(""); setRoleFilter("all"); }}
+                >
+                  {t("common:actions.clear")}
+                </Button>
+              )}
+            </div>
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 pb-2">
           <Table>
             <TableHeader>
               <TableRow>
@@ -201,14 +236,14 @@ export function SupplierStockPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {!stockRequests || stockRequests.length === 0 ? (
+              {filteredRequests.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-muted-foreground">
+                  <TableCell colSpan={5} className="py-8 text-center text-muted-foreground">
                     {t("stockPage.requestsCard.empty")}
                   </TableCell>
                 </TableRow>
               ) : (
-                stockRequests.map((request) => (
+                filteredRequests.map((request) => (
                   <TableRow key={request.id}>
                     <TableCell className="font-medium">{request.productName}</TableCell>
                     <TableCell>{request.quantity}</TableCell>
@@ -232,94 +267,7 @@ export function SupplierStockPage() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">{t("stockPage.submissionsCard.title")}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t("stockPage.table.product")}</TableHead>
-                <TableHead>{t("stockPage.table.supplier")}</TableHead>
-                <TableHead>{t("common:fields.quantity")}</TableHead>
-                <TableHead>{t("common:fields.status")}</TableHead>
-                <TableHead>{t("common:fields.date")}</TableHead>
-                {canReview && <TableHead className="text-end">{t("common:fields.actions")}</TableHead>}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {!submissions || submissions.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={canReview ? 6 : 5} className="text-center text-muted-foreground">
-                    {t("stockPage.submissionsCard.empty")}
-                  </TableCell>
-                </TableRow>
-              ) : (
-                submissions.map((submission) => (
-                  <TableRow key={submission.id}>
-                    <TableCell className="font-medium">{submission.productName}</TableCell>
-                    <TableCell className="text-muted-foreground">{submission.supplierName}</TableCell>
-                    <TableCell>{submission.quantity}</TableCell>
-                    <TableCell>
-                      <Badge variant={STATUS_VARIANT[submission.status]}>
-                        {t(`common:status.${submission.status}`)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {new Date(submission.createdAt._seconds * 1000).toLocaleDateString()}
-                    </TableCell>
-                    {canReview && (
-                      <TableCell className="text-end">
-                        {submission.status === "pending" && (
-                          <div className="flex justify-end gap-2">
-                            <Button
-                              size="sm"
-                              disabled={approveSubmissionMutation.isPending}
-                              onClick={() => approveSubmissionMutation.mutate(submission.id)}
-                            >
-                              {t("common:actions.approve")}
-                            </Button>
-                            <Button size="sm" variant="outline" onClick={() => openReject(submission)}>
-                              {t("common:actions.reject")}
-                            </Button>
-                          </div>
-                        )}
-                      </TableCell>
-                    )}
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-
-      <Dialog open={rejecting !== null} onOpenChange={(next) => !next && setRejecting(null)}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>
-              {t("stockPage.submissionsRejectDialog.title", { name: rejecting?.productName })}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-1.5">
-            <Label>{t("stockPage.submissionsRejectDialog.reasonLabel")}</Label>
-            <Textarea value={reason} onChange={(e) => setReason(e.target.value)} />
-          </div>
-          <DialogFooter>
-            <Button
-              variant="destructive"
-              disabled={rejectSubmissionMutation.isPending}
-              onClick={() => rejectSubmissionMutation.mutate()}
-            >
-              {rejectSubmissionMutation.isPending
-                ? t("stockPage.submissionsRejectDialog.rejecting")
-                : t("stockPage.submissionsRejectDialog.submit")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
+      {/* Request stock dialog */}
       <Dialog open={requesting !== null} onOpenChange={(next) => !next && setRequesting(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>

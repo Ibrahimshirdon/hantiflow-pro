@@ -20,17 +20,13 @@
     "requestsCard": {
       "title": "Stock requests",
       "requestedBy": "Requested by",
-      "empty": "No stock requests sent yet."
-    },
-    "submissionsCard": {
-      "title": "Pending Submissions",
-      "empty": "No supplier submissions yet."
-    },
-    "submissionsRejectDialog": {
-      "title": "Reject submission: {{name}}",
-      "reasonLabel": "Reason (optional)",
-      "submit": "Reject submission",
-      "rejecting": "Rejecting..."
+      "empty": "No stock requests found for the selected filters.",
+      "filterFrom": "From date",
+      "filterTo": "To date",
+      "filterRole": "Requested by",
+      "allRoles": "All roles",
+      "roleAdmin": "Admin",
+      "roleManager": "Manager"
     },
     "dialog": {
       "title": "Request stock: {{name}}",
@@ -41,8 +37,6 @@
     }
   },
   "toasts": {
-    "requestSent": "Request sent to the supplier",
-    "submissionApproved": "Submission approved and added to inventory",
-    "submissionRejected": "Submission rejected"
+    "requestSent": "Request sent to the supplier"
   }
 }

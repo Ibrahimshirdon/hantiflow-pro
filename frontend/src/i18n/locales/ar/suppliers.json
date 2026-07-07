@@ -20,17 +20,13 @@
     "requestsCard": {
       "title": "طلبات المخزون",
       "requestedBy": "طلب من قبل",
-      "empty": "لم يتم إرسال أي طلبات مخزون بعد."
-    },
-    "submissionsCard": {
-      "title": "طلبات الإرسال المعلقة",
-      "empty": "لا توجد طلبات إرسال من الموردين بعد."
-    },
-    "submissionsRejectDialog": {
-      "title": "رفض الطلب: {{name}}",
-      "reasonLabel": "السبب (اختياري)",
-      "submit": "رفض الطلب",
-      "rejecting": "جارٍ الرفض..."
+      "empty": "لا توجد طلبات مخزون للفلاتر المحددة.",
+      "filterFrom": "من تاريخ",
+      "filterTo": "إلى تاريخ",
+      "filterRole": "طلب من قبل",
+      "allRoles": "جميع الأدوار",
+      "roleAdmin": "المدير",
+      "roleManager": "المشرف"
     },
     "dialog": {
       "title": "طلب مخزون: {{name}}",
@@ -41,8 +37,6 @@
     }
   },
   "toasts": {
-    "requestSent": "تم إرسال الطلب إلى المورد",
-    "submissionApproved": "تمت الموافقة على الطلب وإضافته إلى المخزون",
-    "submissionRejected": "تم رفض طلب الإرسال"
+    "requestSent": "تم إرسال الطلب إلى المورد"
   }
 }
