@@ -107,6 +107,53 @@ export async function listGoodsReceipts(filters: { productId?: string; receivedB
 export async function listBatchesForProduct(productId: string) {
   const snap = await db.collection("batches").where("productId", "==", productId).get();
   const batches = snap.docs.map((d) => ({ id: d.id, ...d.data() }) as Batch);
+
+  // Lazy expiry check: any active batch past its expiry date is automatically
+  // written off — status → "expired", quantity → 0, totalStock decremented,
+  // and a damage adjustment created for the audit trail.
+  const now = new Date();
+  const toExpire = batches.filter(
+    (b) => b.status === "active" && b.quantity > 0 && b.expiryDate && b.expiryDate.toDate() < now,
+  );
+
+  if (toExpire.length > 0) {
+    const totalExpiredQty = toExpire.reduce((sum, b) => sum + b.quantity, 0);
+
+    const productRef = db.collection("products").doc(productId);
+    const productSnap = await productRef.get();
+    const product = productSnap.data() as Product;
+    const newTotalStock = Math.max(0, product.totalStock - totalExpiredQty);
+
+    const writeBatch = db.batch();
+
+    for (const batch of toExpire) {
+      writeBatch.update(db.collection("batches").doc(batch.id), {
+        status: "expired",
+        quantity: 0,
+      });
+      writeBatch.set(db.collection("stockAdjustments").doc(), {
+        productId,
+        batchId: batch.id,
+        type: "damage",
+        quantityChange: -batch.quantity,
+        reason: "Expired stock — written off automatically",
+        performedBy: "system",
+        createdAt: FieldValue.serverTimestamp(),
+      });
+      // Reflect write in local array so the response is accurate
+      batch.status = "expired";
+      batch.quantity = 0;
+    }
+
+    writeBatch.update(productRef, {
+      totalStock: newTotalStock,
+      isLowStock: newTotalStock <= product.reorderLevel,
+      updatedAt: FieldValue.serverTimestamp(),
+    });
+
+    await writeBatch.commit();
+  }
+
   return batches.sort((a, b) => {
     const aTime = a.expiryDate?.toMillis() ?? Infinity;
     const bTime = b.expiryDate?.toMillis() ?? Infinity;

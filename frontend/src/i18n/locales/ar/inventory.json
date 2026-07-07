@@ -40,13 +40,16 @@
     "barcodeLabel": "· الباركود {{barcode}}",
     "costLabel": "التكلفة ${{value}}",
     "sellingLabel": "البيع ${{value}}",
-    "totalStockLabel": "إجمالي المخزون {{qty}} {{unit}}",
-    "reorderLevelLabel": "حد إعادة الطلب {{value}}",
+    "totalStockLabel": "إجمالي المخزون",
+    "reorderLevelLabel": "إعادة الطلب عند {{value}}",
     "maxStockLabel": "أقصى مخزون {{value}}",
     "taxLabel": "الضريبة",
     "noTax": "لا يوجد",
     "uploading": "جارٍ الرفع...",
     "uploadImage": "رفع صورة",
+    "profitMarginLabel": "هامش الربح",
+    "expiredAlertTitle": "{{count}} دفعة انتهت صلاحيتها وتمت شطبها",
+    "expiredAlertBody": "تمت إعادة ضبط المخزون المنتهي تلقائيًا. تم تحديث إجمالي المخزون وسجل التسويات.",
     "tabs": {
       "batches": "الدفعات والصلاحية",
       "adjustments": "التسويات"

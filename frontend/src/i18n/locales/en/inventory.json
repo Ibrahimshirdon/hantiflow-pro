@@ -40,13 +40,16 @@
     "barcodeLabel": "· Barcode {{barcode}}",
     "costLabel": "Cost ${{value}}",
     "sellingLabel": "Selling ${{value}}",
-    "totalStockLabel": "Total stock {{qty}} {{unit}}",
-    "reorderLevelLabel": "Reorder level {{value}}",
+    "totalStockLabel": "Total stock",
+    "reorderLevelLabel": "Reorder at {{value}}",
     "maxStockLabel": "Max stock {{value}}",
     "taxLabel": "Tax",
     "noTax": "None",
     "uploading": "Uploading...",
     "uploadImage": "Upload image",
+    "profitMarginLabel": "Profit margin",
+    "expiredAlertTitle": "{{count}} batch expired and written off",
+    "expiredAlertBody": "Expired stock has been zeroed automatically. Stock totals and the adjustment log have been updated.",
     "tabs": {
       "batches": "Batches & expiry",
       "adjustments": "Adjustments"

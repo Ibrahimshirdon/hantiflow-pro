@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -124,6 +124,19 @@ export function ProductDetailPage() {
     queryFn: () => listStockAdjustments(productId),
   });
 
+  // After batches load, re-fetch product + adjustments to reflect any
+  // totalStock changes and new adjustment records from the auto-expiry write-off.
+  const autoExpireInvalidated = useRef(false);
+  useEffect(() => {
+    if (batches && !autoExpireInvalidated.current) {
+      autoExpireInvalidated.current = true;
+      if (batches.some((b) => b.status === "expired")) {
+        queryClient.invalidateQueries({ queryKey: ["product", productId] });
+        queryClient.invalidateQueries({ queryKey: ["adjustments", productId] });
+      }
+    }
+  }, [batches, productId, queryClient]);
+
   const imageMutation = useMutation({
     mutationFn: (file: File) => uploadProductImage(productId, file),
     onSuccess: () => {
@@ -164,8 +177,26 @@ export function ProductDetailPage() {
     ? taxRates?.find((rt) => rt.id === product.taxRateId)
     : null;
 
+  const expiredBatches = batches?.filter((b) => b.status === "expired") ?? [];
+  const hasExpired = expiredBatches.length > 0;
+
   return (
     <div className="flex flex-col gap-6">
+      {/* Expired stock alert */}
+      {hasExpired && (
+        <div className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm">
+          <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
+          <div>
+            <p className="font-medium text-destructive">
+              {t("productDetailPage.expiredAlertTitle", { count: expiredBatches.length })}
+            </p>
+            <p className="text-muted-foreground">
+              {t("productDetailPage.expiredAlertBody")}
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Hero card */}
       <Card className="overflow-hidden">
         <CardContent className="p-0">
@@ -284,9 +315,8 @@ export function ProductDetailPage() {
 
               {/* Reorder / max stock note */}
               <p className="text-sm text-muted-foreground">
-                {t("productDetailPage.reorderLevelLabel", { value: product.reorderLevel })}
                 {product.maxStockLevel != null &&
-                  ` · ${t("productDetailPage.maxStockLabel", { value: product.maxStockLevel })}`}
+                  t("productDetailPage.maxStockLabel", { value: product.maxStockLevel })}
               </p>
             </div>
           </div>
@@ -296,30 +326,30 @@ export function ProductDetailPage() {
       {/* Stat tiles */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatTile
-          label={t("productDetailPage.costLabel", { value: "" }).replace(": ", "")}
+          label={t("editProductDialog.costPrice")}
           value={`$${product.costPrice.toFixed(2)}`}
           icon={DollarSign}
           tone="default"
         />
         <StatTile
-          label={t("productDetailPage.sellingLabel", { value: "" }).replace(": ", "")}
+          label={t("editProductDialog.sellingPrice")}
           value={`$${product.sellingPrice.toFixed(2)}`}
           icon={TrendingUp}
           tone="primary"
           sub={`+$${profit} per unit`}
         />
         <StatTile
-          label="Profit margin"
+          label={t("productDetailPage.profitMarginLabel")}
           value={`${margin}%`}
           icon={TrendingUp}
           tone={Number(margin) >= 20 ? "success" : Number(margin) >= 10 ? "warning" : "destructive"}
         />
         <StatTile
-          label={t("productDetailPage.totalStockLabel", { qty: "", unit: product.unit }).trim()}
+          label={t("productDetailPage.totalStockLabel")}
           value={`${product.totalStock} ${product.unit}`}
           icon={Package}
           tone={product.isLowStock ? "destructive" : "success"}
-          sub={`Reorder at ${product.reorderLevel}`}
+          sub={t("productDetailPage.reorderLevelLabel", { value: product.reorderLevel })}
         />
       </div>
 
@@ -357,7 +387,7 @@ export function ProductDetailPage() {
                     const effectiveExpiry = batch.expiryDate ?? product.expiryDate ?? null;
                     const isProductLevel = !batch.expiryDate && !!product.expiryDate;
                     return (
-                      <TableRow key={batch.id}>
+                      <TableRow key={batch.id} className={batch.status === "expired" ? "opacity-60" : ""}>
                         <TableCell className="font-medium">{batch.batchNumber}</TableCell>
                         <TableCell>{batch.quantity}</TableCell>
                         <TableCell>
@@ -374,7 +404,16 @@ export function ProductDetailPage() {
                           )}
                         </TableCell>
                         <TableCell>
-                          <Badge variant={batch.status === "active" ? "success" : "secondary"} className="capitalize">
+                          <Badge
+                            variant={
+                              batch.status === "active"
+                                ? "success"
+                                : batch.status === "expired"
+                                ? "destructive"
+                                : "secondary"
+                            }
+                            className="capitalize"
+                          >
                             {batch.status}
                           </Badge>
                         </TableCell>

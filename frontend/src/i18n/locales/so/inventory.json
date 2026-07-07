@@ -40,13 +40,16 @@
     "barcodeLabel": "· Barcode {{barcode}}",
     "costLabel": "Qiimaha iibsiga ${{value}}",
     "sellingLabel": "Iibka ${{value}}",
-    "totalStockLabel": "Wadarta kaydka {{qty}} {{unit}}",
-    "reorderLevelLabel": "Heerka dalbashada {{value}}",
+    "totalStockLabel": "Wadarta kaydka",
+    "reorderLevelLabel": "Dib u dalbo {{value}}",
     "maxStockLabel": "Kaydka ugu badan {{value}}",
     "taxLabel": "Canshuurta",
     "noTax": "Mid ma jiro",
     "uploading": "Waa la soo gelinayaa...",
     "uploadImage": "Soo geli sawir",
+    "profitMarginLabel": "Faaido dheeri ah",
+    "expiredAlertTitle": "{{count}} hawl waa dhacday oo la qoritay",
+    "expiredAlertBody": "Kaydka dhacay si toos ah ayaa loo eber samaynayaa. Wadarta kaydka iyo diiwaanka ayaa la cusboonaysiiyay.",
     "tabs": {
       "batches": "Hawlaha & dhicitaanka",
       "adjustments": "Saamaynta"
