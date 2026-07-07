@@ -245,7 +245,7 @@ export function ProductDetailPage() {
                     {!taxRate && (
                       <span className="text-xs">{t("productDetailPage.noTax")}</span>
                     )}
-                    {product.expiryDate && (
+                    {product.expiryDate && !batches?.some((b) => b.expiryDate) && (
                       <span className={`flex items-center gap-1 text-xs ${isExpiringSoon(product.expiryDate) ? "font-medium text-destructive" : ""}`}>
                         <Calendar className="size-3.5" />
                         {t("productDetailPage.expiresLabel")} {formatDate(product.expiryDate)}
@@ -274,6 +274,7 @@ export function ProductDetailPage() {
                       product={product}
                       categories={categories ?? []}
                       taxRates={taxRates ?? []}
+                      showExpiryField={!batches?.some((b) => b.expiryDate)}
                     />
                   )}
                   {profile?.role === "admin" && (

@@ -51,10 +51,12 @@ export function EditProductDialog({
   product,
   categories,
   taxRates,
+  showExpiryField = false,
 }: {
   product: Product;
   categories: Category[];
   taxRates: TaxRate[];
+  showExpiryField?: boolean;
 }) {
   const { t } = useTranslation(["inventory", "common"]);
   const queryClient = useQueryClient();
@@ -192,15 +194,17 @@ export function EditProductDialog({
               </SelectContent>
             </Select>
           </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="edit-expiryDate">{t("editProductDialog.expiryDate")}</Label>
-            <Input
-              id="edit-expiryDate"
-              type="date"
-              value={form.expiryDate ?? ""}
-              onChange={(e) => set("expiryDate", e.target.value || null)}
-            />
-          </div>
+          {showExpiryField && (
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="edit-expiryDate">{t("editProductDialog.expiryDate")}</Label>
+              <Input
+                id="edit-expiryDate"
+                type="date"
+                value={form.expiryDate ?? ""}
+                onChange={(e) => set("expiryDate", e.target.value || null)}
+              />
+            </div>
+          )}
           <div className="flex items-end gap-4">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="edit-reorderLevel">{t("editProductDialog.reorderLevel")}</Label>
