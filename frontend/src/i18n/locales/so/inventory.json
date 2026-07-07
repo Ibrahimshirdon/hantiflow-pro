@@ -53,6 +53,7 @@
     },
     "batchNumber": "Hawlaha #",
     "expiryDate": "Taariikhda dhicitaanka",
+    "expiresLabel": "Waxay dhacaysaa",
     "noBatches": "Wali ma jiraan hawlo.",
     "expiringSoon": "Dhowaan way dhicaysaa",
     "type": "Nooca",
@@ -105,6 +106,7 @@
     "reorderLevel": "Heerka dalbashada",
     "maxStockLevel": "Kaydka ugu badan (ikhtiyaari ah)",
     "trackBatches": "La socod hawlaha / dhicitaanka",
+    "expiryDate": "Taariikhda dhicitaanka (ikhtiyaari ah)",
     "saveChanges": "Keydi isbeddelladda",
     "selectCategoryError": "Dooro qayb",
     "toasts": {

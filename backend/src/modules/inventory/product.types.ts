@@ -18,5 +18,6 @@ export const updateProductSchema = z.object({
   maxStockLevel: z.coerce.number().nonnegative().optional(),
   trackBatches: z.coerce.boolean().optional(),
   isActive: z.boolean().optional(),
+  expiryDate: z.string().nullable().optional(),
 });
 export type UpdateProductInput = z.infer<typeof updateProductSchema>;

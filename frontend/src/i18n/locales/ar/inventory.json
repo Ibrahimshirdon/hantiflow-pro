@@ -53,6 +53,7 @@
     },
     "batchNumber": "رقم الدفعة",
     "expiryDate": "تاريخ الانتهاء",
+    "expiresLabel": "تنتهي",
     "noBatches": "لا توجد دفعات بعد.",
     "expiringSoon": "ستنتهي صلاحيته قريبًا",
     "type": "النوع",
@@ -105,6 +106,7 @@
     "reorderLevel": "حد إعادة الطلب",
     "maxStockLevel": "أقصى مخزون (اختياري)",
     "trackBatches": "تتبع الدفعات / الصلاحية",
+    "expiryDate": "تاريخ الانتهاء (اختياري)",
     "saveChanges": "حفظ التغييرات",
     "selectCategoryError": "اختر فئة",
     "toasts": {

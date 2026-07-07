@@ -27,6 +27,7 @@ export interface Product {
   isLowStock: boolean;
   isActive: boolean;
   approvalStatus: "pending" | "approved";
+  expiryDate?: FirestoreTimestampLike | null;
 }
 
 interface FirestoreTimestampLike {

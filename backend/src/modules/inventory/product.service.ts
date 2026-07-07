@@ -1,4 +1,4 @@
-import { FieldValue } from "firebase-admin/firestore";
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { db } from "../../config/firebase.js";
 import { AppError } from "../../shared/utils/AppError.js";
 import { uploadBuffer } from "../../shared/utils/uploadFile.js";
@@ -66,7 +66,11 @@ export async function updateProduct(id: string, input: UpdateProductInput) {
   }
   const current = snap.data() as Product;
 
-  const updates: Record<string, unknown> = { ...input, updatedAt: FieldValue.serverTimestamp() };
+  const { expiryDate, ...rest } = input;
+  const updates: Record<string, unknown> = { ...rest, updatedAt: FieldValue.serverTimestamp() };
+  if (expiryDate !== undefined) {
+    updates.expiryDate = expiryDate ? Timestamp.fromDate(new Date(expiryDate)) : null;
+  }
   if (input.categoryId) {
     updates.categoryName = await getCategoryName(input.categoryId);
   }

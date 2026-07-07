@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import {
   AlertTriangle,
   Barcode,
+  Calendar,
   Camera,
   CheckCircle2,
   DollarSign,
@@ -243,6 +244,12 @@ export function ProductDetailPage() {
                     )}
                     {!taxRate && (
                       <span className="text-xs">{t("productDetailPage.noTax")}</span>
+                    )}
+                    {product.expiryDate && (
+                      <span className={`flex items-center gap-1 text-xs ${isExpiringSoon(product.expiryDate) ? "font-medium text-destructive" : ""}`}>
+                        <Calendar className="size-3.5" />
+                        {t("productDetailPage.expiresLabel")} {formatDate(product.expiryDate)}
+                      </span>
                     )}
                   </div>
                 </div>

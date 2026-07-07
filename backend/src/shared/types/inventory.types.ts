@@ -36,6 +36,8 @@ export interface Product {
   // Set when this product was created via a supplier's "submit to inventory"
   // action rather than created directly — null for hand-created products.
   supplierProductId?: string | null;
+  // Product-level expiry set by admin/manager when the supplier didn't provide one.
+  expiryDate?: Timestamp | null;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }

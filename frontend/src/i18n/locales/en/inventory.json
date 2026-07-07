@@ -53,6 +53,7 @@
     },
     "batchNumber": "Batch #",
     "expiryDate": "Expiry date",
+    "expiresLabel": "Expires",
     "noBatches": "No batches yet.",
     "expiringSoon": "Expiring soon",
     "type": "Type",
@@ -105,6 +106,7 @@
     "reorderLevel": "Reorder level",
     "maxStockLevel": "Max stock level (optional)",
     "trackBatches": "Track batches / expiry",
+    "expiryDate": "Expiry date (optional)",
     "saveChanges": "Save changes",
     "selectCategoryError": "Select a category",
     "toasts": {

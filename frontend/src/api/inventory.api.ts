@@ -37,6 +37,7 @@ export interface ProductInput {
   reorderLevel: number;
   maxStockLevel?: number;
   trackBatches: boolean;
+  expiryDate?: string | null;
 }
 
 export async function listProducts(filters?: {
