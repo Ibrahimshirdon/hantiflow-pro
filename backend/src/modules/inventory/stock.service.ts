@@ -128,16 +128,16 @@ export async function listExpiringBatches(daysAhead: number) {
 
   // Also surface products that have a product-level expiryDate set by an admin
   // but whose batches carry no batch-level expiry date.
+  // Single-field range query only — avoids needing a composite index.
   const productExpirySnap = await db
     .collection("products")
-    .where("isActive", "==", true)
     .where("expiryDate", "<=", cutoff)
     .get();
 
   const batchProductIds = new Set(batches.map((b) => b.productId));
   for (const doc of productExpirySnap.docs) {
     const product = { id: doc.id, ...doc.data() } as Product;
-    if (!product.expiryDate || batchProductIds.has(product.id)) continue;
+    if (!product.expiryDate || !product.isActive || batchProductIds.has(product.id)) continue;
     batches.push({
       id: `product-expiry-${product.id}`,
       productId: product.id,
