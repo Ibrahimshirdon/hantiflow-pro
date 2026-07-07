@@ -46,6 +46,9 @@ export async function receiveStock(
         totalStock: newTotalStock,
         isLowStock: newTotalStock <= product.reorderLevel,
         updatedAt: FieldValue.serverTimestamp(),
+        // Batch carries its own expiry — clear the product-level fallback so it
+        // no longer appears as a stale "expired" entry on the dashboard.
+        ...(input.expiryDate ? { expiryDate: null } : {}),
       });
     }
 
@@ -181,7 +184,15 @@ export async function listExpiringBatches(daysAhead: number) {
     .where("expiryDate", "<=", cutoff)
     .get();
 
-  const batchProductIds = new Set(batches.map((b) => b.productId));
+  // Also fetch batches with FUTURE expiry dates so we can exclude those product IDs
+  // from the product-level synthetic entries — a product whose batches already carry
+  // their own expiry should never appear via the product.expiryDate fallback.
+  const futureBatchSnap = await db.collection("batches").where("expiryDate", ">", cutoff).get();
+  const batchProductIds = new Set([
+    ...batches.map((b) => b.productId),
+    ...futureBatchSnap.docs.map((d) => (d.data() as Batch).productId),
+  ]);
+
   for (const doc of productExpirySnap.docs) {
     const product = { id: doc.id, ...doc.data() } as Product;
     if (!product.expiryDate || !product.isActive || batchProductIds.has(product.id)) continue;
