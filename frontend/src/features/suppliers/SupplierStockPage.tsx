@@ -8,7 +8,6 @@ import {
   listSupplierProducts,
 } from "@/api/supplier.api";
 import { getApiErrorMessage } from "@/api/client";
-import { useAuth } from "@/context/AuthContext";
 import type { SupplierProduct } from "@/types/supplier.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -48,7 +47,6 @@ const STATUS_VARIANT = {
 export function SupplierStockPage() {
   const { t } = useTranslation(["suppliers", "common"]);
   const queryClient = useQueryClient();
-  const { profile } = useAuth();
   const [requesting, setRequesting] = useState<SupplierProduct | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState("");
