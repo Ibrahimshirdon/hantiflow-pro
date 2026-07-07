@@ -17,6 +17,28 @@
       "wholesalePrice": "Wholesale price",
       "sellingPrice": "Selling price"
     },
+    "submissionsCard": {
+      "title": "Supplier Submissions",
+      "supplier": "Supplier",
+      "empty": "No supplier submissions yet.",
+      "viewDetails": "View details"
+    },
+    "submissionDialog": {
+      "title": "Submission details",
+      "product": "Product",
+      "company": "Company",
+      "supplier": "Supplier",
+      "submitted": "Submitted",
+      "responded": "Responded",
+      "addedToInventory": "Added to inventory",
+      "yes": "Yes",
+      "rejectionReason": "Rejection reason",
+      "rejectReasonLabel": "Reason for rejection (optional)",
+      "rejectReasonPlaceholder": "Explain why this submission is being rejected...",
+      "approve": "Approve & add to inventory",
+      "reject": "Reject",
+      "confirmReject": "Confirm rejection"
+    },
     "requestsCard": {
       "title": "Stock requests",
       "requestedBy": "Requested by",
@@ -37,6 +59,8 @@
     }
   },
   "toasts": {
-    "requestSent": "Request sent to the supplier"
+    "requestSent": "Request sent to the supplier",
+    "submissionApproved": "Submission approved and added to inventory",
+    "submissionRejected": "Submission rejected"
   }
 }

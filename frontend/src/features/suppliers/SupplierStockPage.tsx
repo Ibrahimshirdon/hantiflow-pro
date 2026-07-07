@@ -3,12 +3,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import {
+  approveSupplierSubmission,
   createStockRequest,
   listStockRequests,
   listSupplierProducts,
+  listSupplierSubmissions,
+  rejectSupplierSubmission,
 } from "@/api/supplier.api";
 import { getApiErrorMessage } from "@/api/client";
-import type { SupplierProduct } from "@/types/supplier.types";
+import { useAuth } from "@/context/AuthContext";
+import type { SupplierProduct, SupplierSubmission } from "@/types/supplier.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,9 +48,18 @@ const STATUS_VARIANT = {
   rejected: "destructive",
 } as const;
 
+function formatDate(ts: { _seconds: number } | null | undefined) {
+  if (!ts) return "—";
+  return new Date(ts._seconds * 1000).toLocaleDateString();
+}
+
 export function SupplierStockPage() {
   const { t } = useTranslation(["suppliers", "common"]);
   const queryClient = useQueryClient();
+  const { profile } = useAuth();
+  const isAdmin = profile?.role === "admin";
+
+  // Request stock dialog state
   const [requesting, setRequesting] = useState<SupplierProduct | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState("");
@@ -56,6 +69,11 @@ export function SupplierStockPage() {
   const [dateTo, setDateTo] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
 
+  // Submission detail dialog state
+  const [viewSubmission, setViewSubmission] = useState<SupplierSubmission | null>(null);
+  const [rejectReason, setRejectReason] = useState("");
+  const [showRejectInput, setShowRejectInput] = useState(false);
+
   const { data: products, isLoading } = useQuery({
     queryKey: ["supplierProducts", "all"],
     queryFn: () => listSupplierProducts(),
@@ -63,6 +81,10 @@ export function SupplierStockPage() {
   const { data: stockRequests } = useQuery({
     queryKey: ["stockRequests", "all"],
     queryFn: () => listStockRequests(),
+  });
+  const { data: submissions } = useQuery({
+    queryKey: ["supplierSubmissions"],
+    queryFn: () => listSupplierSubmissions(),
   });
 
   const requestMutation = useMutation({
@@ -80,10 +102,38 @@ export function SupplierStockPage() {
     onError: (error) => toast.error(getApiErrorMessage(error)),
   });
 
+  const approveMutation = useMutation({
+    mutationFn: (id: string) => approveSupplierSubmission(id),
+    onSuccess: () => {
+      toast.success(t("toasts.submissionApproved"));
+      queryClient.invalidateQueries({ queryKey: ["supplierSubmissions"] });
+      setViewSubmission(null);
+    },
+    onError: (error) => toast.error(getApiErrorMessage(error)),
+  });
+
+  const rejectMutation = useMutation({
+    mutationFn: (id: string) => rejectSupplierSubmission(id, { reason: rejectReason || undefined }),
+    onSuccess: () => {
+      toast.success(t("toasts.submissionRejected"));
+      queryClient.invalidateQueries({ queryKey: ["supplierSubmissions"] });
+      setViewSubmission(null);
+      setRejectReason("");
+      setShowRejectInput(false);
+    },
+    onError: (error) => toast.error(getApiErrorMessage(error)),
+  });
+
   function openRequest(product: SupplierProduct) {
     setQuantity(Math.min(1, product.quantityInStock));
     setMessage("");
     setRequesting(product);
+  }
+
+  function openSubmission(sub: SupplierSubmission) {
+    setViewSubmission(sub);
+    setRejectReason("");
+    setShowRejectInput(false);
   }
 
   const filteredRequests = useMemo(() => {
@@ -96,6 +146,8 @@ export function SupplierStockPage() {
       return true;
     });
   }, [stockRequests, dateFrom, dateTo, roleFilter]);
+
+  const pendingCount = submissions?.filter((s) => s.status === "pending").length ?? 0;
 
   return (
     <div className="flex flex-col gap-6">
@@ -264,6 +316,191 @@ export function SupplierStockPage() {
           </Table>
         </CardContent>
       </Card>
+
+      {/* Supplier submissions */}
+      <Card>
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <CardTitle className="text-base">{t("stockPage.submissionsCard.title")}</CardTitle>
+            {pendingCount > 0 && (
+              <Badge variant="warning">{pendingCount}</Badge>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent className="p-0 pb-2">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{t("stockPage.table.product")}</TableHead>
+                <TableHead>{t("stockPage.table.company")}</TableHead>
+                <TableHead>{t("stockPage.submissionsCard.supplier")}</TableHead>
+                <TableHead>{t("common:fields.quantity")}</TableHead>
+                <TableHead>{t("common:fields.status")}</TableHead>
+                <TableHead>{t("common:fields.date")}</TableHead>
+                <TableHead className="text-end">{t("common:fields.actions")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {!submissions || submissions.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={7} className="py-8 text-center text-muted-foreground">
+                    {t("stockPage.submissionsCard.empty")}
+                  </TableCell>
+                </TableRow>
+              ) : (
+                submissions.map((sub) => (
+                  <TableRow key={sub.id} className={sub.status === "pending" ? "bg-warning/5" : ""}>
+                    <TableCell className="font-medium">{sub.productName}</TableCell>
+                    <TableCell className="text-muted-foreground">{sub.companyName}</TableCell>
+                    <TableCell className="text-muted-foreground">{sub.supplierName}</TableCell>
+                    <TableCell>{sub.quantity}</TableCell>
+                    <TableCell>
+                      <Badge variant={STATUS_VARIANT[sub.status]}>
+                        {t(`common:status.${sub.status}`)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">{formatDate(sub.createdAt)}</TableCell>
+                    <TableCell className="text-end">
+                      <Button size="sm" variant="outline" onClick={() => openSubmission(sub)}>
+                        {t("stockPage.submissionsCard.viewDetails")}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      {/* Submission detail dialog */}
+      <Dialog
+        open={viewSubmission !== null}
+        onOpenChange={(next) => {
+          if (!next) { setViewSubmission(null); setShowRejectInput(false); setRejectReason(""); }
+        }}
+      >
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>{t("stockPage.submissionDialog.title")}</DialogTitle>
+          </DialogHeader>
+          {viewSubmission && (
+            <div className="flex flex-col gap-4">
+              {/* Info grid */}
+              <div className="grid grid-cols-2 gap-3 rounded-lg border p-4 text-sm">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs text-muted-foreground">{t("stockPage.submissionDialog.product")}</span>
+                  <span className="font-semibold">{viewSubmission.productName}</span>
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs text-muted-foreground">{t("stockPage.submissionDialog.company")}</span>
+                  <span className="font-medium">{viewSubmission.companyName}</span>
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs text-muted-foreground">{t("stockPage.submissionDialog.supplier")}</span>
+                  <span className="font-medium">{viewSubmission.supplierName}</span>
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs text-muted-foreground">{t("common:fields.quantity")}</span>
+                  <span className="font-medium">{viewSubmission.quantity}</span>
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs text-muted-foreground">{t("common:fields.status")}</span>
+                  <Badge variant={STATUS_VARIANT[viewSubmission.status]} className="w-fit">
+                    {t(`common:status.${viewSubmission.status}`)}
+                  </Badge>
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs text-muted-foreground">{t("stockPage.submissionDialog.submitted")}</span>
+                  <span className="font-medium">{formatDate(viewSubmission.createdAt)}</span>
+                </div>
+                {viewSubmission.respondedAt && (
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-xs text-muted-foreground">{t("stockPage.submissionDialog.responded")}</span>
+                    <span className="font-medium">{formatDate(viewSubmission.respondedAt)}</span>
+                  </div>
+                )}
+                {viewSubmission.resultingProductId && (
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-xs text-muted-foreground">{t("stockPage.submissionDialog.addedToInventory")}</span>
+                    <span className="text-emerald-600 font-medium">{t("stockPage.submissionDialog.yes")}</span>
+                  </div>
+                )}
+              </div>
+
+              {viewSubmission.rejectionReason && (
+                <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm">
+                  <p className="text-xs font-medium text-destructive mb-1">{t("stockPage.submissionDialog.rejectionReason")}</p>
+                  <p className="text-muted-foreground">{viewSubmission.rejectionReason}</p>
+                </div>
+              )}
+
+              {/* Reject input */}
+              {showRejectInput && (
+                <div className="flex flex-col gap-1.5">
+                  <Label>{t("stockPage.submissionDialog.rejectReasonLabel")}</Label>
+                  <Textarea
+                    placeholder={t("stockPage.submissionDialog.rejectReasonPlaceholder")}
+                    value={rejectReason}
+                    onChange={(e) => setRejectReason(e.target.value)}
+                    rows={3}
+                  />
+                </div>
+              )}
+
+              {/* Admin actions for pending submissions */}
+              {isAdmin && viewSubmission.status === "pending" && (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {!showRejectInput ? (
+                    <>
+                      <Button
+                        className="flex-1"
+                        disabled={approveMutation.isPending}
+                        onClick={() => approveMutation.mutate(viewSubmission.id)}
+                      >
+                        {approveMutation.isPending
+                          ? t("common:actions.saving")
+                          : t("stockPage.submissionDialog.approve")}
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        className="flex-1"
+                        onClick={() => setShowRejectInput(true)}
+                      >
+                        {t("stockPage.submissionDialog.reject")}
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        variant="destructive"
+                        className="flex-1"
+                        disabled={rejectMutation.isPending}
+                        onClick={() => rejectMutation.mutate(viewSubmission.id)}
+                      >
+                        {rejectMutation.isPending
+                          ? t("common:actions.saving")
+                          : t("stockPage.submissionDialog.confirmReject")}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => { setShowRejectInput(false); setRejectReason(""); }}
+                      >
+                        {t("common:actions.cancel")}
+                      </Button>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setViewSubmission(null)}>
+              {t("common:actions.close")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Request stock dialog */}
       <Dialog open={requesting !== null} onOpenChange={(next) => !next && setRequesting(null)}>

@@ -17,6 +17,28 @@
       "wholesalePrice": "Qiimaha jumlada",
       "sellingPrice": "Qiimaha iibka"
     },
+    "submissionsCard": {
+      "title": "Gudbinnada Alaab-qeybiyaha",
+      "supplier": "Alaab-qeybiyaha",
+      "empty": "Wali ma jiraan gudbinno alaab-qeybiye.",
+      "viewDetails": "Eeg faahfaahinta"
+    },
+    "submissionDialog": {
+      "title": "Faahfaahinta gudbinta",
+      "product": "Badeecada",
+      "company": "Shirkadda",
+      "supplier": "Alaab-qeybiyaha",
+      "submitted": "Taariikhda gudbinta",
+      "responded": "Taariikhda jawaabta",
+      "addedToInventory": "Lagu daray kaydka",
+      "yes": "Haa",
+      "rejectionReason": "Sababta diidmada",
+      "rejectReasonLabel": "Sababta diidmada (ikhtiyaari ah)",
+      "rejectReasonPlaceholder": "Sharax sababta gudbintan la diidayo...",
+      "approve": "Ansiri oo ku dar kaydka",
+      "reject": "Diid",
+      "confirmReject": "Xaqiiji diidmada"
+    },
     "requestsCard": {
       "title": "Codsiyada kaydka",
       "requestedBy": "Waxaa codsaday",
@@ -37,6 +59,8 @@
     }
   },
   "toasts": {
-    "requestSent": "Codsigu wuxuu u dhacay alaab-qeybiyaha"
+    "requestSent": "Codsigu wuxuu u dhacay alaab-qeybiyaha",
+    "submissionApproved": "Gudbinta waa la ansixiyay waana lagu daray kaydka guud",
+    "submissionRejected": "Gudbinta waa la diiday"
   }
 }

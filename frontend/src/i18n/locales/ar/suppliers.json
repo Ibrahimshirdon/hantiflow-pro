@@ -17,6 +17,28 @@
       "wholesalePrice": "سعر الجملة",
       "sellingPrice": "سعر البيع"
     },
+    "submissionsCard": {
+      "title": "طلبات الموردين",
+      "supplier": "المورد",
+      "empty": "لا توجد طلبات إرسال من الموردين بعد.",
+      "viewDetails": "عرض التفاصيل"
+    },
+    "submissionDialog": {
+      "title": "تفاصيل الطلب",
+      "product": "المنتج",
+      "company": "الشركة",
+      "supplier": "المورد",
+      "submitted": "تاريخ الإرسال",
+      "responded": "تاريخ الرد",
+      "addedToInventory": "تمت الإضافة إلى المخزون",
+      "yes": "نعم",
+      "rejectionReason": "سبب الرفض",
+      "rejectReasonLabel": "سبب الرفض (اختياري)",
+      "rejectReasonPlaceholder": "اشرح سبب رفض هذا الطلب...",
+      "approve": "موافقة وإضافة إلى المخزون",
+      "reject": "رفض",
+      "confirmReject": "تأكيد الرفض"
+    },
     "requestsCard": {
       "title": "طلبات المخزون",
       "requestedBy": "طلب من قبل",
@@ -37,6 +59,8 @@
     }
   },
   "toasts": {
-    "requestSent": "تم إرسال الطلب إلى المورد"
+    "requestSent": "تم إرسال الطلب إلى المورد",
+    "submissionApproved": "تمت الموافقة على الطلب وإضافته إلى المخزون",
+    "submissionRejected": "تم رفض طلب الإرسال"
   }
 }
