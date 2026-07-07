@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import {
   AlertTriangle,
   Barcode,
-  Calendar,
   Camera,
   CheckCircle2,
   DollarSign,
@@ -245,12 +244,6 @@ export function ProductDetailPage() {
                     {!taxRate && (
                       <span className="text-xs">{t("productDetailPage.noTax")}</span>
                     )}
-                    {product.expiryDate && !batches?.some((b) => b.expiryDate) && (
-                      <span className={`flex items-center gap-1 text-xs ${isExpiringSoon(product.expiryDate) ? "font-medium text-destructive" : ""}`}>
-                        <Calendar className="size-3.5" />
-                        {t("productDetailPage.expiresLabel")} {formatDate(product.expiryDate)}
-                      </span>
-                    )}
                   </div>
                 </div>
 
@@ -360,27 +353,34 @@ export function ProductDetailPage() {
                       </TableCell>
                     </TableRow>
                   )}
-                  {batches?.map((batch) => (
-                    <TableRow key={batch.id}>
-                      <TableCell className="font-medium">{batch.batchNumber}</TableCell>
-                      <TableCell>{batch.quantity}</TableCell>
-                      <TableCell>
-                        <span className={isExpiringSoon(batch.expiryDate) && batch.status === "active" ? "text-destructive font-medium" : ""}>
-                          {formatDate(batch.expiryDate)}
-                        </span>
-                        {batch.status === "active" && isExpiringSoon(batch.expiryDate) && (
-                          <Badge variant="destructive" className="ms-2 text-[10px]">
-                            {t("productDetailPage.expiringSoon")}
+                  {batches?.map((batch) => {
+                    const effectiveExpiry = batch.expiryDate ?? product.expiryDate ?? null;
+                    const isProductLevel = !batch.expiryDate && !!product.expiryDate;
+                    return (
+                      <TableRow key={batch.id}>
+                        <TableCell className="font-medium">{batch.batchNumber}</TableCell>
+                        <TableCell>{batch.quantity}</TableCell>
+                        <TableCell>
+                          <span className={isExpiringSoon(effectiveExpiry) && batch.status === "active" ? "text-destructive font-medium" : ""}>
+                            {formatDate(effectiveExpiry)}
+                          </span>
+                          {isProductLevel && effectiveExpiry && (
+                            <span className="ms-1.5 text-[10px] text-muted-foreground">(product)</span>
+                          )}
+                          {batch.status === "active" && isExpiringSoon(effectiveExpiry) && (
+                            <Badge variant="destructive" className="ms-2 text-[10px]">
+                              {t("productDetailPage.expiringSoon")}
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={batch.status === "active" ? "success" : "secondary"} className="capitalize">
+                            {batch.status}
                           </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={batch.status === "active" ? "success" : "secondary"} className="capitalize">
-                          {batch.status}
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </CardContent>

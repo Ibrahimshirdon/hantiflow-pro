@@ -125,16 +125,41 @@ export async function listExpiringBatches(daysAhead: number) {
     .get();
 
   const batches = snap.docs.map((d) => ({ id: d.id, ...d.data() }) as Batch);
+
+  // Also surface products that have a product-level expiryDate set by an admin
+  // but whose batches carry no batch-level expiry date.
+  const productExpirySnap = await db
+    .collection("products")
+    .where("isActive", "==", true)
+    .where("expiryDate", "<=", cutoff)
+    .get();
+
+  const batchProductIds = new Set(batches.map((b) => b.productId));
+  for (const doc of productExpirySnap.docs) {
+    const product = { id: doc.id, ...doc.data() } as Product;
+    if (!product.expiryDate || batchProductIds.has(product.id)) continue;
+    batches.push({
+      id: `product-expiry-${product.id}`,
+      productId: product.id,
+      productName: product.name,
+      batchNumber: "—",
+      quantity: product.totalStock,
+      costPrice: product.costPrice,
+      manufactureDate: null,
+      expiryDate: product.expiryDate,
+      receivedDate: product.createdAt,
+      status: "active",
+    });
+  }
+
   batches.sort((a, b) => (a.expiryDate?.toMillis() ?? 0) - (b.expiryDate?.toMillis() ?? 0));
 
-  // Batch docs only store productId — joined here (rather than denormalizing
-  // productName onto every Batch at write time) so the dashboard's expiring-
-  // batches widget can show a product name without a separate per-row fetch.
-  const productIds = [...new Set(batches.map((b) => b.productId))];
-  const productSnaps = await Promise.all(productIds.map((id) => db.collection("products").doc(id).get()));
+  // Join product names for batch-level entries (synthetic entries already carry productName).
+  const batchOnlyProductIds = [...new Set(batches.filter((b) => !b.productName).map((b) => b.productId))];
+  const productSnaps = await Promise.all(batchOnlyProductIds.map((id) => db.collection("products").doc(id).get()));
   const nameById = new Map(
     productSnaps.filter((s) => s.exists).map((s) => [s.id, (s.data() as Product).name]),
   );
 
-  return batches.map((b) => ({ ...b, productName: nameById.get(b.productId) ?? "—" }));
+  return batches.map((b) => ({ ...b, productName: b.productName ?? nameById.get(b.productId) ?? "—" }));
 }

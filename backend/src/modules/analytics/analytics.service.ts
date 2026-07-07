@@ -145,12 +145,15 @@ export async function getInventoryInsights() {
 
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() + 30);
-  const batchSnap = await db
-    .collection("batches")
-    .where("status", "==", "active")
-    .where("expiryDate", "<=", cutoff)
-    .get();
-  const expiringBatchesCount = batchSnap.docs.length;
+  const [batchSnap, productExpirySnap] = await Promise.all([
+    db.collection("batches").where("status", "==", "active").where("expiryDate", "<=", cutoff).get(),
+    db.collection("products").where("isActive", "==", true).where("expiryDate", "<=", cutoff).get(),
+  ]);
+  const expiringBatchProductIds = new Set(batchSnap.docs.map((d) => d.data().productId as string));
+  const additionalExpiringProducts = productExpirySnap.docs.filter(
+    (d) => !expiringBatchProductIds.has(d.id),
+  ).length;
+  const expiringBatchesCount = batchSnap.docs.length + additionalExpiringProducts;
 
   return {
     totalProducts: products.length,
