@@ -115,5 +115,48 @@
     "toasts": {
       "updated": "Product updated"
     }
+  },
+  "stocktakePage": {
+    "title": "Stocktake",
+    "subtitle": "Physical inventory counts — compare system quantities to actual shelf counts.",
+    "newSession": "Start new stocktake",
+    "startingSession": "Starting...",
+    "empty": "No stocktake sessions yet.",
+    "status": {
+      "in_progress": "In progress",
+      "committed": "Committed"
+    },
+    "columns": {
+      "date": "Started",
+      "startedBy": "Started by",
+      "items": "Items",
+      "discrepancies": "Discrepancies",
+      "status": "Status"
+    }
+  },
+  "stocktakeSessionPage": {
+    "heading": "Stocktake session",
+    "committedBadge": "Committed",
+    "inProgressBadge": "In progress",
+    "startedBy": "Started by {{name}}",
+    "notesLabel": "Notes",
+    "itemsHeading": "Items to count",
+    "searchPlaceholder": "Search by product or batch number...",
+    "columns": {
+      "product": "Product",
+      "batch": "Batch #",
+      "systemQty": "System qty",
+      "counted": "Counted",
+      "variance": "Variance"
+    },
+    "uncounted": "—",
+    "noItems": "No items match your search.",
+    "commitButton": "Commit stocktake",
+    "committing": "Committing...",
+    "commitHint": "Only items with a counted quantity will create adjustments. Uncounted rows are skipped.",
+    "toasts": {
+      "committed": "Stocktake committed — {{count}} discrepancies adjusted",
+      "noDiscrepancies": "Stocktake committed — all counts matched!"
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { apiClient, type ApiSuccess } from "./client";
-import type { Batch, Category, GoodsReceipt, Product, StockAdjustment } from "@/types/inventory.types";
+import type { Batch, Category, GoodsReceipt, Product, StockAdjustment, StocktakeItem, StocktakeSession } from "@/types/inventory.types";
 
 // Categories
 export async function listCategories() {
@@ -127,6 +127,35 @@ export async function createStockAdjustment(input: StockAdjustmentInput) {
   const { data } = await apiClient.post<ApiSuccess<{ id: string }>>(
     "/inventory/stock-adjustments",
     input,
+  );
+  return data.data;
+}
+
+// Stocktake sessions
+export async function listStocktakeSessions() {
+  const { data } = await apiClient.get<ApiSuccess<StocktakeSession[]>>("/inventory/stocktake-sessions");
+  return data.data;
+}
+
+export async function createStocktakeSession(input: { notes?: string }) {
+  const { data } = await apiClient.post<ApiSuccess<{ id: string }>>(
+    "/inventory/stocktake-sessions",
+    input,
+  );
+  return data.data;
+}
+
+export async function getStocktakeSession(id: string) {
+  const { data } = await apiClient.get<ApiSuccess<StocktakeSession & { items: StocktakeItem[] }>>(
+    `/inventory/stocktake-sessions/${id}`,
+  );
+  return data.data;
+}
+
+export async function commitStocktakeSession(id: string, counts: Record<string, number>) {
+  const { data } = await apiClient.post<ApiSuccess<{ discrepancyCount: number }>>(
+    `/inventory/stocktake-sessions/${id}/commit`,
+    { counts },
   );
   return data.data;
 }

@@ -12,6 +12,8 @@ import { DashboardPage } from "@/features/analytics/DashboardPage";
 import { CategoriesPage } from "@/features/inventory/CategoriesPage";
 import { ProductsPage } from "@/features/inventory/ProductsPage";
 import { ProductDetailPage } from "@/features/inventory/ProductDetailPage";
+import { StocktakePage } from "@/features/inventory/StocktakePage";
+import { StocktakeSessionPage } from "@/features/inventory/StocktakeSessionPage";
 import { POSPage } from "@/features/sales/POSPage";
 import { SalesOrdersPage } from "@/features/sales/SalesOrdersPage";
 import { SalesOrderDetailPage } from "@/features/sales/SalesOrderDetailPage";
@@ -71,6 +73,8 @@ export default function App() {
                 <Route path="inventory/products" element={<ProductsPage />} />
                 <Route path="inventory/products/:id" element={<ProductDetailPage />} />
                 <Route path="inventory/categories" element={<CategoriesPage />} />
+                <Route path="inventory/stocktake" element={<StocktakePage />} />
+                <Route path="inventory/stocktake/:id" element={<StocktakeSessionPage />} />
                 <Route path="sales/pos" element={<POSPage />} />
                 <Route path="sales/orders" element={<SalesOrdersPage />} />
                 <Route path="sales/orders/:id" element={<SalesOrderDetailPage />} />

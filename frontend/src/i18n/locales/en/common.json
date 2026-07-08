@@ -17,6 +17,7 @@
     "dashboard": "Dashboard",
     "products": "Products",
     "categories": "Categories",
+    "stocktake": "Stocktake",
     "pos": "POS",
     "orders": "Orders",
     "discounts": "Discounts",

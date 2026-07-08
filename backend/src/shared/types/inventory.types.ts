@@ -68,6 +68,28 @@ export interface StockAdjustment {
   createdAt: Timestamp;
 }
 
+export interface StocktakeSession {
+  id: string;
+  startedBy: string;
+  startedByName: string;
+  status: "in_progress" | "committed";
+  notes: string | null;
+  itemCount: number;
+  discrepancyCount: number;
+  createdAt: Timestamp;
+  committedAt: Timestamp | null;
+}
+
+export interface StocktakeItem {
+  id: string;
+  sessionId: string;
+  productId: string;
+  productName: string;
+  batchId: string;
+  batchNumber: string;
+  systemQty: number;
+}
+
 export interface GoodsReceipt {
   id: string;
   productId: string;

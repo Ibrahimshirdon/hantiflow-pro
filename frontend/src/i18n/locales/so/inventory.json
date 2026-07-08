@@ -115,5 +115,48 @@
     "toasts": {
       "updated": "Badeecada waa la cusboonaysiiyay"
     }
+  },
+  "stocktakePage": {
+    "title": "Tirinta Kaydka",
+    "subtitle": "Tirinta jireed ee alaabta — barbardhig tirada nidaamka tiradda xafiiska.",
+    "newSession": "Bilow tirin cusub",
+    "startingSession": "Waa la bilaabayaa...",
+    "empty": "Wali wax fasal tirin ah lama bilaaban.",
+    "status": {
+      "in_progress": "Socda",
+      "committed": "La dhammaystiray"
+    },
+    "columns": {
+      "date": "La bilaabay",
+      "startedBy": "Waxaa bilaabay",
+      "items": "Alaabta",
+      "discrepancies": "Kala-duwanaanshaha",
+      "status": "Xaaladda"
+    }
+  },
+  "stocktakeSessionPage": {
+    "heading": "Fasal tirinta kaydka",
+    "committedBadge": "La dhammaystiray",
+    "inProgressBadge": "Socda",
+    "startedBy": "Waxaa bilaabay {{name}}",
+    "notesLabel": "Xusuusinnada",
+    "itemsHeading": "Alaabta la tirin doono",
+    "searchPlaceholder": "Raadi badeecada ama lambarka xogta...",
+    "columns": {
+      "product": "Badeecada",
+      "batch": "Xog #",
+      "systemQty": "Tirada nidaamka",
+      "counted": "La tiray",
+      "variance": "Kala-duwanaanshaha"
+    },
+    "uncounted": "—",
+    "noItems": "Wax alaab ah ma jiraan raadintaada.",
+    "commitButton": "Dhammaysi tirinta",
+    "committing": "Waa la dhammaystireyaa...",
+    "commitHint": "Alaabta tirada la galin doonto oo kaliya ayaa hagaajin samaysa. Safafka aan la tirin waa la iska dhaafi doonaa.",
+    "toasts": {
+      "committed": "Tirinta waa la dhammaystiray — {{count}} kala-duwanaansho ayaa la hagaajiyay",
+      "noDiscrepancies": "Tirinta waa la dhammaystiray — dhammaan tiradaha ayaa si sax ah u siman!"
+    }
   }
 }

@@ -115,5 +115,48 @@
     "toasts": {
       "updated": "تم تحديث المنتج"
     }
+  },
+  "stocktakePage": {
+    "title": "جرد المخزون",
+    "subtitle": "عدّ المخزون الفعلي — مقارنة كميات النظام بالأرقام الحقيقية على الرف.",
+    "newSession": "بدء جرد جديد",
+    "startingSession": "جارٍ البدء...",
+    "empty": "لا توجد جلسات جرد بعد.",
+    "status": {
+      "in_progress": "قيد التنفيذ",
+      "committed": "مكتمل"
+    },
+    "columns": {
+      "date": "تاريخ البدء",
+      "startedBy": "بدأه",
+      "items": "العناصر",
+      "discrepancies": "الفوارق",
+      "status": "الحالة"
+    }
+  },
+  "stocktakeSessionPage": {
+    "heading": "جلسة جرد المخزون",
+    "committedBadge": "مكتمل",
+    "inProgressBadge": "قيد التنفيذ",
+    "startedBy": "بدأه {{name}}",
+    "notesLabel": "ملاحظات",
+    "itemsHeading": "العناصر المطلوب عدّها",
+    "searchPlaceholder": "ابحث بالمنتج أو رقم الدُفعة...",
+    "columns": {
+      "product": "المنتج",
+      "batch": "رقم الدُفعة",
+      "systemQty": "كمية النظام",
+      "counted": "المعدودة",
+      "variance": "الفارق"
+    },
+    "uncounted": "—",
+    "noItems": "لا توجد عناصر تطابق بحثك.",
+    "commitButton": "تأكيد الجرد",
+    "committing": "جارٍ التأكيد...",
+    "commitHint": "فقط العناصر التي تم إدخال كميتها ستُنشئ تسويات. الصفوف غير المعدودة سيتم تجاهلها.",
+    "toasts": {
+      "committed": "تم تأكيد الجرد — {{count}} فارق تمت تسويته",
+      "noDiscrepancies": "تم تأكيد الجرد — جميع الكميات متطابقة!"
+    }
   }
 }
