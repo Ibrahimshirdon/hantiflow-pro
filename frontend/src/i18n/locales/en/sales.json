@@ -17,11 +17,15 @@
     },
     "processing": "Processing...",
     "charge": "Charge ${{total}}",
+    "noResults": "No products found.",
+    "noResultsHint": "Press Enter to search by exact barcode.",
     "toasts": {
       "discountApplied": "Discount applied: -${{amount}}",
       "saleCompleted": "Sale completed",
       "cartEmpty": "Cart is empty",
-      "loanRequiresCustomer": "Select a registered customer to use loan payment"
+      "loanRequiresCustomer": "Select a registered customer to use loan payment",
+      "barcodeAdded": "{{name}} added to cart",
+      "barcodeNotFound": "No product found for barcode: {{barcode}}"
     }
   },
   "salesOrdersPage": {

@@ -17,11 +17,15 @@
     },
     "processing": "Waa la habeynayaa...",
     "charge": "Qaad ${{total}}",
+    "noResults": "Wax badeecad ah lama helin.",
+    "noResultsHint": "Taabo Enter si aad u raadiso barcode-ka saxda ah.",
     "toasts": {
       "discountApplied": "Dhimis la dhaqan geliyay: -${{amount}}",
       "saleCompleted": "Iibka waa la dhammeeyay",
       "cartEmpty": "Gaariga iibka waa madhan yahay",
-      "loanRequiresCustomer": "Dooro macmiil diiwaangashan si aad u isticmaalo lacag-bixinta deynta"
+      "loanRequiresCustomer": "Dooro macmiil diiwaangashan si aad u isticmaalo lacag-bixinta deynta",
+      "barcodeAdded": "{{name}} waxa lagu daray gaariga",
+      "barcodeNotFound": "Wax badeecad ah kuma jiraan barcode-kan: {{barcode}}"
     }
   },
   "salesOrdersPage": {

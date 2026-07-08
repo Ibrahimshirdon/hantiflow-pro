@@ -102,12 +102,19 @@ export function POSPage() {
   async function handleBarcodeSearch() {
     const term = search.trim();
     if (!term) return;
+    // If the grid already shows exactly one match, add it directly (no API call needed)
+    if (filteredProducts.length === 1) {
+      addToCart(filteredProducts[0]!);
+      setSearch("");
+      return;
+    }
     try {
       const product = await getProductByBarcode(term);
       addToCart(product);
       setSearch("");
+      toast.success(t("posPage.toasts.barcodeAdded", { name: product.name }));
     } catch {
-      // not a barcode match - fall through to normal text filtering, no error needed
+      toast.error(t("posPage.toasts.barcodeNotFound", { barcode: term }));
     }
   }
 
@@ -184,6 +191,12 @@ export function POSPage() {
           />
         </div>
         <div className="grid grid-cols-3 gap-3 overflow-y-auto pe-1 sm:grid-cols-4">
+          {search.trim() && filteredProducts.length === 0 && (
+            <div className="col-span-full py-10 text-center text-sm text-muted-foreground">
+              <p>{t("posPage.noResults")}</p>
+              <p className="mt-1 text-xs">{t("posPage.noResultsHint")}</p>
+            </div>
+          )}
           {filteredProducts.map((product) => (
             <Card
               key={product.id}

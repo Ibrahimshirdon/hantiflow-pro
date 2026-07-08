@@ -17,11 +17,15 @@
     },
     "processing": "جارٍ المعالجة...",
     "charge": "تحصيل ${{total}}",
+    "noResults": "لم يُعثر على منتجات.",
+    "noResultsHint": "اضغط Enter للبحث بالباركود الكامل.",
     "toasts": {
       "discountApplied": "تم تطبيق الخصم: -${{amount}}",
       "saleCompleted": "تمت عملية البيع بنجاح",
       "cartEmpty": "السلة فارغة",
-      "loanRequiresCustomer": "اختر عميلاً مسجلاً لاستخدام الدفع بالقرض"
+      "loanRequiresCustomer": "اختر عميلاً مسجلاً لاستخدام الدفع بالقرض",
+      "barcodeAdded": "تمت إضافة {{name}} إلى السلة",
+      "barcodeNotFound": "لم يُعثر على منتج بالباركود: {{barcode}}"
     }
   },
   "salesOrdersPage": {
