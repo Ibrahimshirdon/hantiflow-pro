@@ -407,6 +407,11 @@ export async function createSalesOrder(
 
   await notifyIfNewlyLowStock(lowStockTransitions);
 
+  // Award loyalty points for POS purchases made by a registered customer
+  if (!isOnlineOrder && input.customerId) {
+    await awardLoyaltyPointsForOrder(input.customerId, orderRef.id);
+  }
+
   return { id: orderRef.id, invoiceId: invoiceRef.id, receiptId: receiptRef.id };
 }
 
@@ -458,6 +463,10 @@ export async function markOrderCompleted(id: string, actor: AuthenticatedUser) {
     completedAt: FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp(),
   });
+
+  if (order.customerId) {
+    await awardLoyaltyPointsForOrder(order.customerId, id);
+  }
 }
 
 export async function getInvoiceForOrder(orderId: string) {
@@ -503,6 +512,27 @@ export async function approveOrder(id: string, _actor: AuthenticatedUser) {
   }
 }
 
+async function awardLoyaltyPointsForOrder(customerId: string, orderId: string): Promise<void> {
+  const orderSnap = await db.collection("salesOrders").doc(orderId).get();
+  if (!orderSnap.exists) return;
+  const order = orderSnap.data() as SalesOrder;
+  const points = Math.floor(order.grandTotal);
+  if (points <= 0) return;
+
+  const profileRef = db.collection("customerProfiles").doc(customerId);
+  const profileSnap = await profileRef.get();
+  if (!profileSnap.exists) return;
+
+  await profileRef.update({ loyaltyPoints: FieldValue.increment(points) });
+  await createNotification({
+    userId: customerId,
+    title: "Loyalty points earned",
+    message: `You earned ${points} loyalty points on order ${order.orderNumber}. Keep shopping to unlock more rewards!`,
+    type: "system",
+    relatedEntityId: orderId,
+  });
+}
+
 export async function completeOrder(id: string, actor: AuthenticatedUser) {
   const ref = db.collection("salesOrders").doc(id);
   const snap = await ref.get();
@@ -528,6 +558,7 @@ export async function completeOrder(id: string, actor: AuthenticatedUser) {
       type: "order",
       relatedEntityId: id,
     });
+    await awardLoyaltyPointsForOrder(order.customerId, id);
   }
 }
 
