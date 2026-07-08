@@ -64,6 +64,8 @@
     "invoiceStatusLine": "الحالة: {{status}} · الإجمالي ${{total}}",
     "receiptHeading": "الإيصال {{receiptNumber}}",
     "receiptPaidLine": "تم دفع ${{amount}} عن طريق {{method}}",
+    "printReceipt": "طباعة الإيصال",
+    "receiptPreviewTitle": "معاينة الإيصال",
     "approveOrder": "الموافقة على الطلب",
     "approving": "جارٍ الموافقة...",
     "completeOrder": "تعيين كمكتمل",

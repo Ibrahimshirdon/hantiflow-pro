@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import type { TFunction } from "i18next";
-import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Printer, XCircle } from "lucide-react";
 import {
   approveOrder,
   cancelOrder,
@@ -42,6 +42,12 @@ export function SalesOrderDetailPage() {
   const orderId = id!;
   const queryClient = useQueryClient();
   const [cancelOpen, setCancelOpen] = useState(false);
+  const [receiptOpen, setReceiptOpen] = useState(false);
+
+  function handlePrint() {
+    setReceiptOpen(false);
+    setTimeout(() => window.print(), 120);
+  }
 
   const { data: order } = useQuery({
     queryKey: ["salesOrder", orderId],
@@ -172,11 +178,30 @@ export function SalesOrderDetailPage() {
           {order.status === "completed" && (
             <ReturnOrderDialog order={order} alreadyReturnedQty={alreadyReturnedQty} />
           )}
-          <Button variant="outline" size="sm" onClick={() => window.print()}>
-            {t("common:actions.print")}
+          <Button variant="outline" size="sm" className="gap-1.5" onClick={() => setReceiptOpen(true)}>
+            <Printer className="size-4" />
+            {t("salesOrderDetailPage.printReceipt")}
           </Button>
         </div>
       </div>
+
+      {/* Receipt preview dialog */}
+      <Dialog open={receiptOpen} onOpenChange={setReceiptOpen}>
+        <DialogContent className="max-w-xs gap-0 p-0 overflow-hidden">
+          <DialogHeader className="flex-row items-center justify-between border-b p-3">
+            <DialogTitle className="text-sm">
+              {t("salesOrderDetailPage.receiptPreviewTitle")}
+            </DialogTitle>
+            <Button size="sm" className="gap-1.5 shrink-0" onClick={handlePrint}>
+              <Printer className="size-3.5" />
+              {t("salesOrderDetailPage.printReceipt")}
+            </Button>
+          </DialogHeader>
+          <div className="max-h-[70vh] overflow-y-auto">
+            <ReceiptPaper order={order} receipt={receipt} t={t} />
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Cancel confirmation dialog */}
       <Dialog open={cancelOpen} onOpenChange={(o) => !cancelMutation.isPending && setCancelOpen(o)}>
@@ -343,7 +368,10 @@ export function SalesOrderDetailPage() {
         </Card>
       )}
 
-      <ReceiptPaper order={order} receipt={receipt} t={t} />
+      {/* Print-only receipt — hidden on screen, shown when window.print() fires */}
+      <div className="hidden print:block">
+        <ReceiptPaper order={order} receipt={receipt} t={t} />
+      </div>
     </div>
   );
 }

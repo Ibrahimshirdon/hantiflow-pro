@@ -64,6 +64,8 @@
     "invoiceStatusLine": "Xaaladda: {{status}} · Wadarta ${{total}}",
     "receiptHeading": "Rasiidka {{receiptNumber}}",
     "receiptPaidLine": "La bixiyay ${{amount}} iyadoo loo marayo {{method}}",
+    "printReceipt": "Daabi Rasiidka",
+    "receiptPreviewTitle": "Muuqaalka Rasiidka",
     "approveOrder": "Ogolow Dalabka",
     "approving": "Waa la ogolaanahaa...",
     "completeOrder": "Calaamadi Dhammays",

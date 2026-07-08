@@ -64,6 +64,8 @@
     "invoiceStatusLine": "Status: {{status}} · Total ${{total}}",
     "receiptHeading": "Receipt {{receiptNumber}}",
     "receiptPaidLine": "Paid ${{amount}} via {{method}}",
+    "printReceipt": "Print Receipt",
+    "receiptPreviewTitle": "Receipt Preview",
     "approveOrder": "Approve Order",
     "approving": "Approving...",
     "completeOrder": "Mark as Completed",

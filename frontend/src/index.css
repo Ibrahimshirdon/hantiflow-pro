@@ -158,3 +158,15 @@
     15% calc(100% - 8px), 10% 100%, 5% calc(100% - 8px), 0% 100%
   );
 }
+
+@media print {
+  /* Size to 80mm thermal roll width with auto height so nothing gets clipped */
+  @page {
+    size: 80mm auto;
+    margin: 4mm;
+  }
+  /* Remove the decorative torn-edge clip-path so nothing gets cut off */
+  .receipt-torn-edge {
+    clip-path: none;
+  }
+}
