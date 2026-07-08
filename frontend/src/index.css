@@ -160,12 +160,11 @@
 }
 
 @media print {
-  /* Size to 80mm thermal roll width with auto height so nothing gets clipped */
+  /* 80mm thermal roll, portrait, auto height so the full receipt prints on one roll */
   @page {
-    size: 80mm auto;
+    size: 80mm 500mm portrait;
     margin: 4mm;
   }
-  /* Remove the decorative torn-edge clip-path so nothing gets cut off */
   .receipt-torn-edge {
     clip-path: none;
   }
