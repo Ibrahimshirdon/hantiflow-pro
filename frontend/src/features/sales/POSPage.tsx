@@ -62,7 +62,10 @@ export function POSPage() {
     const term = search.trim().toLowerCase();
     if (!term) return products;
     return products.filter(
-      (p) => p.name.toLowerCase().includes(term) || p.sku.toLowerCase().includes(term),
+      (p) =>
+        p.name.toLowerCase().includes(term) ||
+        p.sku.toLowerCase().includes(term) ||
+        (p.barcode?.toLowerCase() ?? "").includes(term),
     );
   }, [products, search]);
 
