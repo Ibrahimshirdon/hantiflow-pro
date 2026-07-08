@@ -87,3 +87,28 @@ export interface Receipt {
   issuedBy: string;
   createdAt: FirestoreTimestampLike;
 }
+
+export interface SalesReturnItem {
+  productId: string;
+  productName: string;
+  batchId: string | null;
+  quantity: number;
+  unitPrice: number;
+  lineRefund: number;
+}
+
+export interface SalesReturn {
+  id: string;
+  orderId: string;
+  orderNumber: string;
+  customerId: string | null;
+  customerName: string | null;
+  paymentMethod: string;
+  items: SalesReturnItem[];
+  refundTotal: number;
+  refundMethod: "wallet" | "cash";
+  reason: string;
+  processedBy: string;
+  processedByName: string;
+  createdAt: FirestoreTimestampLike;
+}

@@ -1,5 +1,5 @@
 import { apiClient, type ApiSuccess } from "./client";
-import type { Discount, Invoice, Receipt, SalesOrder, TaxRate } from "@/types/sales.types";
+import type { Discount, Invoice, Receipt, SalesOrder, SalesReturn, TaxRate } from "@/types/sales.types";
 
 // Tax rates
 export interface TaxRateInput {
@@ -111,4 +111,23 @@ export async function completeOrder(id: string) {
 
 export async function cancelOrder(id: string) {
   await apiClient.patch(`/sales/orders/${id}/cancel`);
+}
+
+// Returns
+export interface CreateReturnInput {
+  reason: string;
+  items: { productId: string; batchId: string | null; quantity: number }[];
+}
+
+export async function createReturn(orderId: string, input: CreateReturnInput) {
+  const { data } = await apiClient.post<ApiSuccess<{ id: string; refundTotal: number; refundMethod: string }>>(
+    `/sales/orders/${orderId}/returns`,
+    input,
+  );
+  return data.data;
+}
+
+export async function listReturnsForOrder(orderId: string) {
+  const { data } = await apiClient.get<ApiSuccess<SalesReturn[]>>(`/sales/orders/${orderId}/returns`);
+  return data.data;
 }

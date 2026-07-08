@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
@@ -12,9 +12,11 @@ import {
   getInvoiceForOrder,
   getReceiptForOrder,
   getSalesOrder,
+  listReturnsForOrder,
 } from "@/api/sales.api";
 import { getApiErrorMessage } from "@/api/client";
 import type { Receipt, SalesOrder } from "@/types/sales.types";
+import { ReturnOrderDialog } from "./ReturnOrderDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -53,6 +55,21 @@ export function SalesOrderDetailPage() {
     queryKey: ["receipt", orderId],
     queryFn: () => getReceiptForOrder(orderId),
   });
+  const { data: returns } = useQuery({
+    queryKey: ["returns", orderId],
+    queryFn: () => listReturnsForOrder(orderId),
+    enabled: order?.status === "completed",
+  });
+
+  const alreadyReturnedQty = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const ret of returns ?? []) {
+      for (const item of ret.items) {
+        map.set(item.productId, (map.get(item.productId) ?? 0) + item.quantity);
+      }
+    }
+    return map;
+  }, [returns]);
 
   function invalidate() {
     queryClient.invalidateQueries({ queryKey: ["salesOrder", orderId] });
@@ -152,6 +169,9 @@ export function SalesOrderDetailPage() {
             </>
           )}
 
+          {order.status === "completed" && (
+            <ReturnOrderDialog order={order} alreadyReturnedQty={alreadyReturnedQty} />
+          )}
           <Button variant="outline" size="sm" onClick={() => window.print()}>
             {t("common:actions.print")}
           </Button>
@@ -285,6 +305,43 @@ export function SalesOrderDetailPage() {
           </CardContent>
         </Card>
       </div>
+
+      {returns && returns.length > 0 && (
+        <Card className="print:hidden">
+          <CardHeader>
+            <CardTitle className="text-base">{t("salesOrderDetailPage.returnsHeading")}</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3 p-4 pt-0">
+            {returns.map((ret) => (
+              <div key={ret.id} className="rounded-lg border bg-muted/40 p-3 text-sm">
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <span className="font-medium">
+                    {new Date(ret.createdAt._seconds * 1000).toLocaleString()}
+                  </span>
+                  <span className="font-semibold text-destructive">
+                    -{`$${ret.refundTotal.toFixed(2)}`}
+                    <span className="ms-1.5 text-xs font-normal text-muted-foreground capitalize">
+                      ({ret.refundMethod})
+                    </span>
+                  </span>
+                </div>
+                <p className="text-muted-foreground">{ret.reason}</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {t("salesOrderDetailPage.returnProcessedBy", { name: ret.processedByName })}
+                </p>
+                <ul className="mt-2 flex flex-col gap-0.5">
+                  {ret.items.map((item, i) => (
+                    <li key={i} className="flex justify-between text-xs">
+                      <span>{item.productName} × {item.quantity}</span>
+                      <span>${item.lineRefund.toFixed(2)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
 
       <ReceiptPaper order={order} receipt={receipt} t={t} />
     </div>

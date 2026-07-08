@@ -81,6 +81,8 @@
       "description": "This will cancel order {{orderNumber}} and notify the customer.",
       "confirm": "Yes, cancel it"
     },
+    "returnsHeading": "Returns",
+    "returnProcessedBy": "Processed by {{name}}",
     "toasts": {
       "approved": "Order approved — customer has been notified",
       "completed": "Order marked as completed",
@@ -103,6 +105,26 @@
       "change": "Change",
       "thankYou": "Thank you for your purchase!",
       "paidStamp": "PAID"
+    }
+  },
+  "returnDialog": {
+    "trigger": "Return items",
+    "title": "Return items — {{orderNumber}}",
+    "product": "Product",
+    "maxReturnable": "Max",
+    "returnQty": "Return qty",
+    "refund": "Refund",
+    "estimatedRefund": "Estimated refund",
+    "reasonLabel": "Reason for return",
+    "reasonPlaceholder": "e.g. customer changed mind, defective item...",
+    "refundHintWallet": "Original payment was via wallet — the refund will be credited back to the customer's wallet.",
+    "refundHintCash": "Refund will be handled as cash — process it manually at the counter.",
+    "processing": "Processing...",
+    "confirm": "Confirm return & refund ${{amount}}",
+    "toasts": {
+      "success": "Return processed — ${{amount}} refund ({{method}})",
+      "wallet": "wallet",
+      "cash": "cash"
     }
   },
   "discountsPage": {

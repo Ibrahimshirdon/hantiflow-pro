@@ -81,6 +81,8 @@
       "description": "Tani waxay joojin doontaa dalabka {{orderNumber}} oo macmiilka waa lagu ogeysiinayaa.",
       "confirm": "Haa, jooji"
     },
+    "returnsHeading": "Soo celinta",
+    "returnProcessedBy": "Waxaa fuliyay {{name}}",
     "toasts": {
       "approved": "Dalabka waa la ogolaaday — macmiilka waa lagu ogeysiiyay",
       "completed": "Dalabka waa loo calaamadiyay dhammays",
@@ -103,6 +105,26 @@
       "change": "Baaqi",
       "thankYou": "Mahadsanid iibsigaaga!",
       "paidStamp": "LA BIXIYAY"
+    }
+  },
+  "returnDialog": {
+    "trigger": "Soo celi alaab",
+    "title": "Soo celinta alaabta — {{orderNumber}}",
+    "product": "Badeecada",
+    "maxReturnable": "Ugu badan",
+    "returnQty": "Tirada la soo celinayo",
+    "refund": "Lacag celinta",
+    "estimatedRefund": "Lacagta la celiyayo",
+    "reasonLabel": "Sababta soo celinta",
+    "reasonPlaceholder": "Tusaale: macmiilku fikradiisii ayuu beddelay, badeecaddu waa khalafsantahay...",
+    "refundHintWallet": "Lacag-bixinta asalka ah waxay ahayd boorsada — lacagta la celiyayo waxaa laguugu dari doonaa boorsadaada.",
+    "refundHintCash": "Lacagta la celiyayo waxaa lagu qabanayaa lacag caddaan ah — gacanta ku samee.",
+    "processing": "Waa la habeynayaa...",
+    "confirm": "Xaqiiji soo celinta & celi ${{amount}}",
+    "toasts": {
+      "success": "Soo celinta waa la fuliyay — ${{amount}} waa la celiyay ({{method}})",
+      "wallet": "boorsada",
+      "cash": "lacag caddaan"
     }
   },
   "discountsPage": {

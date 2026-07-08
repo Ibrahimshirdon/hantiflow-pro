@@ -81,6 +81,8 @@
       "description": "سيتم إلغاء الطلب {{orderNumber}} وإشعار العميل.",
       "confirm": "نعم، إلغاؤه"
     },
+    "returnsHeading": "المرتجعات",
+    "returnProcessedBy": "تمت المعالجة بواسطة {{name}}",
     "toasts": {
       "approved": "تمت الموافقة على الطلب — تم إشعار العميل",
       "completed": "تم تعيين الطلب كمكتمل",
@@ -103,6 +105,26 @@
       "change": "الباقي",
       "thankYou": "شكرًا لشرائك!",
       "paidStamp": "مدفوع"
+    }
+  },
+  "returnDialog": {
+    "trigger": "إرجاع بضاعة",
+    "title": "إرجاع بضاعة — {{orderNumber}}",
+    "product": "المنتج",
+    "maxReturnable": "الحد الأقصى",
+    "returnQty": "كمية الإرجاع",
+    "refund": "المبلغ المسترد",
+    "estimatedRefund": "الاسترداد المقدر",
+    "reasonLabel": "سبب الإرجاع",
+    "reasonPlaceholder": "مثل: غيّر العميل رأيه، المنتج به عيب...",
+    "refundHintWallet": "طريقة الدفع الأصلية كانت المحفظة — سيُضاف المبلغ المسترد إلى محفظة العميل.",
+    "refundHintCash": "سيتم استرداد المبلغ نقدًا — تعامل معه يدويًا في نقطة البيع.",
+    "processing": "جارٍ المعالجة...",
+    "confirm": "تأكيد الإرجاع واسترداد ${{amount}}",
+    "toasts": {
+      "success": "تم معالجة الإرجاع — استرداد ${{amount}} ({{method}})",
+      "wallet": "محفظة",
+      "cash": "نقدًا"
     }
   },
   "discountsPage": {
