@@ -3,7 +3,7 @@ import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { Menu, X } from "lucide-react";
+import { Menu, PanelLeft, X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { listDeliveryIssues } from "@/api/delivery.api";
 import { UserMenu } from "@/components/shared/UserMenu";
@@ -18,6 +18,7 @@ export function DashboardLayout() {
   const { t } = useTranslation("common");
   const canSeeDeliveryIssues = profile?.role === "admin" || profile?.role === "manager";
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const { data: openIssues } = useQuery({
     queryKey: ["deliveryIssues", "open"],
@@ -46,8 +47,11 @@ export function DashboardLayout() {
       )}
       <nav
         className={cn(
-          "fixed inset-y-0 start-0 z-50 flex w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground transition-transform duration-200 lg:static lg:translate-x-0 print:hidden",
+          "fixed inset-y-0 start-0 z-50 flex w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground transition-all duration-200 print:hidden",
           mobileNavOpen ? "translate-x-0" : "-translate-x-full rtl:translate-x-full",
+          sidebarCollapsed
+            ? "lg:static lg:w-0 lg:overflow-hidden lg:translate-x-0"
+            : "lg:static lg:w-64 lg:translate-x-0",
         )}
       >
         <div className="flex h-16 shrink-0 items-center gap-2 px-4">
@@ -116,6 +120,14 @@ export function DashboardLayout() {
             onClick={() => setMobileNavOpen(true)}
           >
             <Menu className="size-5" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="hidden lg:flex"
+            onClick={() => setSidebarCollapsed((c) => !c)}
+          >
+            <PanelLeft className="size-5" />
           </Button>
           <div className="flex flex-1 items-center justify-end gap-2">
             <NotificationBell />
