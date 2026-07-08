@@ -16,7 +16,10 @@
       "mySales7d": "Iibkayga (7mln)",
       "mySales30d": "Iibkayga (30mln)",
       "stockReceived30d": "Kaydka la helay (30mln)",
-      "amountWithCount": "${{amount}} ({{count}})"
+      "amountWithCount": "${{amount}} ({{count}})",
+      "todaySales": "Wadarta maanta",
+      "todaySuccessful": "Guuleystay maanta",
+      "todayRefunded": "La soo celiyay maanta"
     },
     "yourWork": {
       "title": "Shaqadaada",
@@ -47,7 +50,17 @@
       "totalSpent": "Wadarta lacagta la bixiyay",
       "damagedMissing": "{{count}} waa khasaaray/maqan",
       "type": "Nooca",
-      "payment": "Lacag-bixinta"
+      "payment": "Lacag-bixinta",
+      "saleStatus": "Xaaladda"
+    },
+    "saleStatus": {
+      "success": "Iib guulaysta",
+      "refunded": "La soo celiyay"
+    },
+    "orderStatus": {
+      "pending": "Sugaya",
+      "confirmed": "La xaqiijiyay",
+      "cancelled": "La joojiyay"
     },
     "needsAttention": {
       "title": "Waxa u baahan feejignaantaada",

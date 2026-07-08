@@ -35,7 +35,7 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import { listExpiringBatches, listGoodsReceipts, listProducts } from "@/api/inventory.api";
 import { toDate } from "@/types/inventory.types";
-import { listSalesOrders } from "@/api/sales.api";
+import { listReturnsForOrder, listSalesOrders } from "@/api/sales.api";
 import { listCustomers } from "@/api/customers.api";
 import {
   getBestCustomers,
@@ -286,6 +286,42 @@ export function DashboardPage() {
   const recentMySales = (mySales ?? []).slice(0, 6);
   const recentMyReceipts = (myReceipts ?? []).slice(0, 6);
 
+  const todayCompletedOrders = useMemo(() => {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const cutoff = todayStart.getTime();
+    return (mySales ?? []).filter(
+      (o) => o.status === "completed" && o.createdAt._seconds * 1000 >= cutoff,
+    );
+  }, [mySales]);
+
+  const returnQueryIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const o of todayCompletedOrders) ids.add(o.id);
+    for (const o of recentMySales) if (o.status === "completed") ids.add(o.id);
+    return [...ids];
+  }, [todayCompletedOrders, recentMySales]);
+
+  const { data: returnedOrderIds } = useQuery({
+    queryKey: ["staffOrderReturns", returnQueryIds],
+    queryFn: async () => {
+      const results = await Promise.all(returnQueryIds.map((id) => listReturnsForOrder(id)));
+      const set = new Set<string>();
+      returnQueryIds.forEach((id, i) => {
+        if ((results[i]?.length ?? 0) > 0) set.add(id);
+      });
+      return set;
+    },
+    enabled: isStaff && returnQueryIds.length > 0,
+  });
+
+  const todayStats = useMemo(() => {
+    const refunded = todayCompletedOrders.filter((o) => returnedOrderIds?.has(o.id)).length;
+    const successful = todayCompletedOrders.length - refunded;
+    const totalRevenue = round2(todayCompletedOrders.reduce((s, o) => s + o.grandTotal, 0));
+    return { total: todayCompletedOrders.length, successful, refunded, totalRevenue };
+  }, [todayCompletedOrders, returnedOrderIds]);
+
   const pendingApprovalCount = useMemo(
     () => allProducts?.filter((p) => p.approvalStatus === "pending").length ?? 0,
     [allProducts],
@@ -402,6 +438,27 @@ export function DashboardPage() {
             <p className="text-sm text-muted-foreground">{t("dashboardPage.yourWork.subtitle")}</p>
           </div>
 
+          <div className="grid grid-cols-3 gap-4">
+            <StatCard
+              label={t("dashboardPage.stats.todaySuccessful")}
+              value={String(todayStats.successful)}
+              icon={ShoppingCart}
+              tone="success"
+            />
+            <StatCard
+              label={t("dashboardPage.stats.todayRefunded")}
+              value={String(todayStats.refunded)}
+              icon={Receipt}
+              tone="warning"
+            />
+            <StatCard
+              label={t("dashboardPage.stats.todaySales")}
+              value={`$${todayStats.totalRevenue.toFixed(2)} (${todayStats.total})`}
+              icon={DollarSign}
+              tone="primary"
+            />
+          </div>
+
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <StatCard
               label={t("dashboardPage.stats.mySales24h")}
@@ -480,23 +537,41 @@ export function DashboardPage() {
                       <TableHead>{t("dashboardPage.table.orderNumber")}</TableHead>
                       <TableHead>{t("dashboardPage.table.items")}</TableHead>
                       <TableHead className="text-end">{t("common:fields.total")}</TableHead>
+                      <TableHead>{t("dashboardPage.table.saleStatus")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {recentMySales.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={3} className="text-center text-muted-foreground">
+                        <TableCell colSpan={4} className="text-center text-muted-foreground">
                           {t("dashboardPage.myRecentSales.empty")}
                         </TableCell>
                       </TableRow>
                     ) : (
-                      recentMySales.map((order) => (
-                        <TableRow key={order.id}>
-                          <TableCell className="font-medium">{order.orderNumber}</TableCell>
-                          <TableCell>{order.items.length}</TableCell>
-                          <TableCell className="text-end">${order.grandTotal.toFixed(2)}</TableCell>
-                        </TableRow>
-                      ))
+                      recentMySales.map((order) => {
+                        const isRefunded = order.status === "completed" && returnedOrderIds?.has(order.id);
+                        const isSuccess = order.status === "completed" && !returnedOrderIds?.has(order.id);
+                        return (
+                          <TableRow key={order.id}>
+                            <TableCell className="font-medium">{order.orderNumber}</TableCell>
+                            <TableCell>{order.items.length}</TableCell>
+                            <TableCell className="text-end">${order.grandTotal.toFixed(2)}</TableCell>
+                            <TableCell>
+                              {isRefunded ? (
+                                <Badge variant="destructive">{t("dashboardPage.saleStatus.refunded")}</Badge>
+                              ) : isSuccess ? (
+                                <Badge className="bg-green-500/15 text-green-700 dark:text-green-400">
+                                  {t("dashboardPage.saleStatus.success")}
+                                </Badge>
+                              ) : (
+                                <Badge variant="secondary">
+                                  {t(`dashboardPage.orderStatus.${order.status}`)}
+                                </Badge>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
                     )}
                   </TableBody>
                 </Table>

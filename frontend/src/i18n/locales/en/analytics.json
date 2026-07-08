@@ -16,7 +16,10 @@
       "mySales7d": "My sales (7d)",
       "mySales30d": "My sales (30d)",
       "stockReceived30d": "Stock received (30d)",
-      "amountWithCount": "${{amount}} ({{count}})"
+      "amountWithCount": "${{amount}} ({{count}})",
+      "todaySales": "Today's total",
+      "todaySuccessful": "Successful today",
+      "todayRefunded": "Refunded today"
     },
     "yourWork": {
       "title": "Your work",
@@ -47,7 +50,17 @@
       "totalSpent": "Total spent",
       "damagedMissing": "{{count}} damaged/missing",
       "type": "Type",
-      "payment": "Payment"
+      "payment": "Payment",
+      "saleStatus": "Status"
+    },
+    "saleStatus": {
+      "success": "Sale success",
+      "refunded": "Refunded"
+    },
+    "orderStatus": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled"
     },
     "needsAttention": {
       "title": "Needs your attention",

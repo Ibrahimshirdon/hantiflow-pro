@@ -16,7 +16,10 @@
       "mySales7d": "مبيعاتي (7 أيام)",
       "mySales30d": "مبيعاتي (30 يومًا)",
       "stockReceived30d": "المخزون المستلم (30 يومًا)",
-      "amountWithCount": "${{amount}} ({{count}})"
+      "amountWithCount": "${{amount}} ({{count}})",
+      "todaySales": "إجمالي اليوم",
+      "todaySuccessful": "ناجحة اليوم",
+      "todayRefunded": "مستردة اليوم"
     },
     "yourWork": {
       "title": "عملك",
@@ -47,7 +50,17 @@
       "totalSpent": "إجمالي المصروف",
       "damagedMissing": "{{count}} تالف/مفقود",
       "type": "النوع",
-      "payment": "الدفع"
+      "payment": "الدفع",
+      "saleStatus": "الحالة"
+    },
+    "saleStatus": {
+      "success": "بيع ناجح",
+      "refunded": "مسترد"
+    },
+    "orderStatus": {
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "cancelled": "ملغى"
     },
     "needsAttention": {
       "title": "يحتاج إلى اهتمامك",
