@@ -26,6 +26,12 @@
       "loanRequiresCustomer": "Dooro macmiil diiwaangashan si aad u isticmaalo lacag-bixinta deynta",
       "barcodeAdded": "{{name}} waxa lagu daray gaariga",
       "barcodeNotFound": "Wax badeecad ah kuma jiraan barcode-kan: {{barcode}}"
+    },
+    "loyalty": {
+      "balance": "{{pts}} dhibcood ayaa heli kartaa",
+      "pts": "dhibco",
+      "useMax": "Isticmaal ugu badan",
+      "discount": "Daacadnimo ({{pts}} dhibco)"
     }
   },
   "salesOrdersPage": {

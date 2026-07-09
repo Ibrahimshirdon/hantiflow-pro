@@ -47,6 +47,8 @@ export interface SalesOrder {
   items: SalesOrderItem[];
   subtotal: number;
   discountTotal: number;
+  loyaltyDiscountTotal: number;
+  pointsRedeemed: number;
   taxTotal: number;
   fulfillmentType: "pickup" | "delivery" | null;
   deliveryFee: number;

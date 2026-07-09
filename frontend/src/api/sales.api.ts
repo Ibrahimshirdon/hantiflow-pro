@@ -71,6 +71,7 @@ export interface CreateSalesOrderInput {
   items: { productId: string; quantity: number }[];
   discountCode?: string;
   paymentMethod: "cash" | "wallet" | "evc_plus" | "sahal" | "edahab" | "loan";
+  pointsToRedeem?: number;
 }
 
 export async function createSalesOrder(input: CreateSalesOrderInput) {

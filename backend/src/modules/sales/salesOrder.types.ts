@@ -12,5 +12,6 @@ export const createSalesOrderSchema = z.object({
     .min(1),
   discountCode: z.string().optional(),
   paymentMethod: z.enum(["cash", "wallet", "evc_plus", "sahal", "edahab", "loan"]),
+  pointsToRedeem: z.coerce.number().int().min(0).optional(),
 });
 export type CreateSalesOrderInput = z.infer<typeof createSalesOrderSchema>;

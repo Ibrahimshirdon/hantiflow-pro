@@ -19,6 +19,12 @@
     "charge": "Charge ${{total}}",
     "noResults": "No products found.",
     "noResultsHint": "Press Enter to search by exact barcode.",
+    "loyalty": {
+      "balance": "{{pts}} pts available",
+      "pts": "pts",
+      "useMax": "Use max",
+      "discount": "Loyalty ({{pts}} pts)"
+    },
     "toasts": {
       "discountApplied": "Discount applied: -${{amount}}",
       "saleCompleted": "Sale completed",

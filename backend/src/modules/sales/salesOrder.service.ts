@@ -207,7 +207,19 @@ export async function createSalesOrder(
     taxTotal = round2(taxTotal);
 
     const deliveryFee = fulfillment.deliveryFee ?? 0;
-    const grandTotal = round2(subtotal - discountTotal + taxTotal + deliveryFee);
+    const preLoyaltyTotal = round2(subtotal - discountTotal + taxTotal + deliveryFee);
+
+    // Loyalty redemption: 100 points = $1.00
+    const pointsToRedeem = input.pointsToRedeem ?? 0;
+    let loyaltyDiscountAmount = 0;
+    if (pointsToRedeem > 0) {
+      if (!customerProfile) throw new AppError(400, "Select a customer to redeem loyalty points");
+      if (customerProfile.loyaltyPoints < pointsToRedeem) {
+        throw new AppError(400, `Insufficient loyalty points — available ${customerProfile.loyaltyPoints}`);
+      }
+      loyaltyDiscountAmount = round2(Math.min(pointsToRedeem / 100, preLoyaltyTotal));
+    }
+    const grandTotal = round2(preLoyaltyTotal - loyaltyDiscountAmount);
 
     if (input.paymentMethod === "wallet") {
       if (!customerProfile || customerProfile.walletBalance < grandTotal) {
@@ -280,6 +292,10 @@ export async function createSalesOrder(
       tx.update(db.collection("discounts").doc(discountSnapDoc.id), {
         usedCount: FieldValue.increment(1),
       });
+    }
+
+    if (pointsToRedeem > 0 && customerProfileRef) {
+      tx.update(customerProfileRef, { loyaltyPoints: FieldValue.increment(-pointsToRedeem) });
     }
 
     let walletTransactionRef: FirebaseFirestore.DocumentReference | null = null;
@@ -362,6 +378,8 @@ export async function createSalesOrder(
       items,
       subtotal,
       discountTotal,
+      loyaltyDiscountTotal: loyaltyDiscountAmount,
+      pointsRedeemed: pointsToRedeem,
       taxTotal,
       fulfillmentType: fulfillment.fulfillmentType ?? null,
       deliveryFee,

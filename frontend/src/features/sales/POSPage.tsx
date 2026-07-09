@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { Star } from "lucide-react";
 import { getProductByBarcode, listProducts } from "@/api/inventory.api";
 import { listTaxRates, createSalesOrder, previewDiscount, type CreateSalesOrderInput } from "@/api/sales.api";
 import { listUsers } from "@/api/auth.api";
 import { getApiErrorMessage } from "@/api/client";
+import type { CustomerProfile } from "@/types/auth.types";
 import type { Product } from "@/types/inventory.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,6 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+const POINTS_PER_DOLLAR = 100;
 
 interface CartLine {
   productId: string;
@@ -40,6 +44,7 @@ export function POSPage() {
   const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; amount: number } | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<CreateSalesOrderInput["paymentMethod"]>("cash");
   const [customerId, setCustomerId] = useState<string>("none");
+  const [pointsToRedeem, setPointsToRedeem] = useState(0);
 
   const { data: products } = useQuery({
     queryKey: ["products", "availableForSale"],
@@ -118,6 +123,12 @@ export function POSPage() {
     }
   }
 
+  const selectedCustomer = useMemo(
+    () => (customerId === "none" ? null : (customers?.find((c) => c.uid === customerId) ?? null)),
+    [customers, customerId],
+  );
+  const loyaltyBalance = (selectedCustomer?.profile as CustomerProfile | null)?.loyaltyPoints ?? 0;
+
   const subtotal = cart.reduce((sum, line) => sum + line.unitPrice * line.quantity, 0);
 
   const previewMutation = useMutation({
@@ -146,7 +157,10 @@ export function POSPage() {
     const discountShare = subtotal > 0 ? (lineTotal / subtotal) * discountTotal : 0;
     return sum + (lineTotal - discountShare) * line.taxRate;
   }, 0);
-  const grandTotal = subtotal - discountTotal + taxTotal;
+  const preLoyaltyTotal = subtotal - discountTotal + taxTotal;
+  const loyaltyDiscount = Math.min(pointsToRedeem / POINTS_PER_DOLLAR, preLoyaltyTotal);
+  const grandTotal = preLoyaltyTotal - loyaltyDiscount;
+  const maxRedeemablePoints = Math.min(loyaltyBalance, Math.floor(preLoyaltyTotal * POINTS_PER_DOLLAR));
 
   const checkoutMutation = useMutation({
     mutationFn: createSalesOrder,
@@ -155,6 +169,7 @@ export function POSPage() {
       setCart([]);
       setDiscountCode("");
       setAppliedDiscount(null);
+      setPointsToRedeem(0);
       navigate(`/app/sales/orders/${result.id}`);
     },
     onError: (error) => toast.error(getApiErrorMessage(error)),
@@ -174,6 +189,7 @@ export function POSPage() {
       items: cart.map((line) => ({ productId: line.productId, quantity: line.quantity })),
       discountCode: appliedDiscount?.code,
       paymentMethod,
+      pointsToRedeem: pointsToRedeem > 0 ? pointsToRedeem : undefined,
     });
   }
 
@@ -227,7 +243,13 @@ export function POSPage() {
       <Card className="flex flex-col overflow-hidden">
         <CardContent className="flex h-full flex-col gap-3 p-4">
           <div className="flex flex-col gap-1.5">
-            <Select value={customerId} onValueChange={setCustomerId}>
+            <Select
+              value={customerId}
+              onValueChange={(v) => {
+                setCustomerId(v);
+                setPointsToRedeem(0);
+              }}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t("posPage.walkInCustomer")} />
               </SelectTrigger>
@@ -240,6 +262,44 @@ export function POSPage() {
                 ))}
               </SelectContent>
             </Select>
+
+            {loyaltyBalance > 0 && (
+              <div className="flex items-center justify-between rounded-md border border-dashed border-amber-400/60 bg-amber-50/50 px-3 py-2 dark:bg-amber-900/10">
+                <div className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400">
+                  <Star className="size-3.5 fill-amber-500 text-amber-500" />
+                  <span>
+                    {t("posPage.loyalty.balance", { pts: loyaltyBalance })}
+                  </span>
+                </div>
+                {maxRedeemablePoints >= POINTS_PER_DOLLAR && (
+                  <div className="flex items-center gap-1">
+                    <Input
+                      type="number"
+                      min={0}
+                      max={maxRedeemablePoints}
+                      step={POINTS_PER_DOLLAR}
+                      value={pointsToRedeem || ""}
+                      placeholder="0"
+                      onChange={(e) => {
+                        const raw = Math.floor(Number(e.target.value) / POINTS_PER_DOLLAR) * POINTS_PER_DOLLAR;
+                        setPointsToRedeem(Math.min(Math.max(0, raw), maxRedeemablePoints));
+                      }}
+                      className="h-7 w-20 text-center text-xs"
+                    />
+                    <span className="text-xs text-muted-foreground">{t("posPage.loyalty.pts")}</span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 px-2 text-xs"
+                      onClick={() => setPointsToRedeem(maxRedeemablePoints)}
+                    >
+                      {t("posPage.loyalty.useMax")}
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="flex-1 overflow-y-auto">
@@ -292,6 +352,15 @@ export function POSPage() {
               <span className="text-muted-foreground">{t("common:fields.discount")}</span>
               <span>-${discountTotal.toFixed(2)}</span>
             </div>
+            {loyaltyDiscount > 0 && (
+              <div className="flex justify-between text-amber-600 dark:text-amber-400">
+                <span className="flex items-center gap-1">
+                  <Star className="size-3 fill-current" />
+                  {t("posPage.loyalty.discount", { pts: pointsToRedeem })}
+                </span>
+                <span>-${loyaltyDiscount.toFixed(2)}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-muted-foreground">{t("common:fields.tax")}</span>
               <span>${taxTotal.toFixed(2)}</span>

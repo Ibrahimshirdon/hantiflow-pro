@@ -26,6 +26,12 @@
       "loanRequiresCustomer": "اختر عميلاً مسجلاً لاستخدام الدفع بالقرض",
       "barcodeAdded": "تمت إضافة {{name}} إلى السلة",
       "barcodeNotFound": "لم يُعثر على منتج بالباركود: {{barcode}}"
+    },
+    "loyalty": {
+      "balance": "{{pts}} نقطة متاحة",
+      "pts": "نقطة",
+      "useMax": "استخدام الحد الأقصى",
+      "discount": "نقاط الولاء ({{pts}} نقطة)"
     }
   },
   "salesOrdersPage": {
