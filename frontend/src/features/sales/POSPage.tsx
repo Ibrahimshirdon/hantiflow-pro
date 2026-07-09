@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Star } from "lucide-react";
 import { getProductByBarcode, listProducts } from "@/api/inventory.api";
 import { listTaxRates, createSalesOrder, previewDiscount, type CreateSalesOrderInput } from "@/api/sales.api";
-import { listUsers } from "@/api/auth.api";
+import { listUsers, getUser } from "@/api/auth.api";
 import { getApiErrorMessage } from "@/api/client";
 import type { CustomerProfile } from "@/types/auth.types";
 import type { Product } from "@/types/inventory.types";
@@ -123,11 +123,12 @@ export function POSPage() {
     }
   }
 
-  const selectedCustomer = useMemo(
-    () => (customerId === "none" ? null : (customers?.find((c) => c.uid === customerId) ?? null)),
-    [customers, customerId],
-  );
-  const loyaltyBalance = (selectedCustomer?.profile as CustomerProfile | null)?.loyaltyPoints ?? 0;
+  const { data: selectedCustomerFull } = useQuery({
+    queryKey: ["user", customerId],
+    queryFn: () => getUser(customerId),
+    enabled: customerId !== "none",
+  });
+  const loyaltyBalance = (selectedCustomerFull?.profile as CustomerProfile | null)?.loyaltyPoints ?? 0;
 
   const subtotal = cart.reduce((sum, line) => sum + line.unitPrice * line.quantity, 0);
 
