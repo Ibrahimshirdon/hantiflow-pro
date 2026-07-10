@@ -32,6 +32,11 @@
       "pts": "dhibco",
       "useMax": "Isticmaal ugu badan",
       "discount": "Daacadnimo ({{pts}} dhibco)"
+    },
+    "recentOrders": {
+      "title": "Iibka dhowaan",
+      "reAdd": "Ku dar",
+      "added": "Alaabta {{order}} ayaa la dhex galinay baaskiilka"
     }
   },
   "salesOrdersPage": {

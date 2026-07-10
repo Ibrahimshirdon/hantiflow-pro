@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { Package, Star } from "lucide-react";
+import { Clock, Package, Plus, Star } from "lucide-react";
 import { getProductByBarcode, listProducts } from "@/api/inventory.api";
-import { listTaxRates, createSalesOrder, previewDiscount, type CreateSalesOrderInput } from "@/api/sales.api";
+import { listTaxRates, createSalesOrder, previewDiscount, listSalesOrders, type CreateSalesOrderInput } from "@/api/sales.api";
 import { listUsers, getUser } from "@/api/auth.api";
 import { getApiErrorMessage } from "@/api/client";
 import type { CustomerProfile } from "@/types/auth.types";
@@ -129,6 +129,16 @@ export function POSPage() {
     enabled: customerId !== "none",
   });
   const loyaltyBalance = (selectedCustomerFull?.profile as CustomerProfile | null)?.loyaltyPoints ?? 0;
+
+  const { data: recentCustomerOrders } = useQuery({
+    queryKey: ["salesOrders", "customer", customerId],
+    queryFn: () => listSalesOrders({ customerId, status: "completed" }),
+    enabled: customerId !== "none",
+    select: (orders) =>
+      [...orders]
+        .sort((a, b) => b.createdAt._seconds - a.createdAt._seconds)
+        .slice(0, 5),
+  });
 
   const subtotal = cart.reduce((sum, line) => sum + line.unitPrice * line.quantity, 0);
 
@@ -310,6 +320,65 @@ export function POSPage() {
                     </Button>
                   </div>
                 )}
+              </div>
+            )}
+
+            {recentCustomerOrders && recentCustomerOrders.length > 0 && (
+              <div className="mt-1 flex flex-col gap-1.5">
+                <p className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                  <Clock className="size-3" />
+                  {t("posPage.recentOrders.title")}
+                </p>
+                {recentCustomerOrders.map((order) => (
+                  <div
+                    key={order.id}
+                    className="flex items-start justify-between gap-2 rounded-md border bg-muted/30 px-2.5 py-2"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-medium">{order.orderNumber}</p>
+                      <p className="truncate text-[11px] text-muted-foreground">
+                        {order.items.map((i) => `${i.productName} ×${i.quantity}`).join(", ")}
+                      </p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 shrink-0 gap-1 px-2 text-xs"
+                      onClick={() => {
+                        order.items.forEach((item) => {
+                          const product = products?.find((p) => p.id === item.productId);
+                          if (!product || product.totalStock <= 0) return;
+                          setCart((prev) => {
+                            const existing = prev.find((l) => l.productId === item.productId);
+                            if (existing) {
+                              return prev.map((l) =>
+                                l.productId === item.productId
+                                  ? { ...l, quantity: l.quantity + item.quantity }
+                                  : l,
+                              );
+                            }
+                            return [
+                              ...prev,
+                              {
+                                productId: item.productId,
+                                name: item.productName,
+                                unitPrice: item.unitPrice,
+                                taxRate: item.taxRate,
+                                categoryId: product.categoryId,
+                                quantity: item.quantity,
+                              },
+                            ];
+                          });
+                        });
+                        toast.success(t("posPage.recentOrders.added", { order: order.orderNumber }));
+                      }}
+                    >
+                      <Plus className="size-3" />
+                      {t("posPage.recentOrders.reAdd")}
+                    </Button>
+                  </div>
+                ))}
               </div>
             )}
           </div>

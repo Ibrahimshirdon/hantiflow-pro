@@ -19,6 +19,11 @@
     "charge": "Charge ${{total}}",
     "noResults": "No products found.",
     "noResultsHint": "Press Enter to search by exact barcode.",
+    "recentOrders": {
+      "title": "Recent purchases",
+      "reAdd": "Re-add",
+      "added": "{{order}} items added to cart"
+    },
     "loyalty": {
       "balance": "{{pts}} pts available",
       "pts": "pts",

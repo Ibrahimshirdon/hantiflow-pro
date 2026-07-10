@@ -82,7 +82,7 @@ export async function createSalesOrder(input: CreateSalesOrderInput) {
   return data.data;
 }
 
-export async function listSalesOrders(filters?: { status?: string; createdBy?: string }) {
+export async function listSalesOrders(filters?: { status?: string; createdBy?: string; customerId?: string }) {
   const { data } = await apiClient.get<ApiSuccess<SalesOrder[]>>("/sales/orders", { params: filters });
   return data.data;
 }
