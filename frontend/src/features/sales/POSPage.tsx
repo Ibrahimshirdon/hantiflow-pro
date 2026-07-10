@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { Star } from "lucide-react";
+import { Package, Star } from "lucide-react";
 import { getProductByBarcode, listProducts } from "@/api/inventory.api";
 import { listTaxRates, createSalesOrder, previewDiscount, type CreateSalesOrderInput } from "@/api/sales.api";
 import { listUsers, getUser } from "@/api/auth.api";
@@ -217,9 +217,20 @@ export function POSPage() {
           {filteredProducts.map((product) => (
             <Card
               key={product.id}
-              className="cursor-pointer transition-colors hover:border-primary"
+              className="cursor-pointer overflow-hidden transition-colors hover:border-primary"
               onClick={() => addToCart(product)}
             >
+              <div className="flex h-28 items-center justify-center bg-muted">
+                {product.images[0] ? (
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="size-full object-cover"
+                  />
+                ) : (
+                  <Package className="size-8 text-muted-foreground/30" />
+                )}
+              </div>
               <CardContent className="flex flex-col gap-1 p-3">
                 <span className="line-clamp-2 text-sm font-medium">{product.name}</span>
                 <span className="text-sm text-muted-foreground">${product.sellingPrice.toFixed(2)}</span>

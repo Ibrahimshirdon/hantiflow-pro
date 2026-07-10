@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { Package } from "lucide-react";
 import { listCategories, listProducts } from "@/api/inventory.api";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -101,6 +102,7 @@ export function ProductsPage() {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead className="w-10"></TableHead>
             <TableHead>{t("common:fields.name")}</TableHead>
             <TableHead>{t("productsPage.sku")}</TableHead>
             <TableHead>{t("productsPage.category")}</TableHead>
@@ -131,6 +133,15 @@ export function ProductsPage() {
               className="cursor-pointer"
               onClick={() => navigate(`/app/inventory/products/${product.id}`)}
             >
+              <TableCell>
+                <div className="flex size-8 items-center justify-center overflow-hidden rounded-md border bg-muted">
+                  {product.images[0] ? (
+                    <img src={product.images[0]} alt="" className="size-full object-cover" />
+                  ) : (
+                    <Package className="size-4 text-muted-foreground/40" />
+                  )}
+                </div>
+              </TableCell>
               <TableCell className="font-medium">{product.name}</TableCell>
               <TableCell className="text-muted-foreground">{product.sku}</TableCell>
               <TableCell>{product.categoryName}</TableCell>
