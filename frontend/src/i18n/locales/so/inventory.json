@@ -49,7 +49,8 @@
     "resultErrors": "{{count}} saf cilad ah",
     "errorRow": "Saf {{row}}: {{message}}",
     "errorEmpty": "Faylka CSV ma lahan xog.",
-    "errorParse": "Faylka CSV lama qeexi karin."
+    "errorParse": "Faylka CSV lama qeexi karin.",
+    "availableCategories": "Qaybaha la heli karo"
   },
   "productDetailPage": {
     "noImage": "Sawir ma jiro",

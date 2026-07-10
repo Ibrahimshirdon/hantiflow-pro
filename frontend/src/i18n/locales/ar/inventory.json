@@ -49,7 +49,8 @@
     "resultErrors": "{{count}} صفوف تحتوي على أخطاء",
     "errorRow": "الصف {{row}}: {{message}}",
     "errorEmpty": "ملف CSV لا يحتوي على بيانات.",
-    "errorParse": "تعذّر قراءة ملف CSV."
+    "errorParse": "تعذّر قراءة ملف CSV.",
+    "availableCategories": "الفئات المتاحة"
   },
   "productDetailPage": {
     "noImage": "لا توجد صورة",

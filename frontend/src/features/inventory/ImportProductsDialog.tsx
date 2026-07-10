@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Upload, Download, AlertCircle, CheckCircle2 } from "lucide-react";
-import { importProducts, type ImportProductRow, type ImportProductResult } from "@/api/inventory.api";
+import { importProducts, listCategories, type ImportProductRow, type ImportProductResult } from "@/api/inventory.api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,16 +21,14 @@ import {
 
 const TEMPLATE_HEADERS = ["name", "sku", "category", "unit", "costPrice", "sellingPrice", "reorderLevel", "barcode"];
 
-const TEMPLATE_EXAMPLE = [
-  "Mineral Water 500ml", "MW-500", "Beverages", "pcs", "0.50", "1.00", "20", "6001234567890",
-  "Sunflower Oil 1L", "OIL-1L", "Groceries", "pcs", "1.20", "2.50", "15", "",
-];
-
-function downloadTemplate() {
-  const rows = [TEMPLATE_HEADERS.join(",")];
-  for (let i = 0; i < TEMPLATE_EXAMPLE.length; i += TEMPLATE_HEADERS.length) {
-    rows.push(TEMPLATE_EXAMPLE.slice(i, i + TEMPLATE_HEADERS.length).join(","));
-  }
+function downloadTemplate(categoryNames: string[]) {
+  const cat1 = categoryNames[0] ?? "Category Name";
+  const cat2 = categoryNames[1] ?? cat1;
+  const examples = [
+    ["Mineral Water 500ml", "MW-500", cat1, "pcs", "0.50", "1.00", "20", "123456789"],
+    ["Sunflower Oil 1L", "OIL-1L", cat2, "pcs", "1.20", "2.50", "15", ""],
+  ];
+  const rows = [TEMPLATE_HEADERS.join(","), ...examples.map((r) => r.join(","))];
   const blob = new Blob([rows.join("\n")], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -109,6 +107,13 @@ export function ImportProductsDialog({ open, onOpenChange }: Props) {
   const [parseError, setParseError] = useState<string | null>(null);
   const [result, setResult] = useState<ImportProductResult | null>(null);
 
+  const { data: categories } = useQuery({
+    queryKey: ["categories"],
+    queryFn: listCategories,
+    enabled: open,
+  });
+  const categoryNames = (categories ?? []).map((c) => c.name);
+
   const mutation = useMutation({
     mutationFn: () => importProducts(rows),
     onSuccess: (data) => {
@@ -164,10 +169,18 @@ export function ImportProductsDialog({ open, onOpenChange }: Props) {
 
         <div className="flex flex-col gap-4">
           {/* Download template */}
-          <Button variant="outline" size="sm" className="self-start" onClick={downloadTemplate}>
+          <Button variant="outline" size="sm" className="self-start" onClick={() => downloadTemplate(categoryNames)}>
             <Download className="me-1.5 size-4" />
             {t("importProductsDialog.downloadTemplate")}
           </Button>
+
+          {/* Category hint */}
+          {categoryNames.length > 0 && (
+            <p className="text-xs text-muted-foreground">
+              <span className="font-medium">{t("importProductsDialog.availableCategories")}: </span>
+              {categoryNames.join(", ")}
+            </p>
+          )}
 
           {/* File picker */}
           {!result && (

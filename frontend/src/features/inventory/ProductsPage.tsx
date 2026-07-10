@@ -51,7 +51,8 @@ export function ProductsPage() {
       (p) =>
         p.name.toLowerCase().includes(term) ||
         p.sku.toLowerCase().includes(term) ||
-        p.barcode?.toLowerCase().includes(term),
+        p.barcode?.toLowerCase().includes(term) ||
+        p.categoryName?.toLowerCase().includes(term),
     );
   }, [products, search]);
 
