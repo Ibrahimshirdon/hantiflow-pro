@@ -2,7 +2,8 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { Package } from "lucide-react";
+import { Package, Upload } from "lucide-react";
+import { ImportProductsDialog } from "./ImportProductsDialog";
 import { listCategories, listProducts } from "@/api/inventory.api";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -30,6 +31,7 @@ export function ProductsPage() {
   const [search, setSearch] = useState("");
   const [categoryId, setCategoryId] = useState<string>("all");
   const [lowStockOnly, setLowStockOnly] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
 
   const { data: categories } = useQuery({ queryKey: ["categories"], queryFn: listCategories });
   const { data: products, isLoading } = useQuery({
@@ -60,7 +62,16 @@ export function ProductsPage() {
           <h1 className="text-2xl font-semibold">{t("productsPage.title")}</h1>
           <p className="text-muted-foreground">{t("productsPage.subtitle")}</p>
         </div>
+        <button
+          onClick={() => setImportOpen(true)}
+          className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+        >
+          <Upload className="size-4" />
+          {t("productsPage.importCsv")}
+        </button>
       </div>
+
+      <ImportProductsDialog open={importOpen} onOpenChange={setImportOpen} />
 
       <div className="flex flex-wrap items-end gap-4">
         <div className="flex flex-col gap-1.5">

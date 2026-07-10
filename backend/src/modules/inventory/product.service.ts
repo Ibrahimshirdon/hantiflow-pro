@@ -181,3 +181,103 @@ export async function deleteProduct(id: string, actor: AuthenticatedUser) {
 
   return { id };
 }
+
+export interface ImportRow {
+  name: string;
+  sku: string;
+  category: string;
+  unit: string;
+  costPrice: number;
+  sellingPrice: number;
+  reorderLevel: number;
+  barcode?: string;
+}
+
+export interface ImportResult {
+  created: number;
+  skipped: number;
+  errors: { row: number; message: string }[];
+}
+
+export async function importProducts(rows: ImportRow[]): Promise<ImportResult> {
+  const result: ImportResult = { created: 0, skipped: 0, errors: [] };
+
+  // Resolve unique category names to IDs
+  const categoryNames = [...new Set(rows.map((r) => r.category?.trim()).filter(Boolean))] as string[];
+  const categorySnaps = await Promise.all(
+    categoryNames.map((name) =>
+      db.collection("categories").where("name", "==", name).limit(1).get(),
+    ),
+  );
+  const categoryMap = new Map<string, { id: string; name: string }>();
+  categoryNames.forEach((name, i) => {
+    const snap = categorySnaps[i];
+    if (snap && !snap.empty) {
+      categoryMap.set(name.toLowerCase(), { id: snap.docs[0]!.id, name });
+    }
+  });
+
+  // Check existing SKUs (Firestore IN query, chunked to 30)
+  const skus = rows.map((r) => r.sku?.trim().toUpperCase()).filter(Boolean) as string[];
+  const existingSkus = new Set<string>();
+  for (let i = 0; i < skus.length; i += 30) {
+    const chunk = skus.slice(i, i + 30);
+    const snap = await db.collection("products").where("sku", "in", chunk).get();
+    snap.docs.forEach((d) => existingSkus.add((d.data() as Product).sku.toUpperCase()));
+  }
+
+  const batch = db.batch();
+
+  rows.forEach((row, idx) => {
+    const rowNum = idx + 2; // 1-indexed + header row offset
+    const sku = row.sku?.trim().toUpperCase();
+    const category = categoryMap.get(row.category?.trim().toLowerCase());
+
+    if (!row.name?.trim()) {
+      result.errors.push({ row: rowNum, message: "Name is required" });
+      return;
+    }
+    if (!sku) {
+      result.errors.push({ row: rowNum, message: "SKU is required" });
+      return;
+    }
+    if (existingSkus.has(sku)) {
+      result.skipped++;
+      return;
+    }
+    if (!category) {
+      result.errors.push({ row: rowNum, message: `Category "${row.category}" not found` });
+      return;
+    }
+
+    const ref = db.collection("products").doc();
+    batch.set(ref, {
+      sku,
+      barcode: row.barcode?.trim() || null,
+      name: row.name.trim(),
+      description: null,
+      categoryId: category.id,
+      categoryName: category.name,
+      unit: row.unit?.trim() || "pcs",
+      costPrice: Number(row.costPrice) || 0,
+      sellingPrice: Number(row.sellingPrice) || 0,
+      taxRateId: null,
+      images: [],
+      reorderLevel: Number(row.reorderLevel) || 5,
+      maxStockLevel: null,
+      trackBatches: false,
+      totalStock: 0,
+      isLowStock: false,
+      isActive: true,
+      approvalStatus: "approved",
+      supplierProductId: null,
+      expiryDate: null,
+      createdAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
+    });
+    result.created++;
+  });
+
+  if (result.created > 0) await batch.commit();
+  return result;
+}

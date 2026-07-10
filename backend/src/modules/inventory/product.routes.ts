@@ -24,5 +24,10 @@ productRouter.post(
   upload.single("image"),
   productController.uploadImage,
 );
+productRouter.post(
+  "/import",
+  requireRole(["admin", "manager"]),
+  productController.importBulk,
+);
 productRouter.delete("/:id", requireRole(["admin"]), productController.remove);
 productRouter.post("/:id/approve", requireRole(["admin"]), productController.approve);

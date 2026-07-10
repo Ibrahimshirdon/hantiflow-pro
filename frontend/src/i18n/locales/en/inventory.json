@@ -27,7 +27,29 @@
     "empty": "No products found.",
     "lowStock": "Low stock",
     "pendingApproval": "Pending approval",
-    "unit": "Unit"
+    "unit": "Unit",
+    "importCsv": "Import CSV"
+  },
+  "importProductsDialog": {
+    "title": "Import Products from CSV",
+    "downloadTemplate": "Download CSV template",
+    "dropzone": "Click to choose a CSV file",
+    "fileLoaded": "{{count}} rows ready to import",
+    "preview": "Preview — first {{count}} rows",
+    "andMore": "{{count}} more",
+    "colCategory": "Category",
+    "colUnit": "Unit",
+    "colCost": "Cost",
+    "colSelling": "Selling",
+    "importing": "Importing...",
+    "import": "Import {{count}} rows",
+    "importMore": "Import another file",
+    "resultCreated": "{{count}} products created",
+    "resultSkipped": "{{count}} skipped (duplicate SKU)",
+    "resultErrors": "{{count}} rows had errors",
+    "errorRow": "Row {{row}}: {{message}}",
+    "errorEmpty": "CSV file has no data rows.",
+    "errorParse": "Could not parse the CSV file."
   },
   "productDetailPage": {
     "noImage": "No image",

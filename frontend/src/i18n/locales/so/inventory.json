@@ -27,7 +27,29 @@
     "empty": "Wax badeeco ah lama helin.",
     "lowStock": "Kayd yar",
     "pendingApproval": "Sugaya ansixin",
-    "unit": "Halbeegga"
+    "unit": "Halbeegga",
+    "importCsv": "Keenida CSV"
+  },
+  "importProductsDialog": {
+    "title": "Keenida Badeecadaha CSV",
+    "downloadTemplate": "Degso template-ka CSV",
+    "dropzone": "Guji si aad u doorato faylka CSV",
+    "fileLoaded": "{{count}} saf diyaar u ah keenida",
+    "preview": "Muuqaal — {{count}} saf koowaad",
+    "andMore": "{{count}} kale",
+    "colCategory": "Qaybta",
+    "colUnit": "Halbeegga",
+    "colCost": "Qiimaha",
+    "colSelling": "Iibka",
+    "importing": "Waa la keenayaa...",
+    "import": "Keen {{count}} saf",
+    "importMore": "Keen fayl kale",
+    "resultCreated": "{{count}} badeeco la sameeyay",
+    "resultSkipped": "{{count}} la dhaafay (SKU nuqul ah)",
+    "resultErrors": "{{count}} saf cilad ah",
+    "errorRow": "Saf {{row}}: {{message}}",
+    "errorEmpty": "Faylka CSV ma lahan xog.",
+    "errorParse": "Faylka CSV lama qeexi karin."
   },
   "productDetailPage": {
     "noImage": "Sawir ma jiro",

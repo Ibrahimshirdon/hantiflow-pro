@@ -87,6 +87,31 @@ export async function approveProduct(id: string) {
   return data.data;
 }
 
+export interface ImportProductRow {
+  name: string;
+  sku: string;
+  category: string;
+  unit: string;
+  costPrice: number;
+  sellingPrice: number;
+  reorderLevel: number;
+  barcode?: string;
+}
+
+export interface ImportProductResult {
+  created: number;
+  skipped: number;
+  errors: { row: number; message: string }[];
+}
+
+export async function importProducts(rows: ImportProductRow[]) {
+  const { data } = await apiClient.post<ApiSuccess<ImportProductResult>>(
+    "/inventory/products/import",
+    { rows },
+  );
+  return data.data;
+}
+
 // Stock
 export async function listGoodsReceipts(filters?: { productId?: string }) {
   const { data } = await apiClient.get<ApiSuccess<GoodsReceipt[]>>("/inventory/stock/goods-receipts", {

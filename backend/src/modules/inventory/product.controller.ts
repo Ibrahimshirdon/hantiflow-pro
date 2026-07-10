@@ -43,3 +43,15 @@ export async function approve(req: Request, res: Response) {
   const result = await productService.approveProduct(req.params.id as string, req.user!);
   res.json({ success: true, data: result });
 }
+
+export async function importBulk(req: Request, res: Response) {
+  const rows = req.body.rows;
+  if (!Array.isArray(rows) || rows.length === 0) {
+    throw new AppError(400, "rows must be a non-empty array");
+  }
+  if (rows.length > 500) {
+    throw new AppError(400, "Maximum 500 rows per import");
+  }
+  const result = await productService.importProducts(rows);
+  res.json({ success: true, data: result });
+}

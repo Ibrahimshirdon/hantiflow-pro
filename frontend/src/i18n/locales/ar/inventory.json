@@ -27,7 +27,29 @@
     "empty": "لم يتم العثور على منتجات.",
     "lowStock": "مخزون منخفض",
     "pendingApproval": "بانتظار الموافقة",
-    "unit": "الوحدة"
+    "unit": "الوحدة",
+    "importCsv": "استيراد CSV"
+  },
+  "importProductsDialog": {
+    "title": "استيراد المنتجات من CSV",
+    "downloadTemplate": "تحميل قالب CSV",
+    "dropzone": "انقر لاختيار ملف CSV",
+    "fileLoaded": "{{count}} صف جاهز للاستيراد",
+    "preview": "معاينة — أول {{count}} صفوف",
+    "andMore": "{{count}} أخرى",
+    "colCategory": "الفئة",
+    "colUnit": "الوحدة",
+    "colCost": "التكلفة",
+    "colSelling": "سعر البيع",
+    "importing": "جارٍ الاستيراد...",
+    "import": "استيراد {{count}} صف",
+    "importMore": "استيراد ملف آخر",
+    "resultCreated": "تم إنشاء {{count}} منتجات",
+    "resultSkipped": "تم تخطي {{count}} (رمز SKU مكرر)",
+    "resultErrors": "{{count}} صفوف تحتوي على أخطاء",
+    "errorRow": "الصف {{row}}: {{message}}",
+    "errorEmpty": "ملف CSV لا يحتوي على بيانات.",
+    "errorParse": "تعذّر قراءة ملف CSV."
   },
   "productDetailPage": {
     "noImage": "لا توجد صورة",
