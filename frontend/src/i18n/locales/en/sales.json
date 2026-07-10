@@ -19,6 +19,18 @@
     "charge": "Charge ${{total}}",
     "noResults": "No products found.",
     "noResultsHint": "Press Enter to search by exact barcode.",
+    "shiftSummary": {
+      "button": "Shift Summary",
+      "title": "End-of-Shift Summary",
+      "cashier": "Cashier: {{name}}",
+      "totalOrders": "Orders",
+      "totalRevenue": "Revenue",
+      "totalItems": "Items Sold",
+      "paymentMethod": "Payment Method",
+      "orders": "Orders",
+      "amount": "Amount",
+      "noOrders": "No completed orders today."
+    },
     "recentOrders": {
       "title": "Recent purchases",
       "reAdd": "Re-add",

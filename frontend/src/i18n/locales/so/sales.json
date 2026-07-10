@@ -37,6 +37,18 @@
       "title": "Iibka dhowaan",
       "reAdd": "Ku dar",
       "added": "Alaabta {{order}} ayaa la dhex galinay baaskiilka"
+    },
+    "shiftSummary": {
+      "button": "Koobka Shiftiga",
+      "title": "Koobka Dhamaadka Shiftiga",
+      "cashier": "Khasnajiga: {{name}}",
+      "totalOrders": "Dalabaadka",
+      "totalRevenue": "Dakhliga",
+      "totalItems": "Alaabta La Iibiyay",
+      "paymentMethod": "Hab Lacag-bixinta",
+      "orders": "Dalabaadka",
+      "amount": "Lacagta",
+      "noOrders": "Maanta dalabaad la dhammaystirin kuma jiro."
     }
   },
   "salesOrdersPage": {

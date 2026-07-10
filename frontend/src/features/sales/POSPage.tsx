@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ShiftSummaryDialog } from "./ShiftSummaryDialog";
 
 const POINTS_PER_DOLLAR = 100;
 
@@ -216,6 +217,7 @@ export function POSPage() {
               if (e.key === "Enter") handleBarcodeSearch();
             }}
           />
+          <ShiftSummaryDialog />
         </div>
         <div className="grid grid-cols-3 gap-3 overflow-y-auto pe-1 sm:grid-cols-4">
           {search.trim() && filteredProducts.length === 0 && (

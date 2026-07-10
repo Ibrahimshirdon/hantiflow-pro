@@ -37,6 +37,18 @@
       "title": "المشتريات الأخيرة",
       "reAdd": "أعد الإضافة",
       "added": "تمت إضافة عناصر {{order}} إلى السلة"
+    },
+    "shiftSummary": {
+      "button": "ملخص الوردية",
+      "title": "ملخص نهاية الوردية",
+      "cashier": "أمين الصندوق: {{name}}",
+      "totalOrders": "الطلبات",
+      "totalRevenue": "الإيرادات",
+      "totalItems": "المبيعات",
+      "paymentMethod": "طريقة الدفع",
+      "orders": "الطلبات",
+      "amount": "المبلغ",
+      "noOrders": "لا توجد طلبات مكتملة اليوم."
     }
   },
   "salesOrdersPage": {
