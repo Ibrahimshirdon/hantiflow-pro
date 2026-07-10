@@ -226,41 +226,70 @@ export function POSPage() {
               <p className="mt-1 text-xs">{t("posPage.noResultsHint")}</p>
             </div>
           )}
-          {filteredProducts.map((product) => (
-            <Card
-              key={product.id}
-              className="cursor-pointer overflow-hidden transition-colors hover:border-primary"
-              onClick={() => addToCart(product)}
-            >
-              <div className="flex h-28 items-center justify-center bg-muted">
-                {product.images[0] ? (
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="size-full object-cover"
-                  />
-                ) : (
-                  <Package className="size-8 text-muted-foreground/30" />
-                )}
-              </div>
-              <CardContent className="flex flex-col gap-1 p-3">
-                <span className="line-clamp-2 text-sm font-medium">{product.name}</span>
-                <span className="text-sm text-muted-foreground">${product.sellingPrice.toFixed(2)}</span>
-                <div className="flex items-center justify-between gap-1">
-                  <span className="text-xs text-muted-foreground">
-                    {t("posPage.inStock", { count: product.totalStock, unit: product.unit })}
-                  </span>
-                  {product.totalStock <= 0 ? (
-                    <Badge variant="destructive">{t("common:status.outOfStock")}</Badge>
+          {filteredProducts.map((product) => {
+            const outOfStock = product.totalStock <= 0;
+            const lowStock = !outOfStock && product.totalStock <= product.reorderLevel;
+            return (
+              <Card
+                key={product.id}
+                className={[
+                  "group relative overflow-hidden transition-all",
+                  outOfStock
+                    ? "cursor-not-allowed opacity-50"
+                    : "cursor-pointer hover:border-primary hover:shadow-sm active:scale-[0.98]",
+                ].join(" ")}
+                onClick={() => !outOfStock && addToCart(product)}
+              >
+                {/* Image */}
+                <div className="relative flex h-28 items-center justify-center overflow-hidden bg-muted">
+                  {product.images[0] ? (
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="size-full object-cover transition-transform group-hover:scale-105"
+                    />
                   ) : (
-                    product.totalStock <= product.reorderLevel && (
-                      <Badge variant="warning">{t("common:status.lowStock")}</Badge>
-                    )
+                    <Package className="size-8 text-muted-foreground/20" />
+                  )}
+                  {/* Stock badge overlay */}
+                  {outOfStock && (
+                    <span className="absolute inset-0 flex items-center justify-center bg-background/60">
+                      <Badge variant="destructive" className="text-[10px]">
+                        {t("common:status.outOfStock")}
+                      </Badge>
+                    </span>
+                  )}
+                  {lowStock && (
+                    <span className="absolute bottom-1 end-1">
+                      <Badge variant="warning" className="px-1.5 py-0 text-[10px]">
+                        {t("common:status.lowStock")}
+                      </Badge>
+                    </span>
+                  )}
+                  {/* Add overlay on hover */}
+                  {!outOfStock && (
+                    <span className="absolute inset-0 flex items-center justify-center bg-primary/0 transition-colors group-hover:bg-primary/8">
+                      <Plus className="size-6 scale-75 text-primary opacity-0 transition-all group-hover:scale-100 group-hover:opacity-100" />
+                    </span>
                   )}
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+
+                <CardContent className="flex flex-col gap-0.5 p-2.5">
+                  <span className="line-clamp-2 text-xs font-medium leading-snug" title={product.name}>
+                    {product.name}
+                  </span>
+                  <div className="flex items-center justify-between gap-1 pt-0.5">
+                    <span className="text-sm font-bold text-primary">
+                      ${product.sellingPrice.toFixed(2)}
+                    </span>
+                    <span className="text-[10px] text-muted-foreground">
+                      {product.totalStock} {product.unit}
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
 
@@ -326,61 +355,63 @@ export function POSPage() {
             )}
 
             {recentCustomerOrders && recentCustomerOrders.length > 0 && (
-              <div className="mt-1 flex flex-col gap-1.5">
+              <div className="mt-1 flex flex-col gap-1">
                 <p className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
                   <Clock className="size-3" />
                   {t("posPage.recentOrders.title")}
                 </p>
-                {recentCustomerOrders.map((order) => (
-                  <div
-                    key={order.id}
-                    className="flex items-start justify-between gap-2 rounded-md border bg-muted/30 px-2.5 py-2"
-                  >
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-medium">{order.orderNumber}</p>
-                      <p className="truncate text-[11px] text-muted-foreground">
-                        {order.items.map((i) => `${i.productName} ×${i.quantity}`).join(", ")}
-                      </p>
-                    </div>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="h-7 shrink-0 gap-1 px-2 text-xs"
-                      onClick={() => {
-                        order.items.forEach((item) => {
-                          const product = products?.find((p) => p.id === item.productId);
-                          if (!product || product.totalStock <= 0) return;
-                          setCart((prev) => {
-                            const existing = prev.find((l) => l.productId === item.productId);
-                            if (existing) {
-                              return prev.map((l) =>
-                                l.productId === item.productId
-                                  ? { ...l, quantity: l.quantity + item.quantity }
-                                  : l,
-                              );
-                            }
-                            return [
-                              ...prev,
-                              {
-                                productId: item.productId,
-                                name: item.productName,
-                                unitPrice: item.unitPrice,
-                                taxRate: item.taxRate,
-                                categoryId: product.categoryId,
-                                quantity: item.quantity,
-                              },
-                            ];
-                          });
-                        });
-                        toast.success(t("posPage.recentOrders.added", { order: order.orderNumber }));
-                      }}
+                <div className="flex max-h-44 flex-col gap-1 overflow-y-auto">
+                  {recentCustomerOrders.map((order) => (
+                    <div
+                      key={order.id}
+                      className="flex items-start justify-between gap-2 rounded-md border bg-muted/30 px-2.5 py-2"
                     >
-                      <Plus className="size-3" />
-                      {t("posPage.recentOrders.reAdd")}
-                    </Button>
-                  </div>
-                ))}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-medium">{order.orderNumber}</p>
+                        <p className="truncate text-[11px] text-muted-foreground">
+                          {order.items.map((i) => `${i.productName} ×${i.quantity}`).join(", ")}
+                        </p>
+                      </div>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 shrink-0 gap-1 px-2 text-xs"
+                        onClick={() => {
+                          order.items.forEach((item) => {
+                            const product = products?.find((p) => p.id === item.productId);
+                            if (!product || product.totalStock <= 0) return;
+                            setCart((prev) => {
+                              const existing = prev.find((l) => l.productId === item.productId);
+                              if (existing) {
+                                return prev.map((l) =>
+                                  l.productId === item.productId
+                                    ? { ...l, quantity: l.quantity + item.quantity }
+                                    : l,
+                                );
+                              }
+                              return [
+                                ...prev,
+                                {
+                                  productId: item.productId,
+                                  name: item.productName,
+                                  unitPrice: item.unitPrice,
+                                  taxRate: item.taxRate,
+                                  categoryId: product.categoryId,
+                                  quantity: item.quantity,
+                                },
+                              ];
+                            });
+                          });
+                          toast.success(t("posPage.recentOrders.added", { order: order.orderNumber }));
+                        }}
+                      >
+                        <Plus className="size-3" />
+                        {t("posPage.recentOrders.reAdd")}
+                      </Button>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
