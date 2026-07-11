@@ -6,10 +6,13 @@ import {
   Banknote,
   ChevronRight,
   CreditCard,
+  Eye,
+  EyeOff,
   Mail,
   Phone,
   TrendingUp,
   UserCheck,
+  UserPlus,
   Users,
   Wallet,
 } from "lucide-react";
@@ -20,8 +23,10 @@ import {
   setCustomerCreditLimit,
   setCustomerStatus,
 } from "@/api/customers.api";
+import { createCustomer } from "@/api/auth.api";
 import { listLoans, recordRepayment } from "@/api/loans.api";
 import { getApiErrorMessage } from "@/api/client";
+import { useAuth } from "@/context/AuthContext";
 import type { CustomerSummary } from "@/types/customer.types";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -89,9 +94,25 @@ function StatCard({ label, value, icon: Icon, tone = "default" }: StatCardProps)
 export function CustomersPage() {
   const { t } = useTranslation(["customers", "common"]);
   const queryClient = useQueryClient();
+  const { profile } = useAuth();
+  const canCreate = profile?.role === "admin" || profile?.role === "manager";
 
   const [search, setSearch] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState<CustomerSummary | null>(null);
+
+  // create customer dialog
+  const [createOpen, setCreateOpen] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPhone, setNewPhone] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newUsername, setNewUsername] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  function resetCreateForm() {
+    setNewName(""); setNewEmail(""); setNewPhone("");
+    setNewPassword(""); setNewUsername(""); setShowPassword(false);
+  }
 
   // sub-dialogs
   const [walletTarget, setWalletTarget] = useState<CustomerSummary | null>(null);
@@ -136,6 +157,24 @@ export function CustomersPage() {
     setSelectedLoanId(first.id);
     setCollectAmount(first.balanceRemaining);
   }, [outstandingLoans]);
+
+  const createMutation = useMutation({
+    mutationFn: () =>
+      createCustomer({
+        displayName: newName.trim(),
+        email: newEmail.trim(),
+        password: newPassword,
+        phone: newPhone.trim() || undefined,
+        username: newUsername.trim() || undefined,
+      }),
+    onSuccess: () => {
+      toast.success(t("createCustomer.successToast"));
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      setCreateOpen(false);
+      resetCreateForm();
+    },
+    onError: (error) => toast.error(getApiErrorMessage(error)),
+  });
 
   const statusMutation = useMutation({
     mutationFn: ({ uid, status }: { uid: string; status: "active" | "suspended" }) =>
@@ -223,9 +262,17 @@ export function CustomersPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">{t("page.title")}</h1>
-        <p className="mt-0.5 text-muted-foreground">{t("page.subtitle")}</p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">{t("page.title")}</h1>
+          <p className="mt-0.5 text-muted-foreground">{t("page.subtitle")}</p>
+        </div>
+        {canCreate && (
+          <Button onClick={() => setCreateOpen(true)} className="shrink-0 gap-2">
+            <UserPlus className="size-4" />
+            {t("page.newCustomer")}
+          </Button>
+        )}
       </div>
 
       {/* Stat cards */}
@@ -599,6 +646,88 @@ export function CustomersPage() {
               onClick={() => loanMutation.mutate()}
             >
               {loanMutation.isPending ? t("common:actions.saving") : t("dialogs.recordPayment")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Create customer dialog */}
+      <Dialog open={createOpen} onOpenChange={(v) => { if (!v) resetCreateForm(); setCreateOpen(v); }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{t("createCustomer.title")}</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1.5">
+              <Label>{t("common:fields.name")}</Label>
+              <Input
+                placeholder={t("createCustomer.namePlaceholder")}
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>{t("common:fields.phone")} <span className="text-xs text-muted-foreground">({t("common:fields.optional")})</span></Label>
+              <Input
+                placeholder={t("createCustomer.phonePlaceholder")}
+                value={newPhone}
+                onChange={(e) => setNewPhone(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>{t("common:fields.email")}</Label>
+              <Input
+                type="email"
+                placeholder={t("createCustomer.emailPlaceholder")}
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>{t("common:fields.password")}</Label>
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  placeholder={t("createCustomer.passwordPlaceholder")}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="pe-10"
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 end-0 flex items-center px-3 text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowPassword((p) => !p)}
+                >
+                  {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label>{t("common:fields.username")} <span className="text-xs text-muted-foreground">({t("common:fields.optional")})</span></Label>
+              <Input
+                placeholder={t("createCustomer.usernamePlaceholder")}
+                value={newUsername}
+                onChange={(e) => setNewUsername(e.target.value)}
+              />
+            </div>
+            <p className="rounded-md bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
+              {t("createCustomer.loginHint")}
+            </p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => { resetCreateForm(); setCreateOpen(false); }}>
+              {t("common:actions.cancel")}
+            </Button>
+            <Button
+              disabled={
+                createMutation.isPending ||
+                !newName.trim() ||
+                !newEmail.trim() ||
+                newPassword.length < 8
+              }
+              onClick={() => createMutation.mutate()}
+            >
+              {createMutation.isPending ? t("createCustomer.creating") : t("createCustomer.create")}
             </Button>
           </DialogFooter>
         </DialogContent>

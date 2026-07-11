@@ -104,6 +104,16 @@ function buildProfileDoc(role: UserRole, uid: string, input: CreateUserByAdminIn
         licensePlate: input.licensePlate ?? "",
         status: "offline" as const,
       };
+    case "customer":
+      return {
+        uid,
+        walletBalance: 0,
+        loyaltyPoints: 0,
+        addresses: [],
+        defaultAddressIndex: 0,
+        creditLimit: 0,
+        outstandingLoanBalance: 0,
+      };
     default:
       throw new AppError(400, "Unsupported role for admin-created account");
   }

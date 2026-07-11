@@ -19,7 +19,20 @@
     "setCreditLimit": "Set credit limit",
     "suspend": "Suspend",
     "activate": "Activate",
-    "collectLoan": "Collect loan payment"
+    "collectLoan": "Collect loan payment",
+    "newCustomer": "New customer"
+  },
+  "createCustomer": {
+    "title": "Create customer account",
+    "namePlaceholder": "Full name",
+    "phonePlaceholder": "e.g. +252 61 234 5678",
+    "emailPlaceholder": "customer@example.com",
+    "passwordPlaceholder": "Min 8 characters",
+    "usernamePlaceholder": "Optional — alternative login ID",
+    "loginHint": "The customer will be able to log in with their email (or username) and this password.",
+    "creating": "Creating...",
+    "create": "Create customer",
+    "successToast": "Customer account created"
   },
   "dialogs": {
     "adjustWalletTitle": "Adjust wallet: {{name}}",

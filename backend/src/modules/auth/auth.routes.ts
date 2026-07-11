@@ -21,7 +21,7 @@ authRouter.get("/me", verifyToken, authController.me);
 authRouter.post(
   "/users",
   verifyToken,
-  requireRole(["admin"]),
+  requireRole(["admin", "manager"]),
   validate(createUserByAdminSchema),
   authController.createUser,
 );

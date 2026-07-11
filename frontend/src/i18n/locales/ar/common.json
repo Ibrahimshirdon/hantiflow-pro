@@ -105,7 +105,10 @@
     "description": "الوصف",
     "quantity": "الكمية",
     "price": "السعر",
-    "notes": "ملاحظات"
+    "notes": "ملاحظات",
+    "password": "كلمة المرور",
+    "username": "اسم المستخدم",
+    "optional": "اختياري"
   },
   "status": {
     "active": "نشط",

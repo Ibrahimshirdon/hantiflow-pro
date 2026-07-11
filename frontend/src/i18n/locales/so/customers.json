@@ -19,7 +19,20 @@
     "setCreditLimit": "Dejii xadka deynta",
     "suspend": "Joojii",
     "activate": "Shaqaysii",
-    "collectLoan": "Ɗib u qaad lacagta deynta"
+    "collectLoan": "Ɗib u qaad lacagta deynta",
+    "newCustomer": "Macmiil cusub"
+  },
+  "createCustomer": {
+    "title": "Samee akoon macmiil",
+    "namePlaceholder": "Magaca buuxa",
+    "phonePlaceholder": "Tusaale +252 61 234 5678",
+    "emailPlaceholder": "macmiil@tusaale.com",
+    "passwordPlaceholder": "Ugu yaraan 8 xaraf",
+    "usernamePlaceholder": "Ikhtiyaari — magac kale oo galitaanka",
+    "loginHint": "Macmiilku wuxuu galaa barnaamijka adiga oo isticmaala emailkiisa (ama magaciisa) iyo furaha sirta ah.",
+    "creating": "Waa la samaynayaa...",
+    "create": "Samee macmiil",
+    "successToast": "Akoonka macmiilka waa la sameeyay"
   },
   "dialogs": {
     "adjustWalletTitle": "Saami boorsada: {{name}}",

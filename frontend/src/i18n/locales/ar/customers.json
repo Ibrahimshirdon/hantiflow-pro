@@ -19,7 +19,20 @@
     "setCreditLimit": "تحديد حد الائتمان",
     "suspend": "تعليق",
     "activate": "تفعيل",
-    "collectLoan": "تحصيل دفعة القرض"
+    "collectLoan": "تحصيل دفعة القرض",
+    "newCustomer": "عميل جديد"
+  },
+  "createCustomer": {
+    "title": "إنشاء حساب عميل",
+    "namePlaceholder": "الاسم الكامل",
+    "phonePlaceholder": "مثال: 252+ 61 234 5678",
+    "emailPlaceholder": "customer@example.com",
+    "passwordPlaceholder": "8 أحرف على الأقل",
+    "usernamePlaceholder": "اختياري — معرّف بديل لتسجيل الدخول",
+    "loginHint": "سيتمكن العميل من تسجيل الدخول باستخدام بريده الإلكتروني (أو اسم المستخدم) وكلمة المرور.",
+    "creating": "جارٍ الإنشاء...",
+    "create": "إنشاء حساب",
+    "successToast": "تم إنشاء حساب العميل"
   },
   "dialogs": {
     "adjustWalletTitle": "تعديل المحفظة: {{name}}",

@@ -45,6 +45,22 @@ export async function createUser(input: CreateUserByAdminInput) {
   return data.data;
 }
 
+export interface CreateCustomerInput {
+  displayName: string;
+  email: string;
+  password: string;
+  phone?: string;
+  username?: string;
+}
+
+export async function createCustomer(input: CreateCustomerInput) {
+  const { data } = await apiClient.post<ApiSuccess<{ uid: string }>>("/auth/users", {
+    ...input,
+    role: "customer",
+  });
+  return data.data;
+}
+
 export async function listUsers(role?: UserRole) {
   const { data } = await apiClient.get<ApiSuccess<UserProfile[]>>("/auth/users", {
     params: role ? { role } : undefined,

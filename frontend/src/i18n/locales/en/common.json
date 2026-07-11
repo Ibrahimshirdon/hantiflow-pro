@@ -105,7 +105,10 @@
     "description": "Description",
     "quantity": "Quantity",
     "price": "Price",
-    "notes": "Notes"
+    "notes": "Notes",
+    "password": "Password",
+    "username": "Username",
+    "optional": "optional"
   },
   "status": {
     "active": "Active",

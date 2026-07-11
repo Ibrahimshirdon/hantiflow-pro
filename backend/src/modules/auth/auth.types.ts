@@ -24,7 +24,7 @@ export const createUserByAdminSchema = z.object({
   displayName: z.string().min(2),
   phone: z.string().optional(),
   username: usernameSchema.optional(),
-  role: z.enum(["admin", "manager", "staff", "supplier", "driver"]),
+  role: z.enum(["admin", "manager", "staff", "supplier", "driver", "customer"]),
   employeeId: z.string().optional(),
   department: z.string().optional(),
   companyName: z.string().optional(),
