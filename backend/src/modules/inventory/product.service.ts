@@ -31,8 +31,10 @@ export async function listProducts(filters: {
   if (filters.lowStockOnly) {
     query = query.where("isLowStock", "==", true);
   }
-  const snap = await query.orderBy("name").get();
-  const products = snap.docs.map((d) => ({ id: d.id, ...d.data() }) as Product);
+  const snap = await query.get();
+  const products = snap.docs
+    .map((d) => ({ id: d.id, ...d.data() }) as Product)
+    .sort((a, b) => a.name.localeCompare(b.name));
   // A product with no price set yet (sellingPrice 0), or a supplier
   // submission still awaiting admin approval, shouldn't be purchasable —
   // POS/storefront listings filter both out via this flag.
