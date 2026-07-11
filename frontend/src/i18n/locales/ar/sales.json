@@ -19,6 +19,9 @@
     "charge": "تحصيل ${{total}}",
     "noResults": "لم يُعثر على منتجات.",
     "noResultsHint": "اضغط Enter للبحث بالباركود الكامل.",
+    "tabCart": "السلة",
+    "tabHistory": "السجل",
+    "cancelSale": "إلغاء البيع",
     "toasts": {
       "discountApplied": "تم تطبيق الخصم: -${{amount}}",
       "saleCompleted": "تمت عملية البيع بنجاح",

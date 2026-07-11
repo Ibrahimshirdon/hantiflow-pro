@@ -46,6 +46,7 @@ export function POSPage() {
   const [paymentMethod, setPaymentMethod] = useState<CreateSalesOrderInput["paymentMethod"]>("cash");
   const [customerId, setCustomerId] = useState<string>("none");
   const [pointsToRedeem, setPointsToRedeem] = useState(0);
+  const [activeTab, setActiveTab] = useState<"cart" | "history">("cart");
 
   const { data: products } = useQuery({
     queryKey: ["products", "availableForSale"],
@@ -295,6 +296,8 @@ export function POSPage() {
 
       <Card className="flex flex-col overflow-hidden">
         <CardContent className="flex h-full flex-col gap-3 p-4">
+
+          {/* Customer selector + loyalty — always visible */}
           <div className="flex flex-col gap-1.5">
             <Select
               value={customerId}
@@ -320,9 +323,7 @@ export function POSPage() {
               <div className="flex items-center justify-between rounded-md border border-dashed border-amber-400/60 bg-amber-50/50 px-3 py-2 dark:bg-amber-900/10">
                 <div className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400">
                   <Star className="size-3.5 fill-amber-500 text-amber-500" />
-                  <span>
-                    {t("posPage.loyalty.balance", { pts: loyaltyBalance })}
-                  </span>
+                  <span>{t("posPage.loyalty.balance", { pts: loyaltyBalance })}</span>
                 </div>
                 {maxRedeemablePoints >= POINTS_PER_DOLLAR && (
                   <div className="flex items-center gap-1">
@@ -353,160 +354,228 @@ export function POSPage() {
                 )}
               </div>
             )}
+          </div>
 
-            {recentCustomerOrders && recentCustomerOrders.length > 0 && (
-              <div className="mt-1 flex flex-col gap-1">
-                <p className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
-                  <Clock className="size-3" />
+          {/* Cart / History tabs */}
+          <div className="flex rounded-md border bg-muted/40 p-0.5">
+            <button
+              className={[
+                "flex-1 rounded-sm py-1.5 text-xs font-medium transition-colors",
+                activeTab === "cart"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground",
+              ].join(" ")}
+              onClick={() => setActiveTab("cart")}
+            >
+              {t("posPage.tabCart")}
+              {cart.length > 0 && (
+                <span className="ms-1.5 inline-flex size-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
+                  {cart.length}
+                </span>
+              )}
+            </button>
+            <button
+              className={[
+                "flex-1 rounded-sm py-1.5 text-xs font-medium transition-colors",
+                activeTab === "history"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground",
+              ].join(" ")}
+              onClick={() => setActiveTab("history")}
+              disabled={customerId === "none"}
+            >
+              {t("posPage.tabHistory")}
+              {recentCustomerOrders && recentCustomerOrders.length > 0 && (
+                <span className="ms-1.5 inline-flex size-4 items-center justify-center rounded-full bg-muted text-[10px]">
+                  {recentCustomerOrders.length}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* Cart tab */}
+          {activeTab === "cart" && (
+            <>
+              <div className="flex-1 overflow-y-auto">
+                {cart.length === 0 && (
+                  <p className="mt-8 text-center text-sm text-muted-foreground">{t("posPage.cartEmpty")}</p>
+                )}
+                {cart.map((line) => (
+                  <div key={line.productId} className="flex items-center justify-between gap-2 py-2">
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium">{line.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {t("posPage.eachPrice", { price: line.unitPrice.toFixed(2) })}
+                      </p>
+                    </div>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={line.quantity}
+                      onChange={(e) => updateQuantity(line.productId, Number(e.target.value))}
+                      className="w-16 text-center"
+                    />
+                    <span className="w-16 text-end text-sm font-medium">
+                      ${(line.unitPrice * line.quantity).toFixed(2)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-2">
+                <Input
+                  placeholder={t("posPage.discountCodePlaceholder")}
+                  value={discountCode}
+                  onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                />
+                <Button
+                  variant="outline"
+                  disabled={!discountCode || cart.length === 0 || previewMutation.isPending}
+                  onClick={() => previewMutation.mutate()}
+                >
+                  {t("posPage.apply")}
+                </Button>
+              </div>
+
+              <div className="flex flex-col gap-1 border-t border-border pt-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t("common:fields.subtotal")}</span>
+                  <span>${subtotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t("common:fields.discount")}</span>
+                  <span>-${discountTotal.toFixed(2)}</span>
+                </div>
+                {loyaltyDiscount > 0 && (
+                  <div className="flex justify-between text-amber-600 dark:text-amber-400">
+                    <span className="flex items-center gap-1">
+                      <Star className="size-3 fill-current" />
+                      {t("posPage.loyalty.discount", { pts: pointsToRedeem })}
+                    </span>
+                    <span>-${loyaltyDiscount.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t("common:fields.tax")}</span>
+                  <span>${taxTotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-base font-semibold">
+                  <span>{t("common:fields.total")}</span>
+                  <span>${grandTotal.toFixed(2)}</span>
+                </div>
+              </div>
+
+              <Select value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as typeof paymentMethod)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {PAYMENT_METHOD_VALUES.map((value) => (
+                    <SelectItem key={value} value={value}>
+                      {t(`posPage.paymentMethods.${value}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  className="flex-1 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                  disabled={cart.length === 0}
+                  onClick={() => {
+                    setCart([]);
+                    setDiscountCode("");
+                    setAppliedDiscount(null);
+                    setPointsToRedeem(0);
+                  }}
+                >
+                  {t("posPage.cancelSale")}
+                </Button>
+                <Button
+                  size="default"
+                  className="flex-1"
+                  disabled={cart.length === 0 || checkoutMutation.isPending}
+                  onClick={handleCheckout}
+                >
+                  {checkoutMutation.isPending
+                    ? t("posPage.processing")
+                    : t("posPage.charge", { total: grandTotal.toFixed(2) })}
+                </Button>
+              </div>
+            </>
+          )}
+
+          {/* History tab */}
+          {activeTab === "history" && (
+            <div className="flex flex-1 flex-col gap-2 overflow-y-auto">
+              {customerId === "none" ? (
+                <p className="mt-8 text-center text-sm text-muted-foreground">
+                  {t("posPage.walkInCustomer")}
+                </p>
+              ) : !recentCustomerOrders || recentCustomerOrders.length === 0 ? (
+                <p className="mt-8 text-center text-sm text-muted-foreground">
                   {t("posPage.recentOrders.title")}
                 </p>
-                <div className="flex max-h-44 flex-col gap-1 overflow-y-auto">
-                  {recentCustomerOrders.map((order) => (
-                    <div
-                      key={order.id}
-                      className="flex items-start justify-between gap-2 rounded-md border bg-muted/30 px-2.5 py-2"
-                    >
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs font-medium">{order.orderNumber}</p>
-                        <p className="truncate text-[11px] text-muted-foreground">
-                          {order.items.map((i) => `${i.productName} ×${i.quantity}`).join(", ")}
-                        </p>
-                      </div>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="h-7 shrink-0 gap-1 px-2 text-xs"
-                        onClick={() => {
-                          order.items.forEach((item) => {
-                            const product = products?.find((p) => p.id === item.productId);
-                            if (!product || product.totalStock <= 0) return;
-                            setCart((prev) => {
-                              const existing = prev.find((l) => l.productId === item.productId);
-                              if (existing) {
-                                return prev.map((l) =>
-                                  l.productId === item.productId
-                                    ? { ...l, quantity: l.quantity + item.quantity }
-                                    : l,
-                                );
-                              }
-                              return [
-                                ...prev,
-                                {
-                                  productId: item.productId,
-                                  name: item.productName,
-                                  unitPrice: item.unitPrice,
-                                  taxRate: item.taxRate,
-                                  categoryId: product.categoryId,
-                                  quantity: item.quantity,
-                                },
-                              ];
-                            });
-                          });
-                          toast.success(t("posPage.recentOrders.added", { order: order.orderNumber }));
-                        }}
-                      >
-                        <Plus className="size-3" />
-                        {t("posPage.recentOrders.reAdd")}
-                      </Button>
+              ) : (
+                recentCustomerOrders.map((order) => (
+                  <div
+                    key={order.id}
+                    className="flex items-start justify-between gap-2 rounded-md border bg-muted/30 px-2.5 py-2.5"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-semibold">{order.orderNumber}</p>
+                      <p className="mt-0.5 text-[11px] text-muted-foreground">
+                        ${order.grandTotal.toFixed(2)}
+                      </p>
+                      <p className="mt-1 truncate text-[11px] text-muted-foreground">
+                        {order.items.map((i) => `${i.productName} ×${i.quantity}`).join(", ")}
+                      </p>
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="flex-1 overflow-y-auto">
-            {cart.length === 0 && (
-              <p className="mt-4 text-center text-sm text-muted-foreground">{t("posPage.cartEmpty")}</p>
-            )}
-            {cart.map((line) => (
-              <div key={line.productId} className="flex items-center justify-between gap-2 py-2">
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">{line.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {t("posPage.eachPrice", { price: line.unitPrice.toFixed(2) })}
-                  </p>
-                </div>
-                <Input
-                  type="number"
-                  min={0}
-                  value={line.quantity}
-                  onChange={(e) => updateQuantity(line.productId, Number(e.target.value))}
-                  className="w-16 text-center"
-                />
-                <span className="w-16 text-end text-sm font-medium">
-                  ${(line.unitPrice * line.quantity).toFixed(2)}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex gap-2">
-            <Input
-              placeholder={t("posPage.discountCodePlaceholder")}
-              value={discountCode}
-              onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
-            />
-            <Button
-              variant="outline"
-              disabled={!discountCode || cart.length === 0 || previewMutation.isPending}
-              onClick={() => previewMutation.mutate()}
-            >
-              {t("posPage.apply")}
-            </Button>
-          </div>
-
-          <div className="flex flex-col gap-1 border-t border-border pt-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">{t("common:fields.subtotal")}</span>
-              <span>${subtotal.toFixed(2)}</span>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="h-7 shrink-0 gap-1 px-2 text-xs"
+                      onClick={() => {
+                        order.items.forEach((item) => {
+                          const product = products?.find((p) => p.id === item.productId);
+                          if (!product || product.totalStock <= 0) return;
+                          setCart((prev) => {
+                            const existing = prev.find((l) => l.productId === item.productId);
+                            if (existing) {
+                              return prev.map((l) =>
+                                l.productId === item.productId
+                                  ? { ...l, quantity: l.quantity + item.quantity }
+                                  : l,
+                              );
+                            }
+                            return [
+                              ...prev,
+                              {
+                                productId: item.productId,
+                                name: item.productName,
+                                unitPrice: item.unitPrice,
+                                taxRate: item.taxRate,
+                                categoryId: product.categoryId,
+                                quantity: item.quantity,
+                              },
+                            ];
+                          });
+                        });
+                        toast.success(t("posPage.recentOrders.added", { order: order.orderNumber }));
+                        setActiveTab("cart");
+                      }}
+                    >
+                      <Plus className="size-3" />
+                      {t("posPage.recentOrders.reAdd")}
+                    </Button>
+                  </div>
+                ))
+              )}
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">{t("common:fields.discount")}</span>
-              <span>-${discountTotal.toFixed(2)}</span>
-            </div>
-            {loyaltyDiscount > 0 && (
-              <div className="flex justify-between text-amber-600 dark:text-amber-400">
-                <span className="flex items-center gap-1">
-                  <Star className="size-3 fill-current" />
-                  {t("posPage.loyalty.discount", { pts: pointsToRedeem })}
-                </span>
-                <span>-${loyaltyDiscount.toFixed(2)}</span>
-              </div>
-            )}
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">{t("common:fields.tax")}</span>
-              <span>${taxTotal.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between text-base font-semibold">
-              <span>{t("common:fields.total")}</span>
-              <span>${grandTotal.toFixed(2)}</span>
-            </div>
-          </div>
+          )}
 
-          <Select value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as typeof paymentMethod)}>
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {PAYMENT_METHOD_VALUES.map((value) => (
-                <SelectItem key={value} value={value}>
-                  {t(`posPage.paymentMethods.${value}`)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Button
-            size="lg"
-            disabled={cart.length === 0 || checkoutMutation.isPending}
-            onClick={handleCheckout}
-          >
-            {checkoutMutation.isPending
-              ? t("posPage.processing")
-              : t("posPage.charge", { total: grandTotal.toFixed(2) })}
-          </Button>
         </CardContent>
       </Card>
     </div>

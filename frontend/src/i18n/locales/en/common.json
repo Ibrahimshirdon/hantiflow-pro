@@ -118,7 +118,9 @@
     "paidOff": "Paid off",
     "overdue": "Overdue",
     "cancelled": "Cancelled",
-    "suspended": "Suspended"
+    "suspended": "Suspended",
+    "lowStock": "Low stock",
+    "outOfStock": "Out of stock"
   },
   "roles": {
     "admin": "Admin",

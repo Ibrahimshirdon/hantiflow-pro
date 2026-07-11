@@ -118,7 +118,9 @@
     "paidOff": "Si buuxda loo bixiyay",
     "overdue": "Wakhtigii dhaafay",
     "cancelled": "La joojiyay",
-    "suspended": "La hakiyay"
+    "suspended": "La hakiyay",
+    "lowStock": "Kayd yar",
+    "outOfStock": "Kayd ma jiro"
   },
   "roles": {
     "admin": "Maamule",

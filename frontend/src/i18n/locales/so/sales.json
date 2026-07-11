@@ -19,6 +19,9 @@
     "charge": "Qaad ${{total}}",
     "noResults": "Wax badeecad ah lama helin.",
     "noResultsHint": "Taabo Enter si aad u raadiso barcode-ka saxda ah.",
+    "tabCart": "Gaariga",
+    "tabHistory": "Taariikh",
+    "cancelSale": "Baajinta iibka",
     "toasts": {
       "discountApplied": "Dhimis la dhaqan geliyay: -${{amount}}",
       "saleCompleted": "Iibka waa la dhammeeyay",

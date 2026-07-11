@@ -42,6 +42,9 @@
       "useMax": "Use max",
       "discount": "Loyalty ({{pts}} pts)"
     },
+    "tabCart": "Cart",
+    "tabHistory": "History",
+    "cancelSale": "Cancel sale",
     "toasts": {
       "discountApplied": "Discount applied: -${{amount}}",
       "saleCompleted": "Sale completed",

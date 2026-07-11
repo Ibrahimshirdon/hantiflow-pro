@@ -118,7 +118,9 @@
     "paidOff": "مدفوع بالكامل",
     "overdue": "متأخر",
     "cancelled": "ملغى",
-    "suspended": "معلّق"
+    "suspended": "معلّق",
+    "lowStock": "مخزون منخفض",
+    "outOfStock": "نفد المخزون"
   },
   "roles": {
     "admin": "مسؤول",
