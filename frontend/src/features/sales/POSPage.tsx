@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { Clock, Package, Plus, Star } from "lucide-react";
+import { Package, Plus, Star } from "lucide-react";
 import { getProductByBarcode, listProducts } from "@/api/inventory.api";
 import { listTaxRates, createSalesOrder, previewDiscount, listSalesOrders, type CreateSalesOrderInput } from "@/api/sales.api";
 import { listUsers, getUser } from "@/api/auth.api";
