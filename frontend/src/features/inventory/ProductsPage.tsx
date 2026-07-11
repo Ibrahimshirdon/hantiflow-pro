@@ -63,13 +63,10 @@ export function ProductsPage() {
           <h1 className="text-2xl font-semibold">{t("productsPage.title")}</h1>
           <p className="text-muted-foreground">{t("productsPage.subtitle")}</p>
         </div>
-        <button
-          onClick={() => setImportOpen(true)}
-          className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-        >
+        <span title="Coming soon" className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium opacity-40 shadow-sm">
           <Upload className="size-4" />
           {t("productsPage.importCsv")}
-        </button>
+        </span>
       </div>
 
       <ImportProductsDialog open={importOpen} onOpenChange={setImportOpen} />
