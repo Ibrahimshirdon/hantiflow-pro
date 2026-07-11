@@ -204,18 +204,20 @@ export interface ImportResult {
 export async function importProducts(rows: ImportRow[]): Promise<ImportResult> {
   const result: ImportResult = { created: 0, skipped: 0, errors: [] };
 
-  // Resolve unique category names to IDs
-  const categoryNames = [...new Set(rows.map((r) => r.category?.trim()).filter(Boolean))] as string[];
-  const categorySnaps = await Promise.all(
-    categoryNames.map((name) =>
-      db.collection("categories").where("name", "==", name).limit(1).get(),
-    ),
-  );
+  // Fetch all categories once and index by exact name AND emoji-stripped name
+  // This handles garbled category names (e.g. Excel corrupting emoji to ðŸ¥•)
+  const stripLeadingEmoji = (s: string) =>
+    s.replace(/^[\p{Emoji_Presentation}\p{Extended_Pictographic}\s]+/gu, "").trim();
+
+  const allCatsSnap = await db.collection("categories").get();
   const categoryMap = new Map<string, { id: string; name: string }>();
-  categoryNames.forEach((name, i) => {
-    const snap = categorySnaps[i];
-    if (snap && !snap.empty) {
-      categoryMap.set(name.toLowerCase(), { id: snap.docs[0]!.id, name });
+  allCatsSnap.docs.forEach((d) => {
+    const data = d.data() as { name: string };
+    const cat = { id: d.id, name: data.name };
+    categoryMap.set(data.name.toLowerCase(), cat);
+    const stripped = stripLeadingEmoji(data.name).toLowerCase();
+    if (stripped && stripped !== data.name.toLowerCase()) {
+      categoryMap.set(stripped, cat);
     }
   });
 
@@ -233,7 +235,10 @@ export async function importProducts(rows: ImportRow[]): Promise<ImportResult> {
   rows.forEach((row, idx) => {
     const rowNum = idx + 2; // 1-indexed + header row offset
     const sku = row.sku?.trim().toUpperCase();
-    const category = categoryMap.get(row.category?.trim().toLowerCase());
+    const rawCat = row.category?.trim() ?? "";
+    const category =
+      categoryMap.get(rawCat.toLowerCase()) ??
+      categoryMap.get(stripLeadingEmoji(rawCat).toLowerCase());
 
     if (!row.name?.trim()) {
       result.errors.push({ row: rowNum, message: "Name is required" });

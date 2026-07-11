@@ -21,15 +21,30 @@ import {
 
 const TEMPLATE_HEADERS = ["name", "sku", "category", "unit", "costPrice", "sellingPrice", "reorderLevel", "barcode"];
 
+// Remove leading emoji/symbols so category names in the CSV are plain text
+function stripLeadingEmoji(s: string): string {
+  return s.replace(/^[\p{Emoji_Presentation}\p{Extended_Pictographic}\s]+/gu, "").trim();
+}
+
+function quoteCsv(val: string): string {
+  if (val.includes(",") || val.includes('"') || val.includes("\n")) {
+    return '"' + val.replace(/"/g, '""') + '"';
+  }
+  return val;
+}
+
 function downloadTemplate(categoryNames: string[]) {
-  const cat1 = categoryNames[0] ?? "Category Name";
-  const cat2 = categoryNames[1] ?? cat1;
+  const plainNames = categoryNames.map(stripLeadingEmoji);
+  const cat1 = plainNames[0] ?? "Category Name";
+  const cat2 = plainNames[1] ?? cat1;
+  // Use ="value" Excel formula for barcode to force text format (prevents 1.23E+08 display)
   const examples = [
-    ["Mineral Water 500ml", "MW-500", cat1, "pcs", "0.50", "1.00", "20", "123456789"],
+    ["Mineral Water 500ml", "MW-500", cat1, "pcs", "0.50", "1.00", "20", '="8901234567890"'],
     ["Sunflower Oil 1L", "OIL-1L", cat2, "pcs", "1.20", "2.50", "15", ""],
   ];
-  const rows = [TEMPLATE_HEADERS.join(","), ...examples.map((r) => r.join(","))];
-  const blob = new Blob([rows.join("\n")], { type: "text/csv" });
+  const csvRows = [TEMPLATE_HEADERS.join(","), ...examples.map((r) => r.map(quoteCsv).join(","))];
+  // ﻿ BOM tells Excel this file is UTF-8 so it renders non-ASCII characters correctly
+  const blob = new Blob(["﻿" + csvRows.join("\n")], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -81,16 +96,33 @@ function csvToRows(rawRows: string[][]): ImportProductRow[] {
   const iReorder = idx("reorderlevel");
   const iBarcode = idx("barcode");
 
-  return dataRows.map((cols) => ({
-    name: cols[iName] ?? "",
-    sku: cols[iSku] ?? "",
-    category: cols[iCat] ?? "",
-    unit: cols[iUnit] ?? "pcs",
-    costPrice: parseFloat(cols[iCost] ?? "0") || 0,
-    sellingPrice: parseFloat(cols[iSell] ?? "0") || 0,
-    reorderLevel: parseInt(cols[iReorder] ?? "5", 10) || 5,
-    barcode: cols[iBarcode] || undefined,
-  }));
+  return dataRows.map((cols) => {
+    const rawBarcode = (cols[iBarcode] ?? "").trim();
+    let barcode: string | undefined;
+    if (rawBarcode) {
+      // Handle Excel formula style: ="8901234567890" → 8901234567890
+      const formula = rawBarcode.match(/^="?([^"]+)"?$/);
+      if (formula) {
+        barcode = formula[1];
+      } else if (/e[+\-]/i.test(rawBarcode)) {
+        // Handle scientific notation: 1.23E+08 → convert back to integer string
+        const n = Number(rawBarcode);
+        barcode = isNaN(n) ? rawBarcode : String(Math.round(n));
+      } else {
+        barcode = rawBarcode;
+      }
+    }
+    return {
+      name: cols[iName] ?? "",
+      sku: cols[iSku] ?? "",
+      category: (cols[iCat] ?? "").trim(),
+      unit: cols[iUnit] ?? "pcs",
+      costPrice: parseFloat(cols[iCost] ?? "0") || 0,
+      sellingPrice: parseFloat(cols[iSell] ?? "0") || 0,
+      reorderLevel: parseInt(cols[iReorder] ?? "5", 10) || 5,
+      barcode,
+    };
+  });
 }
 
 interface Props {
@@ -112,7 +144,8 @@ export function ImportProductsDialog({ open, onOpenChange }: Props) {
     queryFn: listCategories,
     enabled: open,
   });
-  const categoryNames = (categories ?? []).map((c) => c.name);
+  // Strip leading emoji so the hint and template use plain text names (Excel-safe)
+  const categoryNames = (categories ?? []).map((c) => stripLeadingEmoji(c.name));
 
   const mutation = useMutation({
     mutationFn: () => importProducts(rows),
@@ -129,7 +162,8 @@ export function ImportProductsDialog({ open, onOpenChange }: Props) {
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
-        const text = e.target?.result as string;
+        // Strip UTF-8 BOM if present (added by our own template or Excel when saving CSV)
+        let text = (e.target?.result as string).replace(/^﻿/, "");
         const raw = parseCsv(text);
         if (raw.length < 2) {
           setParseError(t("importProductsDialog.errorEmpty"));
@@ -141,7 +175,7 @@ export function ImportProductsDialog({ open, onOpenChange }: Props) {
         setParseError(t("importProductsDialog.errorParse"));
       }
     };
-    reader.readAsText(file);
+    reader.readAsText(file, "utf-8");
   }
 
   function reset() {
