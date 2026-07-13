@@ -50,6 +50,7 @@ import { listAuditLogs } from "@/api/security.api";
 import { describeAuditLog } from "./auditLogText";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -158,6 +159,34 @@ function StatCard({
   );
 }
 
+function StatCardSkeleton() {
+  return (
+    <Card>
+      <CardContent className="flex flex-col gap-3 p-4">
+        <Skeleton className="size-9 rounded-lg" />
+        <div className="flex flex-col gap-1.5">
+          <Skeleton className="h-3.5 w-24" />
+          <Skeleton className="h-7 w-20" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function StatGridSkeleton({ count = 4 }: { count?: number }) {
+  return (
+    <>
+      {Array.from({ length: count }).map((_, i) => (
+        <StatCardSkeleton key={i} />
+      ))}
+    </>
+  );
+}
+
+function ChartSkeleton({ height = 288 }: { height?: number }) {
+  return <Skeleton className="w-full rounded-lg" style={{ height }} />;
+}
+
 export function DashboardPage() {
   const { t } = useTranslation(["analytics", "common"]);
   const { profile } = useAuth();
@@ -173,14 +202,14 @@ export function DashboardPage() {
     queryKey: ["batches", "expiring"],
     queryFn: () => listExpiringBatches(30),
   });
-  const { data: insights } = useQuery({
+  const { data: insights, isLoading: insightsLoading } = useQuery({
     queryKey: ["inventoryInsights"],
     queryFn: getInventoryInsights,
   });
   // Polling rather than a websocket push - a deliberate, simpler stand-in
   // for "real-time" charts that keeps the dashboard reasonably fresh
   // without standing up separate realtime infrastructure.
-  const { data: forecast } = useQuery({
+  const { data: forecast, isLoading: forecastLoading } = useQuery({
     queryKey: ["salesForecast"],
     queryFn: () => getSalesForecast(30, 7),
     refetchInterval: 30_000,
@@ -193,7 +222,7 @@ export function DashboardPage() {
     queryKey: ["bestCustomers"],
     queryFn: () => getBestCustomers(30, 5),
   });
-  const { data: financialSummary } = useQuery({
+  const { data: financialSummary, isLoading: financeLoading } = useQuery({
     queryKey: ["financialSummary", "dashboard"],
     queryFn: () => getFinancialSummary({ dateFrom: isoDaysAgo(30), dateTo: isoDaysAgo(0) }),
     enabled: canSeeFinance,
@@ -372,62 +401,74 @@ export function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <StatCard
-          label={t("dashboardPage.stats.totalProducts")}
-          value={String(insights?.totalProducts ?? "—")}
-          icon={Boxes}
-          tone="primary"
-        />
-        <StatCard
-          label={t("dashboardPage.stats.inventoryValue")}
-          value={`$${(insights?.totalInventoryValue ?? 0).toFixed(2)}`}
-          icon={DollarSign}
-          tone="success"
-        />
-        <StatCard
-          label={t("dashboardPage.stats.lowStockItems")}
-          value={String(insights?.lowStockCount ?? "—")}
-          icon={AlertTriangle}
-          tone="warning"
-        />
-        <StatCard
-          label={t("dashboardPage.stats.expiringBatches30d")}
-          value={String(insights?.expiringBatchesCount ?? "—")}
-          icon={CalendarRange}
-          tone="purple"
-        />
+        {insightsLoading ? (
+          <StatGridSkeleton count={4} />
+        ) : (
+          <>
+            <StatCard
+              label={t("dashboardPage.stats.totalProducts")}
+              value={String(insights?.totalProducts ?? "—")}
+              icon={Boxes}
+              tone="primary"
+            />
+            <StatCard
+              label={t("dashboardPage.stats.inventoryValue")}
+              value={`$${(insights?.totalInventoryValue ?? 0).toFixed(2)}`}
+              icon={DollarSign}
+              tone="success"
+            />
+            <StatCard
+              label={t("dashboardPage.stats.lowStockItems")}
+              value={String(insights?.lowStockCount ?? "—")}
+              icon={AlertTriangle}
+              tone="warning"
+            />
+            <StatCard
+              label={t("dashboardPage.stats.expiringBatches30d")}
+              value={String(insights?.expiringBatchesCount ?? "—")}
+              icon={CalendarRange}
+              tone="purple"
+            />
+          </>
+        )}
       </div>
 
       {canSeeFinance && (
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <StatCard
-            label={t("dashboardPage.stats.revenue30d")}
-            value={`$${(financialSummary?.totalRevenue ?? 0).toFixed(2)}`}
-            icon={DollarSign}
-            tone="primary"
-            trend={{ value: revenueTrend }}
-          />
-          <StatCard
-            label={t("dashboardPage.stats.expenses30d")}
-            value={`$${(financialSummary?.totalExpenses ?? 0).toFixed(2)}`}
-            icon={Receipt}
-            tone="warning"
-            trend={{ value: expensesTrend, invert: true }}
-          />
-          <StatCard
-            label={t("dashboardPage.stats.netProfit30d")}
-            value={`$${(financialSummary?.netProfit ?? 0).toFixed(2)}`}
-            icon={TrendingUp}
-            tone="success"
-            trend={{ value: netProfitTrend }}
-          />
-          <StatCard
-            label={t("dashboardPage.stats.completedOrders30d")}
-            value={String(financialSummary?.orderCount ?? "—")}
-            icon={ShoppingCart}
-            tone="purple"
-            trend={{ value: orderCountTrend }}
-          />
+          {financeLoading ? (
+            <StatGridSkeleton count={4} />
+          ) : (
+            <>
+              <StatCard
+                label={t("dashboardPage.stats.revenue30d")}
+                value={`$${(financialSummary?.totalRevenue ?? 0).toFixed(2)}`}
+                icon={DollarSign}
+                tone="primary"
+                trend={{ value: revenueTrend }}
+              />
+              <StatCard
+                label={t("dashboardPage.stats.expenses30d")}
+                value={`$${(financialSummary?.totalExpenses ?? 0).toFixed(2)}`}
+                icon={Receipt}
+                tone="warning"
+                trend={{ value: expensesTrend, invert: true }}
+              />
+              <StatCard
+                label={t("dashboardPage.stats.netProfit30d")}
+                value={`$${(financialSummary?.netProfit ?? 0).toFixed(2)}`}
+                icon={TrendingUp}
+                tone="success"
+                trend={{ value: netProfitTrend }}
+              />
+              <StatCard
+                label={t("dashboardPage.stats.completedOrders30d")}
+                value={String(financialSummary?.orderCount ?? "—")}
+                icon={ShoppingCart}
+                tone="purple"
+                trend={{ value: orderCountTrend }}
+              />
+            </>
+          )}
         </div>
       )}
 
@@ -667,35 +708,41 @@ export function DashboardPage() {
           <CardTitle className="text-base">{t("dashboardPage.salesTrendForecast.title")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" tick={{ fontSize: 11 }} />
-                <YAxis tick={{ fontSize: 12 }} />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="actual"
-                  stroke="var(--color-primary)"
-                  name={t("dashboardPage.salesTrendForecast.actualSales")}
-                  dot={false}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="predicted"
-                  stroke="var(--color-warning)"
-                  strokeDasharray="5 5"
-                  name={t("dashboardPage.salesTrendForecast.forecast")}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <p className="mt-2 text-xs text-muted-foreground">
-            {t("dashboardPage.salesTrendForecast.disclaimer")}
-          </p>
+          {forecastLoading ? (
+            <ChartSkeleton height={288} />
+          ) : (
+            <>
+              <div className="h-72">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" tick={{ fontSize: 11 }} />
+                    <YAxis tick={{ fontSize: 12 }} />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="actual"
+                      stroke="var(--color-primary)"
+                      name={t("dashboardPage.salesTrendForecast.actualSales")}
+                      dot={false}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="predicted"
+                      stroke="var(--color-warning)"
+                      strokeDasharray="5 5"
+                      name={t("dashboardPage.salesTrendForecast.forecast")}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {t("dashboardPage.salesTrendForecast.disclaimer")}
+              </p>
+            </>
+          )}
         </CardContent>
       </Card>
 

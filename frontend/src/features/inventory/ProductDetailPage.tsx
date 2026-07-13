@@ -205,7 +205,7 @@ export function ProductDetailPage() {
             <div className="relative shrink-0">
               <div className="flex size-36 items-center justify-center overflow-hidden rounded-2xl border bg-muted shadow-sm">
                 {product.images[0] ? (
-                  <img src={product.images[0]} alt={product.name} className="size-full object-cover" />
+                  <img src={product.images[0]} alt={product.name} className="size-full object-cover" loading="lazy" />
                 ) : (
                   <Package className="size-12 text-muted-foreground/40" />
                 )}

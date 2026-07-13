@@ -28,7 +28,13 @@ export function DashboardLayout() {
   });
   const openIssueCount = openIssues?.length ?? 0;
 
-  if (!profile) return null;
+  if (!profile) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="size-8 animate-spin rounded-full border-4 border-muted border-t-primary" />
+      </div>
+    );
+  }
 
   const sections = dashboardNavSections
     .map((section) => ({

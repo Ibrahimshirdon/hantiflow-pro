@@ -48,7 +48,7 @@ export function POSPage() {
   const [pointsToRedeem, setPointsToRedeem] = useState(0);
   const [activeTab, setActiveTab] = useState<"cart" | "history">("cart");
 
-  const { data: products } = useQuery({
+  const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ["products", "availableForSale"],
     queryFn: () => listProducts({ availableForSale: true }),
   });
@@ -221,7 +221,20 @@ export function POSPage() {
           <ShiftSummaryDialog />
         </div>
         <div className="grid grid-cols-3 gap-3 overflow-y-auto pe-1 sm:grid-cols-4">
-          {search.trim() && filteredProducts.length === 0 && (
+          {productsLoading && (
+            <>
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="overflow-hidden rounded-lg border bg-card">
+                  <div className="h-28 animate-pulse bg-muted" />
+                  <div className="flex flex-col gap-1.5 p-2">
+                    <div className="h-3 w-3/4 animate-pulse rounded bg-muted" />
+                    <div className="h-3 w-1/2 animate-pulse rounded bg-muted" />
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+          {!productsLoading && search.trim() && filteredProducts.length === 0 && (
             <div className="col-span-full py-10 text-center text-sm text-muted-foreground">
               <p>{t("posPage.noResults")}</p>
               <p className="mt-1 text-xs">{t("posPage.noResultsHint")}</p>
@@ -248,6 +261,7 @@ export function POSPage() {
                       src={product.images[0]}
                       alt={product.name}
                       className="size-full object-cover transition-transform group-hover:scale-105"
+                      loading="lazy"
                     />
                   ) : (
                     <Package className="size-8 text-muted-foreground/20" />

@@ -223,7 +223,7 @@ export function ShopPage() {
               <CardContent className="flex flex-col gap-2 p-3">
                 <div className="flex h-24 items-center justify-center overflow-hidden rounded-md bg-muted">
                   {product.images[0] ? (
-                    <img src={product.images[0]} alt={product.name} className="size-full object-cover" />
+                    <img src={product.images[0]} alt={product.name} className="size-full object-cover" loading="lazy" />
                   ) : (
                     <span className="text-xs text-muted-foreground">{t("shopPage.product.noImage")}</span>
                   )}

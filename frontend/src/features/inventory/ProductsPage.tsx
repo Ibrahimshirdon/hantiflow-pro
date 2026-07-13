@@ -148,7 +148,7 @@ export function ProductsPage() {
               <TableCell>
                 <div className="flex size-8 items-center justify-center overflow-hidden rounded-md border bg-muted">
                   {product.images[0] ? (
-                    <img src={product.images[0]} alt="" className="size-full object-cover" />
+                    <img src={product.images[0]} alt="" className="size-full object-cover" loading="lazy" />
                   ) : (
                     <Package className="size-4 text-muted-foreground/40" />
                   )}
