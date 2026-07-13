@@ -113,6 +113,22 @@
       "daysLeft_other": "{{count}} maalmood",
       "expired": "Way dhacday"
     },
+    "supplierActivity": {
+      "title": "Howlaha sahayda",
+      "pendingSubmissions": "Gudbinimadii sugaysa",
+      "recentStockRequests": "Codsiyada kaydka — 7 maalmood ugu dambeeyay",
+      "noPending": "Wax gudbino ah oo sugaya ma jiraan.",
+      "noRecentRequests": "Wax codsi kayd ah kuma jirin 7 maalmoodkii u dambeeyay.",
+      "pending": "Sugaya",
+      "columns": {
+        "product": "Badeecada",
+        "supplier": "Sahayaha",
+        "company": "Shirkadda",
+        "qty": "Tirada",
+        "submitted": "La gudbiyay",
+        "requested": "La codsaday"
+      }
+    },
     "teamOverview": {
       "title": "Guudmarka kooxda"
     },

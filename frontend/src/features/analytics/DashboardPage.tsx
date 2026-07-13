@@ -47,6 +47,7 @@ import { getFinancialSummary } from "@/api/finance.api";
 import { listDeliveries, listDeliveryIssues } from "@/api/delivery.api";
 import { listUsers } from "@/api/auth.api";
 import { listAuditLogs } from "@/api/security.api";
+import { listSupplierSubmissions, listStockRequests } from "@/api/supplier.api";
 import { describeAuditLog } from "./auditLogText";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -268,6 +269,16 @@ export function DashboardPage() {
   const { data: recentActivity } = useQuery({
     queryKey: ["auditLogs", "dashboard"],
     queryFn: () => listAuditLogs(),
+    enabled: isAdmin,
+  });
+  const { data: supplierSubmissions } = useQuery({
+    queryKey: ["supplierSubmissions", "dashboard"],
+    queryFn: listSupplierSubmissions,
+    enabled: isAdmin,
+  });
+  const { data: stockRequests } = useQuery({
+    queryKey: ["stockRequests", "dashboard"],
+    queryFn: listStockRequests,
     enabled: isAdmin,
   });
   const { data: mySales } = useQuery({
@@ -1037,6 +1048,123 @@ export function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {isAdmin && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between text-base">
+              {t("dashboardPage.supplierActivity.title")}
+              <Link to="/app/suppliers/stock" className="text-xs font-normal text-primary hover:underline">
+                {t("dashboardPage.viewAll")}
+              </Link>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
+            {/* Pending submissions */}
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                {t("dashboardPage.supplierActivity.pendingSubmissions")}
+              </p>
+              {(() => {
+                const pending = (supplierSubmissions ?? []).filter((s) => s.status === "pending");
+                if (pending.length === 0) {
+                  return (
+                    <p className="text-sm text-muted-foreground">
+                      {t("dashboardPage.supplierActivity.noPending")}
+                    </p>
+                  );
+                }
+                return (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>{t("dashboardPage.supplierActivity.columns.product")}</TableHead>
+                        <TableHead>{t("dashboardPage.supplierActivity.columns.supplier")}</TableHead>
+                        <TableHead>{t("dashboardPage.supplierActivity.columns.qty")}</TableHead>
+                        <TableHead>{t("dashboardPage.supplierActivity.columns.submitted")}</TableHead>
+                        <TableHead>{t("common:fields.status")}</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {pending.slice(0, 6).map((s) => (
+                        <TableRow key={s.id}>
+                          <TableCell className="font-medium">{s.productName}</TableCell>
+                          <TableCell className="text-muted-foreground">{s.companyName}</TableCell>
+                          <TableCell>{s.quantity}</TableCell>
+                          <TableCell className="text-muted-foreground">
+                            {new Date(s.createdAt._seconds * 1000).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="warning">{t("dashboardPage.supplierActivity.pending")}</Badge>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                );
+              })()}
+            </div>
+
+            {/* Recent stock requests */}
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                {t("dashboardPage.supplierActivity.recentStockRequests")}
+              </p>
+              {(() => {
+                const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+                const recent = (stockRequests ?? [])
+                  .filter((r) => r.createdAt._seconds * 1000 >= cutoff)
+                  .slice(0, 6);
+                if (recent.length === 0) {
+                  return (
+                    <p className="text-sm text-muted-foreground">
+                      {t("dashboardPage.supplierActivity.noRecentRequests")}
+                    </p>
+                  );
+                }
+                return (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>{t("dashboardPage.supplierActivity.columns.product")}</TableHead>
+                        <TableHead>{t("dashboardPage.supplierActivity.columns.company")}</TableHead>
+                        <TableHead>{t("dashboardPage.supplierActivity.columns.qty")}</TableHead>
+                        <TableHead>{t("dashboardPage.supplierActivity.columns.requested")}</TableHead>
+                        <TableHead>{t("common:fields.status")}</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {recent.map((r) => (
+                        <TableRow key={r.id}>
+                          <TableCell className="font-medium">{r.productName}</TableCell>
+                          <TableCell className="text-muted-foreground">{r.companyName}</TableCell>
+                          <TableCell>{r.quantity}</TableCell>
+                          <TableCell className="text-muted-foreground">
+                            {new Date(r.createdAt._seconds * 1000).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>
+                            <Badge
+                              variant={
+                                r.status === "approved"
+                                  ? "success"
+                                  : r.status === "rejected"
+                                    ? "destructive"
+                                    : "warning"
+                              }
+                            >
+                              {t(`common:status.${r.status}`)}
+                            </Badge>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                );
+              })()}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {isAdmin && (
         <div className="grid gap-4 md:grid-cols-2">

@@ -113,6 +113,22 @@
       "daysLeft_other": "{{count}} days",
       "expired": "Expired"
     },
+    "supplierActivity": {
+      "title": "Supplier activity",
+      "pendingSubmissions": "Pending submissions",
+      "recentStockRequests": "Stock requests — last 7 days",
+      "noPending": "No pending submissions.",
+      "noRecentRequests": "No stock requests in the last 7 days.",
+      "pending": "Pending",
+      "columns": {
+        "product": "Product",
+        "supplier": "Supplier",
+        "company": "Company",
+        "qty": "Qty",
+        "submitted": "Submitted",
+        "requested": "Requested"
+      }
+    },
     "teamOverview": {
       "title": "Team overview"
     },

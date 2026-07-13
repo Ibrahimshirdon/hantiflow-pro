@@ -113,6 +113,22 @@
       "daysLeft_other": "{{count}} أيام",
       "expired": "منتهية الصلاحية"
     },
+    "supplierActivity": {
+      "title": "نشاط الموردين",
+      "pendingSubmissions": "الطلبات المعلقة",
+      "recentStockRequests": "طلبات المخزون — آخر 7 أيام",
+      "noPending": "لا توجد طلبات معلقة.",
+      "noRecentRequests": "لا توجد طلبات مخزون في آخر 7 أيام.",
+      "pending": "معلق",
+      "columns": {
+        "product": "المنتج",
+        "supplier": "المورد",
+        "company": "الشركة",
+        "qty": "الكمية",
+        "submitted": "تاريخ الإرسال",
+        "requested": "تاريخ الطلب"
+      }
+    },
     "teamOverview": {
       "title": "نظرة عامة على الفريق"
     },
