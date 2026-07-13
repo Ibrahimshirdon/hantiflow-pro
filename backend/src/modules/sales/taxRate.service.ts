@@ -40,3 +40,13 @@ export async function updateTaxRate(id: string, input: UpdateTaxRateInput) {
   await ref.update({ ...input });
   return { id };
 }
+
+export async function deleteTaxRate(id: string) {
+  const ref = collection().doc(id);
+  const snap = await ref.get();
+  if (!snap.exists) {
+    throw new AppError(404, "Tax rate not found");
+  }
+  await ref.delete();
+  return { id };
+}

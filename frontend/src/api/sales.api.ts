@@ -23,6 +23,11 @@ export async function updateTaxRate(id: string, input: Partial<TaxRateInput>) {
   return data.data;
 }
 
+export async function deleteTaxRate(id: string) {
+  const { data } = await apiClient.delete<ApiSuccess<{ id: string }>>(`/sales/tax-rates/${id}`);
+  return data.data;
+}
+
 // Discounts
 export interface DiscountInput {
   code: string;

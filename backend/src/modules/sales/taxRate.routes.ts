@@ -21,3 +21,8 @@ taxRateRouter.patch(
   validate(updateTaxRateSchema),
   taxRateController.update,
 );
+taxRateRouter.delete(
+  "/:id",
+  requireRole(["admin"]),
+  taxRateController.remove,
+);

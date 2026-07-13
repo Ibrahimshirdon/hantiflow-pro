@@ -202,15 +202,21 @@
     "creating": "Waa la samaynayaa...",
     "setAsDefault": "U dejin sida caadiga ah",
     "default": "Caadiga ah",
+    "editDialogTitle": "Wax ka beddel heerka canshuurta",
+    "deleteTitle": "Tirtir heerka canshuurta",
+    "deleteDescription": "Ma hubtaa inaad tirtireyso \"{{name}}\"? Tani laguma noqon karo.",
     "fields": {
-      "rate": "Heerka (tirakoob, tusaale 0.15 = 15%)"
+      "rate": "Heerka (tirakoob, tusaale 0.15 = 15%)",
+      "rateHint": "Waxay u dhigantaa {{pct}}%"
     },
     "columns": {
       "rate": "Heerka",
       "default": "Caadiga ah"
     },
     "toasts": {
-      "created": "Heerka canshuurta waa la abuuray"
+      "created": "Heerka canshuurta waa la abuuray",
+      "updated": "Heerka canshuurta waa la cusbooneysiiyay",
+      "deleted": "Heerka canshuurta waa la tirtiray"
     }
   }
 }

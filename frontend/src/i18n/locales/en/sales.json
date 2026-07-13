@@ -202,15 +202,21 @@
     "creating": "Creating...",
     "setAsDefault": "Set as default",
     "default": "Default",
+    "editDialogTitle": "Edit tax rate",
+    "deleteTitle": "Delete tax rate",
+    "deleteDescription": "Are you sure you want to delete \"{{name}}\"? This cannot be undone.",
     "fields": {
-      "rate": "Rate (as decimal, e.g. 0.15 for 15%)"
+      "rate": "Rate (as decimal, e.g. 0.15 for 15%)",
+      "rateHint": "Equivalent to {{pct}}%"
     },
     "columns": {
       "rate": "Rate",
       "default": "Default"
     },
     "toasts": {
-      "created": "Tax rate created"
+      "created": "Tax rate created",
+      "updated": "Tax rate updated",
+      "deleted": "Tax rate deleted"
     }
   }
 }
