@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { Package, Plus, Star } from "lucide-react";
+import { Package, Plus, Star, Truck } from "lucide-react";
 import { getProductByBarcode, listProducts } from "@/api/inventory.api";
 import { listTaxRates, createSalesOrder, previewDiscount, listSalesOrders, type CreateSalesOrderInput } from "@/api/sales.api";
+import { createDelivery } from "@/api/delivery.api";
 import { listUsers, getUser } from "@/api/auth.api";
 import { getApiErrorMessage } from "@/api/client";
 import type { CustomerProfile } from "@/types/auth.types";
@@ -47,6 +48,12 @@ export function POSPage() {
   const [customerId, setCustomerId] = useState<string>("none");
   const [pointsToRedeem, setPointsToRedeem] = useState(0);
   const [activeTab, setActiveTab] = useState<"cart" | "history">("cart");
+  const [scheduleDelivery, setScheduleDelivery] = useState(false);
+  const [pickupLine1, setPickupLine1] = useState("");
+  const [pickupCity, setPickupCity] = useState("");
+  const [dropoffLine1, setDropoffLine1] = useState("");
+  const [dropoffCity, setDropoffCity] = useState("");
+  const [deliveryNotes, setDeliveryNotes] = useState("");
 
   const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ["products", "availableForSale"],
@@ -177,12 +184,33 @@ export function POSPage() {
 
   const checkoutMutation = useMutation({
     mutationFn: createSalesOrder,
-    onSuccess: (result) => {
-      toast.success(t("posPage.toasts.saleCompleted"));
+    onSuccess: async (result) => {
+      if (scheduleDelivery) {
+        try {
+          await createDelivery({
+            salesOrderId: result.id,
+            pickupAddress: { label: t("posPage.delivery.pickupLabel"), line1: pickupLine1, city: pickupCity },
+            dropoffAddress: { label: t("posPage.delivery.dropoffLabel"), line1: dropoffLine1, city: dropoffCity },
+            notes: deliveryNotes || undefined,
+          });
+          toast.success(t("posPage.toasts.saleAndDeliveryCreated"));
+        } catch {
+          toast.success(t("posPage.toasts.saleCompleted"));
+          toast.error(t("posPage.toasts.deliveryFailed"));
+        }
+      } else {
+        toast.success(t("posPage.toasts.saleCompleted"));
+      }
       setCart([]);
       setDiscountCode("");
       setAppliedDiscount(null);
       setPointsToRedeem(0);
+      setScheduleDelivery(false);
+      setPickupLine1("");
+      setPickupCity("");
+      setDropoffLine1("");
+      setDropoffCity("");
+      setDeliveryNotes("");
       navigate(`/app/sales/orders/${result.id}`);
     },
     onError: (error) => toast.error(getApiErrorMessage(error)),
@@ -195,6 +223,10 @@ export function POSPage() {
     }
     if (paymentMethod === "loan" && customerId === "none") {
       toast.error(t("posPage.toasts.loanRequiresCustomer"));
+      return;
+    }
+    if (scheduleDelivery && (!pickupLine1 || !pickupCity || !dropoffLine1 || !dropoffCity)) {
+      toast.error(t("posPage.toasts.deliveryAddressRequired"));
       return;
     }
     checkoutMutation.mutate({
@@ -318,6 +350,7 @@ export function POSPage() {
               onValueChange={(v) => {
                 setCustomerId(v);
                 setPointsToRedeem(0);
+                if (v === "none") setScheduleDelivery(false);
               }}
             >
               <SelectTrigger className="w-full">
@@ -491,6 +524,74 @@ export function POSPage() {
                   ))}
                 </SelectContent>
               </Select>
+
+              {/* Delivery toggle — only when a registered customer is selected */}
+              {customerId !== "none" && (
+                <div className="rounded-md border">
+                  <button
+                    type="button"
+                    className={[
+                      "flex w-full items-center justify-between px-3 py-2 text-sm font-medium transition-colors",
+                      scheduleDelivery ? "rounded-t-md" : "rounded-md",
+                    ].join(" ")}
+                    onClick={() => setScheduleDelivery(!scheduleDelivery)}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Truck className="size-4 text-muted-foreground" />
+                      {t("posPage.delivery.toggle")}
+                    </span>
+                    <span className={[
+                      "rounded-full px-2 py-0.5 text-xs font-medium",
+                      scheduleDelivery
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground",
+                    ].join(" ")}>
+                      {scheduleDelivery ? t("posPage.delivery.on") : t("posPage.delivery.off")}
+                    </span>
+                  </button>
+
+                  {scheduleDelivery && (
+                    <div className="flex flex-col gap-2 border-t p-3">
+                      <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        {t("posPage.delivery.pickupSection")}
+                      </p>
+                      <Input
+                        placeholder={t("posPage.delivery.addressLine")}
+                        value={pickupLine1}
+                        onChange={(e) => setPickupLine1(e.target.value)}
+                        className="h-8 text-xs"
+                      />
+                      <Input
+                        placeholder={t("posPage.delivery.city")}
+                        value={pickupCity}
+                        onChange={(e) => setPickupCity(e.target.value)}
+                        className="h-8 text-xs"
+                      />
+                      <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        {t("posPage.delivery.dropoffSection")}
+                      </p>
+                      <Input
+                        placeholder={t("posPage.delivery.addressLine")}
+                        value={dropoffLine1}
+                        onChange={(e) => setDropoffLine1(e.target.value)}
+                        className="h-8 text-xs"
+                      />
+                      <Input
+                        placeholder={t("posPage.delivery.city")}
+                        value={dropoffCity}
+                        onChange={(e) => setDropoffCity(e.target.value)}
+                        className="h-8 text-xs"
+                      />
+                      <Input
+                        placeholder={t("posPage.delivery.notes")}
+                        value={deliveryNotes}
+                        onChange={(e) => setDeliveryNotes(e.target.value)}
+                        className="h-8 text-xs"
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="flex gap-2">
                 <Button
