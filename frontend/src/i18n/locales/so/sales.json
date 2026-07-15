@@ -19,6 +19,7 @@
     "charge": "Qaad ${{total}}",
     "noResults": "Wax badeecad ah lama helin.",
     "noResultsHint": "Taabo Enter si aad u raadiso barcode-ka saxda ah.",
+    "tabProducts": "Badeecadaha",
     "tabCart": "Gaariga",
     "tabHistory": "Taariikh",
     "cancelSale": "Baajinta iibka",

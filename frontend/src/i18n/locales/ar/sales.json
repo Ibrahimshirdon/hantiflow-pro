@@ -19,6 +19,7 @@
     "charge": "تحصيل ${{total}}",
     "noResults": "لم يُعثر على منتجات.",
     "noResultsHint": "اضغط Enter للبحث بالباركود الكامل.",
+    "tabProducts": "المنتجات",
     "tabCart": "السلة",
     "tabHistory": "السجل",
     "cancelSale": "إلغاء البيع",

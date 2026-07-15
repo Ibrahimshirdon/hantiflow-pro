@@ -55,6 +55,7 @@ export function POSPage() {
   const [dropoffLine1, setDropoffLine1] = useState("");
   const [dropoffCity, setDropoffCity] = useState("");
   const [deliveryNotes, setDeliveryNotes] = useState("");
+  const [mobileView, setMobileView] = useState<"products" | "cart">("products");
 
   const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ["products", "availableForSale"],
@@ -256,8 +257,30 @@ export function POSPage() {
   }
 
   return (
-    <div className="grid h-[calc(100vh-7rem)] grid-cols-[1fr_360px] gap-4">
-      <div className="flex flex-col gap-4 overflow-hidden">
+    <div className="flex h-[calc(100vh-6rem)] flex-col gap-3 md:h-[calc(100vh-7rem)] md:grid md:grid-cols-[1fr_360px] md:gap-4">
+
+      {/* Mobile-only tab switcher */}
+      <div className="flex shrink-0 rounded-lg border bg-muted/40 p-0.5 md:hidden">
+        <button
+          className={["flex-1 rounded-sm py-1.5 text-xs font-medium transition-colors", mobileView === "products" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}
+          onClick={() => setMobileView("products")}
+        >
+          {t("posPage.tabProducts")}
+        </button>
+        <button
+          className={["flex-1 rounded-sm py-1.5 text-xs font-medium transition-colors", mobileView === "cart" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"].join(" ")}
+          onClick={() => setMobileView("cart")}
+        >
+          {t("posPage.tabCart")}
+          {cart.length > 0 && (
+            <span className="ms-1.5 inline-flex size-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
+              {cart.length}
+            </span>
+          )}
+        </button>
+      </div>
+
+      <div className={["min-h-0 flex-1 flex flex-col gap-4 overflow-hidden", mobileView === "cart" ? "hidden md:flex" : ""].join(" ")}>
         <div className="flex gap-2">
           <Input
             placeholder={t("posPage.searchPlaceholder")}
@@ -358,7 +381,7 @@ export function POSPage() {
         </div>
       </div>
 
-      <Card className="flex flex-col overflow-hidden">
+      <Card className={["min-h-0 flex-1 flex flex-col overflow-hidden", mobileView === "products" ? "hidden md:flex" : ""].join(" ")}>
         <CardContent className="flex h-full flex-col gap-3 p-4">
 
           {/* Customer selector + loyalty — always visible */}

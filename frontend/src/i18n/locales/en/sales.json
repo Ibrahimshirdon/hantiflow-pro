@@ -42,6 +42,7 @@
       "useMax": "Use max",
       "discount": "Loyalty ({{pts}} pts)"
     },
+    "tabProducts": "Products",
     "tabCart": "Cart",
     "tabHistory": "History",
     "cancelSale": "Cancel sale",
