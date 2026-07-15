@@ -96,6 +96,12 @@
       "approved": "Badeecada waa la ansixiyay — hadda waa la iibin karaa"
     }
   },
+  "barcodePrintDialog": {
+    "title": "Summadda barcode-ka",
+    "trigger": "Daabac barcode",
+    "print": "Daabac summadda",
+    "popupBlocked": "Pop-up waxa xidnay — u ogolow pop-ups goobtan si aad u daabacdo"
+  },
   "adjustStockDialog": {
     "trigger": "Saami kayd",
     "title": "Saami kayd",

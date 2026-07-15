@@ -96,6 +96,12 @@
       "approved": "Product approved — now live for sale"
     }
   },
+  "barcodePrintDialog": {
+    "title": "Barcode label",
+    "trigger": "Print barcode",
+    "print": "Print label",
+    "popupBlocked": "Pop-up blocked — allow pop-ups for this site to print"
+  },
   "adjustStockDialog": {
     "trigger": "Adjust stock",
     "title": "Adjust stock",

@@ -46,6 +46,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AdjustStockDialog } from "./AdjustStockDialog";
+import { BarcodePrintDialog } from "./BarcodePrintDialog";
 import { EditProductDialog } from "./EditProductDialog";
 
 function formatDate(ts: Parameters<typeof toDate>[0]) {
@@ -300,6 +301,9 @@ export function ProductDetailPage() {
                       taxRates={taxRates ?? []}
                       showExpiryField={!batches?.some((b) => b.expiryDate)}
                     />
+                  )}
+                  {product.barcode && (
+                    <BarcodePrintDialog product={product} />
                   )}
                   {profile?.role === "admin" && (
                     <Button
