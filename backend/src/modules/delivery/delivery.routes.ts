@@ -69,7 +69,7 @@ deliveryRouter.post(
 );
 deliveryRouter.patch(
   "/:id/assign",
-  requireRole(["admin", "manager"]),
+  requireRole(["admin", "manager", "staff"]),
   validate(assignDriverSchema),
   deliveryController.assign,
 );
