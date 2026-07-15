@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ShiftSummaryDialog } from "./ShiftSummaryDialog";
+import { CameraScanner } from "./CameraScanner";
 
 const POINTS_PER_DOLLAR = 100;
 
@@ -129,6 +130,22 @@ export function POSPage() {
       toast.success(t("posPage.toasts.barcodeAdded", { name: product.name }));
     } catch {
       toast.error(t("posPage.toasts.barcodeNotFound", { barcode: term }));
+    }
+  }
+
+  async function onCameraScan(barcode: string) {
+    const existing = products?.find((p) => p.barcode === barcode);
+    if (existing) {
+      addToCart(existing);
+      toast.success(t("posPage.toasts.barcodeAdded", { name: existing.name }));
+      return;
+    }
+    try {
+      const product = await getProductByBarcode(barcode);
+      addToCart(product);
+      toast.success(t("posPage.toasts.barcodeAdded", { name: product.name }));
+    } catch {
+      toast.error(t("posPage.toasts.barcodeNotFound", { barcode }));
     }
   }
 
@@ -250,6 +267,7 @@ export function POSPage() {
               if (e.key === "Enter") handleBarcodeSearch();
             }}
           />
+          <CameraScanner onScan={onCameraScan} />
           <ShiftSummaryDialog />
         </div>
         <div className="grid grid-cols-3 gap-3 overflow-y-auto pe-1 sm:grid-cols-4">

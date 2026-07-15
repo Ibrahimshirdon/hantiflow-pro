@@ -57,6 +57,13 @@
       "on": "On",
       "off": "Off"
     },
+    "cameraScanner": {
+      "trigger": "Scan with camera",
+      "title": "Scan barcode",
+      "hint": "Point your camera at the barcode — it scans automatically",
+      "cancel": "Cancel",
+      "errorCamera": "Cannot access camera — check browser permissions"
+    },
     "toasts": {
       "discountApplied": "Discount applied: -${{amount}}",
       "saleCompleted": "Sale completed",
