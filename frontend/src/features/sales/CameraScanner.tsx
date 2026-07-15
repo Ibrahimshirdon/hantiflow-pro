@@ -19,12 +19,12 @@ export function CameraScanner({ onScan }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [scanning, setScanning] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  // Store the reader so we can reset it on close
-  const readerRef = useRef<{ reset: () => void } | null>(null);
+  // IScannerControls returned by decodeFromVideoDevice — has stop()
+  const controlsRef = useRef<{ stop: () => void } | null>(null);
 
   const stopScanner = useCallback(() => {
-    readerRef.current?.reset();
-    readerRef.current = null;
+    controlsRef.current?.stop();
+    controlsRef.current = null;
     setScanning(false);
   }, []);
 
@@ -43,32 +43,43 @@ export function CameraScanner({ onScan }: Props) {
       setScanning(true);
 
       try {
-        // Lazy-load ZXing so it doesn't bloat the initial bundle
-        const { BrowserMultiFormatReader, NotFoundException } = await import("@zxing/browser");
+        const { BrowserMultiFormatReader } = await import("@zxing/browser");
         if (cancelled) return;
 
         const reader = new BrowserMultiFormatReader();
-        readerRef.current = reader;
 
-        await reader.decodeFromVideoDevice(
+        // decodeFromVideoDevice resolves with IScannerControls once the camera
+        // stream starts. The callback then fires on every decoded frame.
+        const controls = await reader.decodeFromVideoDevice(
           undefined,
-          videoRef.current,
+          videoRef.current!,
           (result, err) => {
             if (cancelled) return;
             if (result) {
               const text = result.getText();
-              stopScanner();
+              controlsRef.current?.stop();
+              controlsRef.current = null;
+              setScanning(false);
               setOpen(false);
               onScan(text);
               return;
             }
-            // NotFoundException fires every frame when nothing is detected — ignore it
-            if (err && !(err instanceof NotFoundException)) {
+            // "NotFoundException" fires every frame when no barcode is visible — ignore it.
+            // Any other error (camera access denied, decode failure) is real.
+            if (err && err.name !== "NotFoundException") {
               setError(t("sales:cameraScanner.errorCamera"));
-              stopScanner();
+              controlsRef.current?.stop();
+              controlsRef.current = null;
+              setScanning(false);
             }
           },
         );
+
+        if (cancelled) {
+          controls.stop();
+        } else {
+          controlsRef.current = controls;
+        }
       } catch {
         if (!cancelled) {
           setError(t("sales:cameraScanner.errorCamera"));
@@ -111,7 +122,7 @@ export function CameraScanner({ onScan }: Props) {
               muted
               playsInline
             />
-            {/* Scan target overlay */}
+            {/* Scan-target overlay */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
               <div className="size-48 rounded-lg border-2 border-primary/80 shadow-[0_0_0_9999px_rgba(0,0,0,0.45)]" />
             </div>
