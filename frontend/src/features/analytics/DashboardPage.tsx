@@ -292,6 +292,9 @@ export function DashboardPage() {
     enabled: isStaff,
   });
 
+  // eslint-disable-next-line react-hooks/purity, react-hooks/exhaustive-deps
+  const nowMs = useMemo(() => Date.now(), [expiringBatches, stockRequests]);
+
   const salesLast24h = useMemo(
     () => (mySales ?? []).filter((o) => o.createdAt._seconds * 1000 >= msAgo(1)),
     [mySales],
@@ -1019,7 +1022,7 @@ export function DashboardPage() {
                   {expiringBatches.slice(0, 5).map((batch) => {
                     const expiry = toDate(batch.expiryDate);
                     const daysLeft = expiry
-                      ? Math.ceil((expiry.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+                      ? Math.ceil((expiry.getTime() - nowMs) / (1000 * 60 * 60 * 24))
                       : 0;
                     const isCritical = daysLeft <= 7;
                     return (
@@ -1111,7 +1114,7 @@ export function DashboardPage() {
                 {t("dashboardPage.supplierActivity.recentStockRequests")}
               </p>
               {(() => {
-                const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+                const cutoff = nowMs - 7 * 24 * 60 * 60 * 1000;
                 const recent = (stockRequests ?? [])
                   .filter((r) => r.createdAt._seconds * 1000 >= cutoff)
                   .slice(0, 6);

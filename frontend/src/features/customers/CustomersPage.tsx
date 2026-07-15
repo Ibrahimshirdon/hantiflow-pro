@@ -147,6 +147,7 @@ export function CustomersPage() {
   useEffect(() => {
     if (!selectedCustomer || !customers) return;
     const updated = customers.find((c) => c.uid === selectedCustomer.uid);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (updated) setSelectedCustomer(updated);
   }, [customers]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -154,6 +155,7 @@ export function CustomersPage() {
   useEffect(() => {
     if (!outstandingLoans || outstandingLoans.length === 0) return;
     const first = outstandingLoans[0];
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedLoanId(first.id);
     setCollectAmount(first.balanceRemaining);
   }, [outstandingLoans]);

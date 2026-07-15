@@ -41,7 +41,7 @@ export function StocktakeSessionPage() {
         item.productName.toLowerCase().includes(term) ||
         item.batchNumber.toLowerCase().includes(term),
     );
-  }, [session?.items, search]);
+  }, [session, search]);
 
   const commitMutation = useMutation({
     mutationFn: () => {

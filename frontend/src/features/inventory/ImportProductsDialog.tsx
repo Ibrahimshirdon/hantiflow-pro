@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+﻿import { useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Upload, Download, AlertCircle, CheckCircle2 } from "lucide-react";
@@ -43,7 +43,7 @@ function downloadTemplate(categoryNames: string[]) {
     ["Sunflower Oil 1L", "OIL-1L", cat2, "pcs", "1.20", "2.50", "15", ""],
   ];
   const csvRows = [TEMPLATE_HEADERS.join(","), ...examples.map((r) => r.map(quoteCsv).join(","))];
-  // ﻿ BOM tells Excel this file is UTF-8 so it renders non-ASCII characters correctly
+  // BOM tells Excel this file is UTF-8 so it renders non-ASCII characters correctly
   const blob = new Blob(["﻿" + csvRows.join("\n")], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -104,7 +104,7 @@ function csvToRows(rawRows: string[][]): ImportProductRow[] {
       const formula = rawBarcode.match(/^="?([^"]+)"?$/);
       if (formula) {
         barcode = formula[1];
-      } else if (/e[+\-]/i.test(rawBarcode)) {
+      } else if (/e[+-]/i.test(rawBarcode)) {
         // Handle scientific notation: 1.23E+08 → convert back to integer string
         const n = Number(rawBarcode);
         barcode = isNaN(n) ? rawBarcode : String(Math.round(n));
@@ -163,7 +163,7 @@ export function ImportProductsDialog({ open, onOpenChange }: Props) {
     reader.onload = (e) => {
       try {
         // Strip UTF-8 BOM if present (added by our own template or Excel when saving CSV)
-        let text = (e.target?.result as string).replace(/^﻿/, "");
+        const text = (e.target?.result as string).replace(/^\uFEFF/, "");
         const raw = parseCsv(text);
         if (raw.length < 2) {
           setParseError(t("importProductsDialog.errorEmpty"));

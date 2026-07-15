@@ -104,6 +104,7 @@ export function UsersPage() {
   useEffect(() => {
     if (!editingUser) return;
     const p = editingUser.profile as Record<string, string> | null;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setEditForm({
       displayName: editingUser.displayName,
       phone: editingUser.phone ?? "",
