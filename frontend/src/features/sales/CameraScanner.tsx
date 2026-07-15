@@ -75,8 +75,11 @@ export function CameraScanner({ onScan }: Props) {
               onScanRef.current(text);
               return;
             }
-            // NotFoundException fires every frame when nothing is detected — ignore
-            if (err && err.name !== "NotFoundException") {
+            // ZXing fires NotFoundException / ChecksumException / FormatException
+            // on every frame where no barcode is fully decoded — all are normal
+            // scan-miss events. Only a DOMException (camera permission denied,
+            // device not found, etc.) is a real hardware error worth surfacing.
+            if (err && err instanceof DOMException) {
               setError(t("sales:cameraScanner.errorCamera"));
               controlsRef.current?.stop();
               controlsRef.current = null;
