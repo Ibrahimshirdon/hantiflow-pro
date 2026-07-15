@@ -41,8 +41,26 @@ export function BarcodePrintDialog({ product }: Props) {
   }, [open, product.barcode]);
 
   function handlePrint() {
-    if (!canvasRef.current) return;
-    const dataUrl = canvasRef.current.toDataURL("image/png");
+    if (!product.barcode) return;
+    // Use a fresh offscreen canvas so the result is never affected by
+    // dialog animation state or a zero-sized DOM canvas.
+    const offscreen = document.createElement("canvas");
+    try {
+      JsBarcode(offscreen, product.barcode, {
+        format: "CODE128",
+        width: 2,
+        height: 70,
+        displayValue: true,
+        fontSize: 13,
+        margin: 10,
+        background: "#ffffff",
+        lineColor: "#000000",
+      });
+    } catch {
+      toast.error("Could not generate barcode — check the barcode value");
+      return;
+    }
+    const dataUrl = offscreen.toDataURL("image/png");
     const win = window.open("", "_blank", "width=420,height=360");
     if (!win) {
       toast.error(t("inventory:barcodePrintDialog.popupBlocked"));
