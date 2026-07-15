@@ -34,13 +34,6 @@
       "on": "Fur",
       "off": "Xir"
     },
-    "cameraScanner": {
-      "trigger": "Sawir barcode",
-      "title": "Sawir barcode",
-      "hint": "Tusso kaameeradaada barcode-ka — si toos ah ayay u sawiri doontaa",
-      "cancel": "Jooji",
-      "errorCamera": "Ma heli kartid kaameerada — hubi fasaxa browser-ka"
-    },
     "toasts": {
       "discountApplied": "Dhimis la dhaqan geliyay: -${{amount}}",
       "saleCompleted": "Iibka waa la dhammeeyay",
@@ -75,6 +68,13 @@
       "amount": "Lacagta",
       "noOrders": "Maanta dalabaad la dhammaystirin kuma jiro."
     }
+  },
+  "cameraScanner": {
+    "trigger": "Sawir barcode",
+    "title": "Sawir barcode",
+    "hint": "Tusso kaameeradaada barcode-ka — si toos ah ayay u sawiri doontaa",
+    "cancel": "Jooji",
+    "errorCamera": "Ma heli kartid kaameerada — hubi fasaxa browser-ka"
   },
   "salesOrdersPage": {
     "title": "Dalabaadka Iibka",
