@@ -18,9 +18,12 @@ export function CameraScanner({ onScan }: Props) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [scanning, setScanning] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  // IScannerControls returned by decodeFromVideoDevice — has stop()
+  // Use state instead of ref so the effect below reacts when the video mounts
+  const [videoEl, setVideoEl] = useState<HTMLVideoElement | null>(null);
   const controlsRef = useRef<{ stop: () => void } | null>(null);
+  // Keep onScan stable inside the async callback via ref
+  const onScanRef = useRef(onScan);
+  onScanRef.current = onScan;
 
   const stopScanner = useCallback(() => {
     controlsRef.current?.stop();
@@ -28,17 +31,26 @@ export function CameraScanner({ onScan }: Props) {
     setScanning(false);
   }, []);
 
+  // Callback ref — fires with the real element once the dialog mounts it
+  const videoCallbackRef = useCallback((el: HTMLVideoElement | null) => {
+    setVideoEl(el);
+  }, []);
+
+  // Reset error when dialog closes
   useEffect(() => {
-    if (!open) {
+    if (!open) setError(null);
+  }, [open]);
+
+  // Start/stop scanner whenever the video element mounts or unmounts
+  useEffect(() => {
+    if (!videoEl) {
       stopScanner();
-      setError(null);
       return;
     }
 
     let cancelled = false;
 
     async function startScanner() {
-      if (!videoRef.current) return;
       setError(null);
       setScanning(true);
 
@@ -48,11 +60,10 @@ export function CameraScanner({ onScan }: Props) {
 
         const reader = new BrowserMultiFormatReader();
 
-        // decodeFromVideoDevice resolves with IScannerControls once the camera
-        // stream starts. The callback then fires on every decoded frame.
-        const controls = await reader.decodeFromVideoDevice(
-          undefined,
-          videoRef.current!,
+        // facingMode: "environment" selects the rear camera on mobile
+        const controls = await reader.decodeFromConstraints(
+          { video: { facingMode: "environment" } },
+          videoEl!,
           (result, err) => {
             if (cancelled) return;
             if (result) {
@@ -61,11 +72,10 @@ export function CameraScanner({ onScan }: Props) {
               controlsRef.current = null;
               setScanning(false);
               setOpen(false);
-              onScan(text);
+              onScanRef.current(text);
               return;
             }
-            // "NotFoundException" fires every frame when no barcode is visible — ignore it.
-            // Any other error (camera access denied, decode failure) is real.
+            // NotFoundException fires every frame when nothing is detected — ignore
             if (err && err.name !== "NotFoundException") {
               setError(t("sales:cameraScanner.errorCamera"));
               controlsRef.current?.stop();
@@ -94,7 +104,7 @@ export function CameraScanner({ onScan }: Props) {
       cancelled = true;
       stopScanner();
     };
-  }, [open, onScan, stopScanner, t]);
+  }, [videoEl, stopScanner, t]);
 
   return (
     <>
@@ -116,7 +126,7 @@ export function CameraScanner({ onScan }: Props) {
 
           <div className="relative overflow-hidden rounded-lg bg-black">
             <video
-              ref={videoRef}
+              ref={videoCallbackRef}
               className="w-full"
               autoPlay
               muted
