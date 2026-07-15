@@ -443,7 +443,7 @@ export function POSPage() {
           {/* Cart tab */}
           {activeTab === "cart" && (
             <>
-              <div className="flex-1 overflow-y-auto">
+              <div className="min-h-0 flex-1 overflow-y-auto">
                 {cart.length === 0 && (
                   <p className="mt-8 text-center text-sm text-muted-foreground">{t("posPage.cartEmpty")}</p>
                 )}
@@ -469,6 +469,7 @@ export function POSPage() {
                 ))}
               </div>
 
+              <div className="flex flex-col gap-3 overflow-y-auto">
               <div className="flex gap-2">
                 <Input
                   placeholder={t("posPage.discountCodePlaceholder")}
@@ -593,7 +594,9 @@ export function POSPage() {
                 </div>
               )}
 
-              <div className="flex gap-2">
+              </div>{/* end scrollable middle section */}
+
+              <div className="flex shrink-0 gap-2">
                 <Button
                   variant="outline"
                   className="flex-1 text-destructive hover:bg-destructive/10 hover:text-destructive"
