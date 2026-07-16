@@ -39,7 +39,8 @@ export function CreateDeliveryDialog() {
     queryKey: ["salesOrders", "withCustomer"],
     queryFn: () => listSalesOrders(),
   });
-  const deliverableOrders = orders?.filter((o) => o.customerId) ?? [];
+  // Only paid orders with a customer can be dispatched — pre-paid policy
+  const deliverableOrders = orders?.filter((o) => o.customerId && o.paymentStatus === "paid") ?? [];
 
   const mutation = useMutation({
     mutationFn: createDelivery,
@@ -99,6 +100,9 @@ export function CreateDeliveryDialog() {
                 ))}
               </SelectContent>
             </Select>
+            <p className="text-xs text-muted-foreground">
+              {t("createDeliveryDialog.salesOrder.paidOnly")}
+            </p>
           </div>
           <p className="text-xs font-medium text-muted-foreground">
             {t("createDeliveryDialog.pickupAddress.sectionLabel")}

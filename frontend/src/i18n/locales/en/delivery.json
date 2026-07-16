@@ -99,7 +99,8 @@
     "title": "Create delivery",
     "salesOrder": {
       "label": "Sales order",
-      "placeholder": "Select an order"
+      "placeholder": "Select an order",
+      "paidOnly": "Only paid orders are shown — payment must be collected at the counter before dispatch."
     },
     "pickupAddress": {
       "sectionLabel": "Pickup address",

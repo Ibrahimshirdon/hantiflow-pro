@@ -99,7 +99,8 @@
     "title": "Samee gaarsiin",
     "salesOrder": {
       "label": "Dalabka iibka",
-      "placeholder": "Dooro dalab"
+      "placeholder": "Dooro dalab",
+      "paidOnly": "Dalabyo la bixiyay oo keliya ayaa muuqda — lacagta waa in ka dibadda la bixiyaa ka hor diritaanka."
     },
     "pickupAddress": {
       "sectionLabel": "Cinwaanka qaadista",

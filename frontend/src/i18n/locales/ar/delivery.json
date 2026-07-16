@@ -99,7 +99,8 @@
     "title": "إنشاء توصيل",
     "salesOrder": {
       "label": "طلب البيع",
-      "placeholder": "اختر طلبًا"
+      "placeholder": "اختر طلبًا",
+      "paidOnly": "تظهر فقط الطلبات المدفوعة — يجب تحصيل الدفع عند الكاشير قبل الإرسال."
     },
     "pickupAddress": {
       "sectionLabel": "عنوان الاستلام",
