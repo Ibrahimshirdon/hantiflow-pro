@@ -132,5 +132,10 @@
     "customer": "Customer",
     "supplier": "Supplier",
     "driver": "Driver"
+  },
+  "newDeliveryAlert": {
+    "title": "New delivery arrived!",
+    "subtitle_one": "{{count}} new delivery is waiting to be assigned.",
+    "subtitle_other": "{{count}} new deliveries are waiting to be assigned."
   }
 }

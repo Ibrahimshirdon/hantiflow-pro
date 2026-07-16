@@ -132,5 +132,10 @@
     "customer": "عميل",
     "supplier": "مورد",
     "driver": "سائق"
+  },
+  "newDeliveryAlert": {
+    "title": "وصل توصيل جديد!",
+    "subtitle_one": "{{count}} توصيل جديد ينتظر تعيين سائق.",
+    "subtitle_other": "{{count}} توصيلات جديدة تنتظر تعيين سائق."
   }
 }

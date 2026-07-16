@@ -132,5 +132,10 @@
     "customer": "Macmiil",
     "supplier": "Alaab-qeybiye",
     "driver": "Darawal"
+  },
+  "newDeliveryAlert": {
+    "title": "Gaarsiin cusub ayaa yimid!",
+    "subtitle_one": "{{count}} gaarsiin cusub oo sugaysa in darawal loo qoondeeyo.",
+    "subtitle_other": "{{count}} gaarsiin cusub oo sugaysa in darawal loo qoondeeyo."
   }
 }
