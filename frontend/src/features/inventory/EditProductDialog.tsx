@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -19,6 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ScanLine } from "lucide-react";
 import { CameraScanner } from "@/features/sales/CameraScanner";
 import {
   Select,
@@ -63,6 +64,40 @@ export function EditProductDialog({
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<ProductInput>(() => toFormState(product));
+  const [scanMode, setScanMode] = useState(false);
+
+  // When scan mode is active, capture rapid keystrokes from a physical
+  // scanner / Barcode to PC and fill the barcode field automatically.
+  useEffect(() => {
+    if (!scanMode) return;
+    let buffer = "";
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Enter") {
+        if (buffer.length >= 4) {
+          setForm((prev) => ({ ...prev, barcode: buffer }));
+          toast.success(`Barcode scanned: ${buffer}`);
+        }
+        buffer = "";
+        setScanMode(false);
+        if (timer) { clearTimeout(timer); timer = null; }
+        return;
+      }
+      if (e.key.length === 1) {
+        buffer += e.key;
+        if (timer) clearTimeout(timer);
+        // Auto-cancel scan mode after 10 s with no input
+        timer = setTimeout(() => { buffer = ""; setScanMode(false); timer = null; }, 10_000);
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      if (timer) clearTimeout(timer);
+    };
+  }, [scanMode]);
 
   const mutation = useMutation({
     mutationFn: () => updateProduct(product.id, form),
@@ -118,8 +153,24 @@ export function EditProductDialog({
                   value={form.barcode}
                   onChange={(e) => set("barcode", e.target.value)}
                 />
+                {/* Physical scanner / Barcode to PC */}
+                <Button
+                  type="button"
+                  variant={scanMode ? "default" : "outline"}
+                  size="icon"
+                  title="Scan with physical scanner"
+                  onClick={() => setScanMode((s) => !s)}
+                >
+                  <ScanLine className={["size-4", scanMode ? "animate-pulse" : ""].join(" ")} />
+                </Button>
+                {/* Camera scanner */}
                 <CameraScanner onScan={(code) => set("barcode", code)} />
               </div>
+              {scanMode && (
+                <p className="text-xs text-primary animate-pulse">
+                  Ready — scan now with your device…
+                </p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-1.5">
