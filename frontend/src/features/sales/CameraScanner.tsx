@@ -55,14 +55,27 @@ export function CameraScanner({ onScan }: Props) {
       setScanning(true);
 
       try {
-        const { BrowserMultiFormatReader } = await import("@zxing/browser");
+        const [{ BrowserMultiFormatReader }, { DecodeHintType }] = await Promise.all([
+          import("@zxing/browser"),
+          import("@zxing/library"),
+        ]);
         if (cancelled) return;
 
-        const reader = new BrowserMultiFormatReader();
+        // TRY_HARDER makes ZXing spend more effort per frame — essential for
+        // reading real retail barcodes (EAN-13, UPC-A) on product packaging.
+        const hints = new Map<number, unknown>();
+        hints.set(DecodeHintType.TRY_HARDER, true);
+        const reader = new BrowserMultiFormatReader(hints);
 
-        // facingMode: "environment" selects the rear camera on mobile
+        // Request HD resolution so small barcode lines are resolved clearly.
         const controls = await reader.decodeFromConstraints(
-          { video: { facingMode: "environment" } },
+          {
+            video: {
+              facingMode: "environment",
+              width: { ideal: 1280 },
+              height: { ideal: 720 },
+            },
+          },
           videoEl!,
           (result, err) => {
             if (cancelled) return;
