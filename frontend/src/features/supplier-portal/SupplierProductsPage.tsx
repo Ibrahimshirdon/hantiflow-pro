@@ -172,17 +172,27 @@ export function SupplierProductsPage() {
     setSubmitting(product);
   }
 
+  function validatePrices() {
+    if (form.sellingPrice <= form.wholesalePrice) {
+      toast.error(t("productsPage.toasts.sellingPriceTooLow"));
+      return false;
+    }
+    return true;
+  }
+
   function handleCreateSubmit(event: FormEvent) {
     event.preventDefault();
     if (!form.companyId) {
       toast.error(t("productsPage.toasts.selectCompany"));
       return;
     }
+    if (!validatePrices()) return;
     createMutation.mutate(form);
   }
 
   function handleEditSubmit(event: FormEvent) {
     event.preventDefault();
+    if (!validatePrices()) return;
     updateMutation.mutate();
   }
 
@@ -311,8 +321,12 @@ export function SupplierProductsPage() {
                     min={0}
                     step="0.01"
                     value={form.sellingPrice}
+                    className={form.wholesalePrice > 0 && form.sellingPrice <= form.wholesalePrice ? "border-destructive focus-visible:ring-destructive" : ""}
                     onChange={(e) => setForm({ ...form, sellingPrice: Number(e.target.value) })}
                   />
+                  {form.wholesalePrice > 0 && form.sellingPrice <= form.wholesalePrice && (
+                    <p className="text-xs text-destructive">{t("productsPage.toasts.sellingPriceTooLow")}</p>
+                  )}
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -564,8 +578,12 @@ export function SupplierProductsPage() {
                   min={0}
                   step="0.01"
                   value={form.sellingPrice}
+                  className={form.wholesalePrice > 0 && form.sellingPrice <= form.wholesalePrice ? "border-destructive focus-visible:ring-destructive" : ""}
                   onChange={(e) => setForm({ ...form, sellingPrice: Number(e.target.value) })}
                 />
+                {form.wholesalePrice > 0 && form.sellingPrice <= form.wholesalePrice && (
+                  <p className="text-xs text-destructive">{t("productsPage.toasts.sellingPriceTooLow")}</p>
+                )}
               </div>
             </div>
             <div className="flex flex-col gap-1.5">

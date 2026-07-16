@@ -162,7 +162,8 @@
       "updated": "Badeecada waa la cusboonaysiiyay",
       "deleted": "Badeecada waa la tirtiray",
       "submissionRequested": "Gudbinta waa la codsaday — waxay sugaysaa ansixinta maamulka",
-      "selectCompany": "Dooro shirkad"
+      "selectCompany": "Dooro shirkad",
+      "sellingPriceTooLow": "Qiimaha iibka waa inuu ka sarreeya qiimaha kulaylaha"
     }
   },
   "stockRequestsPage": {

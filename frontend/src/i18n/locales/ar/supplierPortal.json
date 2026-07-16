@@ -162,7 +162,8 @@
       "updated": "تم تحديث المنتج",
       "deleted": "تم حذف المنتج",
       "submissionRequested": "تم تقديم طلب الإرسال — في انتظار موافقة المسؤول",
-      "selectCompany": "اختر شركة"
+      "selectCompany": "اختر شركة",
+      "sellingPriceTooLow": "يجب أن يكون سعر البيع أعلى من سعر الجملة"
     }
   },
   "stockRequestsPage": {

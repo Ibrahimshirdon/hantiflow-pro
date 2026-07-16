@@ -162,7 +162,8 @@
       "updated": "Product updated",
       "deleted": "Product deleted",
       "submissionRequested": "Submission requested — awaiting admin approval",
-      "selectCompany": "Select a company"
+      "selectCompany": "Select a company",
+      "sellingPriceTooLow": "Selling price must be higher than wholesale price"
     }
   },
   "stockRequestsPage": {
