@@ -19,6 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { CameraScanner } from "@/features/sales/CameraScanner";
 import {
   Select,
   SelectContent,
@@ -111,11 +112,14 @@ export function EditProductDialog({
             </div>
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="edit-barcode">{t("editProductDialog.barcode")}</Label>
-              <Input
-                id="edit-barcode"
-                value={form.barcode}
-                onChange={(e) => set("barcode", e.target.value)}
-              />
+              <div className="flex gap-2">
+                <Input
+                  id="edit-barcode"
+                  value={form.barcode}
+                  onChange={(e) => set("barcode", e.target.value)}
+                />
+                <CameraScanner onScan={(code) => set("barcode", code)} />
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-1.5">
