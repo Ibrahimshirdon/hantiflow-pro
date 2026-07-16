@@ -23,6 +23,12 @@
     "assignDriverPlaceholder": "تعيين سائق",
     "toasts": {
       "driverAssigned": "تم تعيين السائق"
+    },
+    "newDeliveryAlert": {
+      "title": "وصل توصيل جديد!",
+      "subtitle_one": "{{count}} توصيل جديد ينتظر تعيين سائق.",
+      "subtitle_other": "{{count}} توصيلات جديدة تنتظر تعيين سائق.",
+      "dismiss": "إغلاق"
     }
   },
   "deliveryDetailPage": {

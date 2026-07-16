@@ -23,6 +23,12 @@
     "assignDriverPlaceholder": "U qoondee darawal",
     "toasts": {
       "driverAssigned": "Darawalka waa la qoondeeyay"
+    },
+    "newDeliveryAlert": {
+      "title": "Gaarsiin cusub ayaa yimid!",
+      "subtitle_one": "{{count}} gaarsiin cusub oo sugaysa in darawal loo qoondeeyo.",
+      "subtitle_other": "{{count}} gaarsiin cusub oo sugaysa in darawal loo qoondeeyo.",
+      "dismiss": "Xir"
     }
   },
   "deliveryDetailPage": {
