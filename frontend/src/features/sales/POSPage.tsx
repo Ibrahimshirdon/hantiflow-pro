@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -149,6 +149,47 @@ export function POSPage() {
       toast.error(t("posPage.toasts.barcodeNotFound", { barcode }));
     }
   }
+
+  // Keep a stable ref so the effect below never needs to re-register
+  const onCameraScanRef = useRef(onCameraScan);
+  onCameraScanRef.current = onCameraScan;
+
+  // Global physical barcode scanner support.
+  // USB/Bluetooth scanners act as keyboards: they type the barcode very fast
+  // (<50 ms between characters) then send Enter. We buffer rapid keystrokes
+  // and, on Enter, treat the buffer as a scanned barcode.
+  useEffect(() => {
+    let buffer = "";
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    function onKeyDown(e: KeyboardEvent) {
+      // If the user is actively typing in any text field, don't intercept —
+      // the existing search-box Enter handler already covers that path.
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+
+      if (e.key === "Enter") {
+        if (buffer.length >= 4) onCameraScanRef.current(buffer);
+        buffer = "";
+        if (timer) { clearTimeout(timer); timer = null; }
+        return;
+      }
+
+      if (e.key.length === 1) {
+        buffer += e.key;
+        // Physical scanners send all characters in < 50 ms. Reset the buffer
+        // if no new character arrives within 100 ms (human typing pace).
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => { buffer = ""; timer = null; }, 100);
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      if (timer) clearTimeout(timer);
+    };
+  }, []);
 
   const { data: selectedCustomerFull } = useQuery({
     queryKey: ["user", customerId],
