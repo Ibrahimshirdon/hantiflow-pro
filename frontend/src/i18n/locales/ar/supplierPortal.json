@@ -130,7 +130,8 @@
       "company": "الشركة",
       "unit": "الوحدة",
       "wholesale": "الجملة",
-      "selling": "البيع"
+      "selling": "البيع",
+      "purchase": "الشراء"
     },
     "createDialog": {
       "submit": "إنشاء منتج",

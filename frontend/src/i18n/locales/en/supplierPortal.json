@@ -130,7 +130,8 @@
       "company": "Company",
       "unit": "Unit",
       "wholesale": "Wholesale",
-      "selling": "Selling"
+      "selling": "Selling",
+      "purchase": "Purchase"
     },
     "createDialog": {
       "submit": "Create product",

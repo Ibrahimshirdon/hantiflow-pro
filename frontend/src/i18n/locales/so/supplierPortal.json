@@ -130,7 +130,8 @@
       "company": "Shirkadda",
       "unit": "Cabbirka",
       "wholesale": "Jumlada",
-      "selling": "Iibka"
+      "selling": "Iibka",
+      "purchase": "Iibsiga"
     },
     "createDialog": {
       "submit": "Samee badeeco",

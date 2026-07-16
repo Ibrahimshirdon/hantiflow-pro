@@ -420,6 +420,7 @@ export function SupplierProductsPage() {
             <TableHead>{t("productsPage.table.unit")}</TableHead>
             <TableHead>{t("productsPage.table.wholesale")}</TableHead>
             <TableHead>{t("productsPage.table.selling")}</TableHead>
+            <TableHead>{t("productsPage.table.purchase")}</TableHead>
             <TableHead>{t("common:fields.status")}</TableHead>
             <TableHead className="text-end">{t("common:fields.actions")}</TableHead>
           </TableRow>
@@ -451,6 +452,7 @@ export function SupplierProductsPage() {
               <TableCell className="text-muted-foreground">{product.unitType}</TableCell>
               <TableCell>${product.wholesalePrice.toFixed(2)}</TableCell>
               <TableCell>${product.sellingPrice.toFixed(2)}</TableCell>
+              <TableCell>${product.purchasePrice.toFixed(2)}</TableCell>
               <TableCell>
                 {submissions?.some(
                   (s) => s.supplierProductId === product.id && s.status === "pending",
