@@ -33,7 +33,10 @@
       "pickupLabel": "المستودع",
       "dropoffLabel": "العميل",
       "on": "تفعيل",
-      "off": "إيقاف"
+      "off": "إيقاف",
+      "feeSection": "رسوم التوصيل",
+      "feePlaceholder": "المبلغ (مثال: 2.50)",
+      "feeLabel": "رسوم التوصيل"
     },
     "toasts": {
       "discountApplied": "تم تطبيق الخصم: -${{amount}}",

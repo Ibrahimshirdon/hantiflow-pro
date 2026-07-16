@@ -50,6 +50,7 @@ export function POSPage() {
   const [pointsToRedeem, setPointsToRedeem] = useState(0);
   const [activeTab, setActiveTab] = useState<"cart" | "history">("cart");
   const [scheduleDelivery, setScheduleDelivery] = useState(false);
+  const [deliveryFee, setDeliveryFee] = useState(0);
   const [pickupLine1, setPickupLine1] = useState("");
   const [pickupCity, setPickupCity] = useState("");
   const [dropoffLine1, setDropoffLine1] = useState("");
@@ -238,7 +239,7 @@ export function POSPage() {
   }, 0);
   const preLoyaltyTotal = subtotal - discountTotal + taxTotal;
   const loyaltyDiscount = Math.min(pointsToRedeem / POINTS_PER_DOLLAR, preLoyaltyTotal);
-  const grandTotal = preLoyaltyTotal - loyaltyDiscount;
+  const grandTotal = preLoyaltyTotal - loyaltyDiscount + (scheduleDelivery ? deliveryFee : 0);
   const maxRedeemablePoints = Math.min(loyaltyBalance, Math.floor(preLoyaltyTotal * POINTS_PER_DOLLAR));
 
   const checkoutMutation = useMutation({
@@ -265,6 +266,7 @@ export function POSPage() {
       setAppliedDiscount(null);
       setPointsToRedeem(0);
       setScheduleDelivery(false);
+      setDeliveryFee(0);
       setPickupLine1("");
       setPickupCity("");
       setDropoffLine1("");
@@ -294,6 +296,8 @@ export function POSPage() {
       discountCode: appliedDiscount?.code,
       paymentMethod,
       pointsToRedeem: pointsToRedeem > 0 ? pointsToRedeem : undefined,
+      fulfillmentType: scheduleDelivery ? "delivery" : undefined,
+      deliveryFee: scheduleDelivery && deliveryFee > 0 ? deliveryFee : undefined,
     });
   }
 
@@ -589,6 +593,15 @@ export function POSPage() {
                   <span className="text-muted-foreground">{t("common:fields.tax")}</span>
                   <span>${taxTotal.toFixed(2)}</span>
                 </div>
+                {scheduleDelivery && deliveryFee > 0 && (
+                  <div className="flex justify-between text-blue-600 dark:text-blue-400">
+                    <span className="flex items-center gap-1">
+                      <Truck className="size-3" />
+                      {t("posPage.delivery.feeLabel")}
+                    </span>
+                    <span>+${deliveryFee.toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-base font-semibold">
                   <span>{t("common:fields.total")}</span>
                   <span>${grandTotal.toFixed(2)}</span>
@@ -663,6 +676,18 @@ export function POSPage() {
                         placeholder={t("posPage.delivery.city")}
                         value={dropoffCity}
                         onChange={(e) => setDropoffCity(e.target.value)}
+                        className="h-8 text-xs"
+                      />
+                      <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        {t("posPage.delivery.feeSection")}
+                      </p>
+                      <Input
+                        type="number"
+                        min={0}
+                        step="0.01"
+                        placeholder={t("posPage.delivery.feePlaceholder")}
+                        value={deliveryFee || ""}
+                        onChange={(e) => setDeliveryFee(Math.max(0, Number(e.target.value)))}
                         className="h-8 text-xs"
                       />
                       <Input

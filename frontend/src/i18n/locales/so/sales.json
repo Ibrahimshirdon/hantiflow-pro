@@ -33,7 +33,10 @@
       "pickupLabel": "Bakhaar",
       "dropoffLabel": "Macmiilka",
       "on": "Fur",
-      "off": "Xir"
+      "off": "Xir",
+      "feeSection": "Kharashka gaarsiinta",
+      "feePlaceholder": "Qaddarka lacagta (e.g. 2.50)",
+      "feeLabel": "Kharashka gaarsiinta"
     },
     "toasts": {
       "discountApplied": "Dhimis la dhaqan geliyay: -${{amount}}",

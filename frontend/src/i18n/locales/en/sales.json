@@ -56,7 +56,10 @@
       "pickupLabel": "Warehouse",
       "dropoffLabel": "Customer",
       "on": "On",
-      "off": "Off"
+      "off": "Off",
+      "feeSection": "Delivery fee",
+      "feePlaceholder": "Fee amount (e.g. 2.50)",
+      "feeLabel": "Delivery fee"
     },
     "toasts": {
       "discountApplied": "Discount applied: -${{amount}}",
