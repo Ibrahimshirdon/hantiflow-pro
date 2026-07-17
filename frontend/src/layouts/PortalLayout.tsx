@@ -1,80 +1,53 @@
-import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { LayoutDashboard, Receipt, Wallet } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { UserMenu } from "@/components/shared/UserMenu";
 import { NotificationBell } from "@/components/shared/NotificationBell";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const NAV_ITEMS = [
-  { labelKey: "nav.dashboard", path: "/portal/dashboard" },
-  { labelKey: "nav.orders", path: "/portal/orders" },
-  { labelKey: "nav.wallet", path: "/portal/wallet" },
+const TABS = [
+  { labelKey: "nav.dashboard", path: "/portal/dashboard", icon: LayoutDashboard },
+  { labelKey: "nav.orders",    path: "/portal/orders",    icon: Receipt },
+  { labelKey: "nav.wallet",    path: "/portal/wallet",    icon: Wallet },
 ];
 
 export function PortalLayout() {
   const { t } = useTranslation("common");
-  const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4 sm:px-6">
-        <div className="flex items-center gap-3">
-          <img src="/favicon.png" alt="" className="size-7 object-contain" />
-          <span className="text-lg font-semibold">{t("appName")}</span>
-          <nav className="hidden items-center gap-4 sm:flex">
-            {NAV_ITEMS.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  cn(
-                    "text-sm font-medium",
-                    isActive ? "text-primary" : "text-muted-foreground hover:text-foreground",
-                  )
-                }
-              >
-                {t(item.labelKey)}
-              </NavLink>
-            ))}
-          </nav>
-        </div>
+    <div className="mx-auto flex min-h-screen max-w-md flex-col">
+      <header className="flex h-14 shrink-0 items-center justify-between border-b border-border px-4">
         <div className="flex items-center gap-2">
+          <img src="/favicon.png" alt="" className="size-6 object-contain" />
+          <span className="font-semibold">{t("appName")}</span>
+        </div>
+        <div className="flex items-center gap-1">
           <NotificationBell />
           <UserMenu />
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="sm:hidden"
-            onClick={() => setOpen((v) => !v)}
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </Button>
         </div>
       </header>
-      {open && (
-        <nav className="flex flex-col border-b border-border bg-card px-4 pb-3 sm:hidden">
-          {NAV_ITEMS.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              onClick={() => setOpen(false)}
-              className={({ isActive }) =>
-                cn(
-                  "py-2 text-sm font-medium",
-                  isActive ? "text-primary" : "text-muted-foreground hover:text-foreground",
-                )
-              }
-            >
-              {t(item.labelKey)}
-            </NavLink>
-          ))}
-        </nav>
-      )}
-      <main className="flex-1 p-4 sm:p-6">
+
+      <main className="flex-1 overflow-y-auto p-4">
         <Outlet />
       </main>
+
+      <nav className="flex shrink-0 border-t border-border">
+        {TABS.map((tab) => (
+          <NavLink
+            key={tab.path}
+            to={tab.path}
+            className={({ isActive }) =>
+              cn(
+                "flex flex-1 flex-col items-center gap-1 py-2 text-xs font-medium",
+                isActive ? "text-primary" : "text-muted-foreground",
+              )
+            }
+          >
+            <tab.icon className="size-5" />
+            {t(tab.labelKey)}
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 }
