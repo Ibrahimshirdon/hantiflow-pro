@@ -15,6 +15,7 @@ export interface Delivery {
   salesOrderId: string;
   orderNumber: string;
   customerId: string;
+  customerName: string | null;
   driverId: string | null;
   status: "unassigned" | "assigned" | "picked_up" | "in_transit" | "delivered" | "failed";
   pickupAddress: Address;

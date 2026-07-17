@@ -57,11 +57,17 @@ export async function createDelivery(input: CreateDeliveryInput, actor: Authenti
     throw new AppError(409, "A delivery already exists for this order");
   }
 
+  const customerSnap = await db.collection("users").doc(order.customerId).get();
+  const customerName = customerSnap.exists
+    ? (customerSnap.data() as { displayName: string }).displayName
+    : null;
+
   const ref = collection().doc();
   await ref.set({
     salesOrderId: input.salesOrderId,
     orderNumber: order.orderNumber,
     customerId: order.customerId,
+    customerName,
     driverId: null,
     status: "unassigned",
     pickupAddress: input.pickupAddress,

@@ -10,6 +10,7 @@ import {
   Search,
   Star,
   Timer,
+  User,
   XCircle,
   type LucideIcon,
 } from "lucide-react";
@@ -254,6 +255,14 @@ export function DriverHistoryPage() {
                       <StarRating rating={delivery.rating} />
                     )}
                   </div>
+
+                  {/* Customer */}
+                  {delivery.customerName && (
+                    <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+                      <User className="size-3 shrink-0" />
+                      <span className="font-medium text-foreground">{delivery.customerName}</span>
+                    </div>
+                  )}
 
                   {/* Pickup → Dropoff summary */}
                   <div className="mt-1 flex items-start gap-1 text-xs text-muted-foreground">
