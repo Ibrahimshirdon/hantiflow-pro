@@ -15,23 +15,48 @@ export function PortalLayout() {
   const { t } = useTranslation("common");
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col">
-      <header className="flex h-14 shrink-0 items-center justify-between border-b border-border px-4">
-        <div className="flex items-center gap-2">
+    <div className="flex min-h-screen flex-col">
+      {/* Header — full width on all screens */}
+      <header className="flex h-14 shrink-0 items-center justify-between border-b border-border px-4 md:px-6">
+        <div className="flex items-center gap-3">
           <img src="/favicon.png" alt="" className="size-6 object-contain" />
           <span className="font-semibold">{t("appName")}</span>
+
+          {/* Desktop nav — inline in header */}
+          <nav className="ms-4 hidden items-center gap-0.5 md:flex">
+            {TABS.map((tab) => (
+              <NavLink
+                key={tab.path}
+                to={tab.path}
+                className={({ isActive }) =>
+                  cn(
+                    "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  )
+                }
+              >
+                <tab.icon className="size-4" />
+                {t(tab.labelKey)}
+              </NavLink>
+            ))}
+          </nav>
         </div>
+
         <div className="flex items-center gap-1">
           <NotificationBell />
           <UserMenu />
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto p-4">
+      {/* Page content */}
+      <main className="flex-1 overflow-y-auto p-4 md:p-6">
         <Outlet />
       </main>
 
-      <nav className="flex shrink-0 border-t border-border">
+      {/* Mobile-only bottom tab bar */}
+      <nav className="flex shrink-0 border-t border-border md:hidden">
         {TABS.map((tab) => (
           <NavLink
             key={tab.path}
