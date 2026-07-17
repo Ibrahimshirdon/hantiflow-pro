@@ -190,7 +190,13 @@
   },
   "categoriesPage": {
     "title": "Categories",
-    "subtitle": "Browse the categories used in the internal catalog.",
-    "empty": "No categories yet."
+    "subtitle": "Browse categories or add a new one for the catalog.",
+    "empty": "No categories yet.",
+    "newCategory": "New category",
+    "dialogTitle": "Create category",
+    "descriptionOptional": "Description (optional)",
+    "toasts": {
+      "created": "Category created"
+    }
   }
 }

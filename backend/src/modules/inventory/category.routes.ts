@@ -11,7 +11,7 @@ categoryRouter.use(verifyToken);
 categoryRouter.get("/", categoryController.list);
 categoryRouter.post(
   "/",
-  requireRole(["admin", "manager"]),
+  requireRole(["admin", "manager", "supplier"]),
   validate(createCategorySchema),
   categoryController.create,
 );

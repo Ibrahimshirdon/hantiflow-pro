@@ -190,7 +190,13 @@
   },
   "categoriesPage": {
     "title": "Qaybaha",
-    "subtitle": "Eeg qaybaha lagu isticmaalo kaydka guud.",
-    "empty": "Wali ma jiraan qaybo."
+    "subtitle": "Eeg qaybaha ama kudar mid cusub.",
+    "empty": "Wali ma jiraan qaybo.",
+    "newCategory": "Qaybta cusub",
+    "dialogTitle": "Samee qaybta",
+    "descriptionOptional": "Sharaxaad (ikhtiyaari)",
+    "toasts": {
+      "created": "Qaybta waa la sameeyay"
+    }
   }
 }
