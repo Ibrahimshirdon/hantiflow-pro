@@ -494,11 +494,12 @@ function DeliveryCard({
             <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
               {t("salesOrderDetailPage.deliveryCard.proofOfDelivery")}
             </p>
-            <a href={delivery.proofOfDeliveryUrl} target="_blank" rel="noreferrer">
+            <a href={delivery.proofOfDeliveryUrl} target="_blank" rel="noreferrer" className="block">
               <img
                 src={delivery.proofOfDeliveryUrl}
                 alt="Proof of delivery"
-                className="h-40 w-full rounded-lg border object-cover"
+                className="w-full rounded-lg border object-contain"
+                style={{ maxHeight: "480px", background: "rgba(0,0,0,0.04)" }}
               />
             </a>
           </div>
