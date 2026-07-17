@@ -63,7 +63,7 @@ export const ROLE_HOME_ROUTE: Record<UserRole, string> = {
   admin: "/app/dashboard",
   manager: "/app/dashboard",
   staff: "/app/dashboard",
-  customer: "/portal/shop",
+  customer: "/portal/dashboard",
   supplier: "/supplier/dashboard",
   driver: "/driver/active",
 };

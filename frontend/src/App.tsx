@@ -32,7 +32,6 @@ const SalesOrderDetailPage = lazy(() => import("@/features/sales/SalesOrderDetai
 const DiscountsPage = lazy(() => import("@/features/sales/DiscountsPage").then((m) => ({ default: m.DiscountsPage })));
 const TaxRatesPage = lazy(() => import("@/features/sales/TaxRatesPage").then((m) => ({ default: m.TaxRatesPage })));
 const CustomerDashboardPage = lazy(() => import("@/features/customer-portal/CustomerDashboardPage").then((m) => ({ default: m.CustomerDashboardPage })));
-const ShopPage = lazy(() => import("@/features/customer-portal/ShopPage").then((m) => ({ default: m.ShopPage })));
 const OrdersPage = lazy(() => import("@/features/customer-portal/OrdersPage").then((m) => ({ default: m.OrdersPage })));
 const OrderDetailPage = lazy(() => import("@/features/customer-portal/OrderDetailPage").then((m) => ({ default: m.OrderDetailPage })));
 const WalletPage = lazy(() => import("@/features/customer-portal/WalletPage").then((m) => ({ default: m.WalletPage })));
@@ -121,7 +120,7 @@ export default function App() {
               <Route element={<ProtectedRoute allowedRoles={["customer"]} />}>
                 <Route path="/portal" element={<PortalLayout />}>
                   <Route path="dashboard" element={<CustomerDashboardPage />} />
-                  <Route path="shop" element={<ShopPage />} />
+                  <Route path="shop" element={<Navigate to="/portal/dashboard" replace />} />
                   <Route path="orders" element={<OrdersPage />} />
                   <Route path="orders/:id" element={<OrderDetailPage />} />
                   <Route path="wallet" element={<WalletPage />} />

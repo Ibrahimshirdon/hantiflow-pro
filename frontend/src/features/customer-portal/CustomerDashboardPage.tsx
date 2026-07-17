@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -391,15 +391,6 @@ export function CustomerDashboardPage() {
           </CardContent>
         </Card>
       )}
-
-      <Card className="border-dashed">
-        <CardContent className="flex items-center justify-between p-4">
-          <p className="text-sm text-muted-foreground">{t("dashboardPage.promo.readyToOrder")}</p>
-          <Link to="/portal/shop" className="text-sm font-medium text-primary hover:underline">
-            {t("dashboardPage.promo.goToShop")}
-          </Link>
-        </CardContent>
-      </Card>
 
       <Dialog open={repayTarget !== null} onOpenChange={(next) => !next && setRepayTarget(null)}>
         <DialogContent className="sm:max-w-md">

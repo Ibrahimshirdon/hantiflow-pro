@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { labelKey: "nav.dashboard", path: "/portal/dashboard" },
-  { labelKey: "nav.shop", path: "/portal/shop" },
   { labelKey: "nav.orders", path: "/portal/orders" },
   { labelKey: "nav.wallet", path: "/portal/wallet" },
 ];
