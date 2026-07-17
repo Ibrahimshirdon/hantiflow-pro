@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { Package, Plus, Star, Truck } from "lucide-react";
+import { Plus, Star, Truck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getProductByBarcode, listProducts } from "@/api/inventory.api";
 import { listTaxRates, createSalesOrder, previewDiscount, listSalesOrders, type CreateSalesOrderInput } from "@/api/sales.api";
@@ -342,8 +342,8 @@ export function POSPage() {
         <div className="grid grid-cols-2 gap-3 overflow-y-auto pe-1 sm:grid-cols-3 lg:grid-cols-4">
           {productsLoading && (
             Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="overflow-hidden rounded-xl border bg-card">
-                <div className="aspect-[4/3] animate-pulse bg-muted" />
+              <div key={i} className="flex flex-col overflow-hidden rounded-xl border bg-card">
+                <div className="h-28 animate-pulse bg-muted" />
                 <div className="flex flex-col gap-2 p-2.5">
                   <div className="h-3 w-3/4 animate-pulse rounded bg-muted" />
                   <div className="h-4 w-1/2 animate-pulse rounded bg-muted" />
@@ -365,16 +365,16 @@ export function POSPage() {
               <div
                 key={product.id}
                 className={cn(
-                  "group relative overflow-hidden rounded-xl border bg-card transition-all duration-150",
+                  "group relative flex flex-col overflow-hidden rounded-xl border bg-card transition-all duration-150",
                   outOfStock
                     ? "cursor-not-allowed opacity-50"
-                    : "cursor-pointer hover:border-primary/50 hover:shadow-md hover:shadow-primary/5 active:scale-[0.97]",
+                    : "cursor-pointer hover:border-primary/50 hover:shadow-md active:scale-[0.97]",
                   cartLine && "ring-2 ring-primary/70",
                 )}
                 onClick={() => !outOfStock && addToCart(product)}
               >
-                {/* Image area */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                {/* Image */}
+                <div className="relative h-28 shrink-0 overflow-hidden bg-muted">
                   {product.images[0] ? (
                     <img
                       src={product.images[0]}
@@ -383,23 +383,25 @@ export function POSPage() {
                       loading="lazy"
                     />
                   ) : (
-                    <div className="flex size-full items-center justify-center bg-gradient-to-br from-muted to-muted/50">
-                      <Package className="size-9 text-muted-foreground/20" />
+                    <div className="flex size-full items-center justify-center">
+                      <span className="select-none text-5xl font-bold text-muted-foreground/15">
+                        {product.name.charAt(0).toUpperCase()}
+                      </span>
                     </div>
                   )}
 
                   {/* Out of stock overlay */}
                   {outOfStock && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/70 backdrop-blur-[1px]">
-                      <Badge variant="destructive" className="shadow-sm text-[10px]">
+                      <Badge variant="destructive" className="text-[10px] shadow-sm">
                         {t("common:status.outOfStock")}
                       </Badge>
                     </div>
                   )}
 
-                  {/* Low stock pill */}
+                  {/* Low stock */}
                   {lowStock && (
-                    <div className="absolute bottom-1.5 start-1.5">
+                    <div className="absolute bottom-1.5 inset-s-1.5">
                       <Badge variant="warning" className="h-4 px-1.5 text-[9px] shadow-sm">
                         {t("common:status.lowStock")}
                       </Badge>
@@ -416,17 +418,17 @@ export function POSPage() {
                   {/* Hover add overlay */}
                   {!outOfStock && (
                     <div className="absolute inset-0 flex items-center justify-center bg-primary/0 transition-colors duration-150 group-hover:bg-primary/8">
-                      <Plus className="size-7 scale-75 text-primary opacity-0 drop-shadow transition-all duration-150 group-hover:scale-100 group-hover:opacity-100" />
+                      <Plus className="size-7 scale-75 text-primary opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100" />
                     </div>
                   )}
                 </div>
 
                 {/* Info */}
-                <div className="flex flex-col gap-1 p-2.5">
+                <div className="flex flex-1 flex-col justify-between gap-1 p-2.5">
                   <p className="line-clamp-2 text-[11px] font-medium leading-tight" title={product.name}>
                     {product.name}
                   </p>
-                  <div className="flex items-end justify-between gap-1 pt-0.5">
+                  <div className="flex items-center justify-between gap-1 pt-1">
                     <span className="text-sm font-bold tabular-nums text-primary">
                       ${product.sellingPrice.toFixed(2)}
                     </span>
