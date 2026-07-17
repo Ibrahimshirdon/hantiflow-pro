@@ -15,12 +15,23 @@
       "dropoff": "موقع التسليم",
       "driver": "السائق",
       "status": "الحالة",
+      "date": "التاريخ",
       "actions": "الإجراءات"
     },
     "loading": "جارٍ التحميل...",
     "empty": "لا توجد عمليات توصيل بعد.",
     "noDriver": "—",
     "assignDriverPlaceholder": "تعيين سائق",
+    "filters": {
+      "searchPlaceholder": "بحث برقم الطلب...",
+      "dateFrom": "من تاريخ",
+      "dateTo": "إلى تاريخ",
+      "allDrivers": "جميع السائقين",
+      "allStatuses": "جميع الحالات",
+      "clear": "مسح",
+      "noResults": "لا توجد عمليات توصيل تطابق الفلاتر.",
+      "resultCount": "{{count}} نتيجة"
+    },
     "toasts": {
       "driverAssigned": "تم تعيين السائق"
     },

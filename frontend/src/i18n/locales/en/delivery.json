@@ -15,12 +15,23 @@
       "dropoff": "Dropoff",
       "driver": "Driver",
       "status": "Status",
+      "date": "Date",
       "actions": "Actions"
     },
     "loading": "Loading...",
     "empty": "No deliveries yet.",
     "noDriver": "—",
     "assignDriverPlaceholder": "Assign driver",
+    "filters": {
+      "searchPlaceholder": "Search by order #...",
+      "dateFrom": "From date",
+      "dateTo": "To date",
+      "allDrivers": "All drivers",
+      "allStatuses": "All statuses",
+      "clear": "Clear",
+      "noResults": "No deliveries match the filters.",
+      "resultCount": "{{count}} results"
+    },
     "toasts": {
       "driverAssigned": "Driver assigned"
     },

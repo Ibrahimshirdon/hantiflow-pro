@@ -15,12 +15,23 @@
       "dropoff": "Goobta la geynayo",
       "driver": "Darawalka",
       "status": "Xaaladda",
+      "date": "Taariikhda",
       "actions": "Ficillada"
     },
     "loading": "Waa la soo rarayaa...",
     "empty": "Wali ma jiraan gaarsiino.",
     "noDriver": "—",
     "assignDriverPlaceholder": "U qoondee darawal",
+    "filters": {
+      "searchPlaceholder": "Raadi dalabka #...",
+      "dateFrom": "Taariikhda bilawga",
+      "dateTo": "Taariikhda dhamaadka",
+      "allDrivers": "Dhammaan darawalada",
+      "allStatuses": "Dhammaan xaaladaha",
+      "clear": "Nadiifi",
+      "noResults": "Ma jiraan natiijooyin u dhigma shaandhada.",
+      "resultCount": "{{count}} natiijo"
+    },
     "toasts": {
       "driverAssigned": "Darawalka waa la qoondeeyay"
     },
