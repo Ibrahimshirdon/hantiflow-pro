@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { Package, Plus, Star, Truck } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { getProductByBarcode, listProducts } from "@/api/inventory.api";
 import { listTaxRates, createSalesOrder, previewDiscount, listSalesOrders, type CreateSalesOrderInput } from "@/api/sales.api";
 import { createDelivery } from "@/api/delivery.api";
@@ -338,19 +339,17 @@ export function POSPage() {
           <CameraScanner onScan={onCameraScan} />
           <ShiftSummaryDialog />
         </div>
-        <div className="grid grid-cols-3 gap-3 overflow-y-auto pe-1 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 overflow-y-auto pe-1 sm:grid-cols-3 lg:grid-cols-4">
           {productsLoading && (
-            <>
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="overflow-hidden rounded-lg border bg-card">
-                  <div className="h-28 animate-pulse bg-muted" />
-                  <div className="flex flex-col gap-1.5 p-2">
-                    <div className="h-3 w-3/4 animate-pulse rounded bg-muted" />
-                    <div className="h-3 w-1/2 animate-pulse rounded bg-muted" />
-                  </div>
+            Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="overflow-hidden rounded-xl border bg-card">
+                <div className="aspect-[4/3] animate-pulse bg-muted" />
+                <div className="flex flex-col gap-2 p-2.5">
+                  <div className="h-3 w-3/4 animate-pulse rounded bg-muted" />
+                  <div className="h-4 w-1/2 animate-pulse rounded bg-muted" />
                 </div>
-              ))}
-            </>
+              </div>
+            ))
           )}
           {!productsLoading && search.trim() && filteredProducts.length === 0 && (
             <div className="col-span-full py-10 text-center text-sm text-muted-foreground">
@@ -361,66 +360,82 @@ export function POSPage() {
           {filteredProducts.map((product) => {
             const outOfStock = product.totalStock <= 0;
             const lowStock = !outOfStock && product.totalStock <= product.reorderLevel;
+            const cartLine = cart.find((l) => l.productId === product.id);
             return (
-              <Card
+              <div
                 key={product.id}
-                className={[
-                  "group relative overflow-hidden transition-all",
+                className={cn(
+                  "group relative overflow-hidden rounded-xl border bg-card transition-all duration-150",
                   outOfStock
                     ? "cursor-not-allowed opacity-50"
-                    : "cursor-pointer hover:border-primary hover:shadow-sm active:scale-[0.98]",
-                ].join(" ")}
+                    : "cursor-pointer hover:border-primary/50 hover:shadow-md hover:shadow-primary/5 active:scale-[0.97]",
+                  cartLine && "ring-2 ring-primary/70",
+                )}
                 onClick={() => !outOfStock && addToCart(product)}
               >
-                {/* Image */}
-                <div className="relative flex h-28 items-center justify-center overflow-hidden bg-muted">
+                {/* Image area */}
+                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                   {product.images[0] ? (
                     <img
                       src={product.images[0]}
                       alt={product.name}
-                      className="size-full object-cover transition-transform group-hover:scale-105"
+                      className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
                       loading="lazy"
                     />
                   ) : (
-                    <Package className="size-8 text-muted-foreground/20" />
+                    <div className="flex size-full items-center justify-center bg-gradient-to-br from-muted to-muted/50">
+                      <Package className="size-9 text-muted-foreground/20" />
+                    </div>
                   )}
-                  {/* Stock badge overlay */}
+
+                  {/* Out of stock overlay */}
                   {outOfStock && (
-                    <span className="absolute inset-0 flex items-center justify-center bg-background/60">
-                      <Badge variant="destructive" className="text-[10px]">
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/70 backdrop-blur-[1px]">
+                      <Badge variant="destructive" className="shadow-sm text-[10px]">
                         {t("common:status.outOfStock")}
                       </Badge>
-                    </span>
+                    </div>
                   )}
+
+                  {/* Low stock pill */}
                   {lowStock && (
-                    <span className="absolute bottom-1 end-1">
-                      <Badge variant="warning" className="px-1.5 py-0 text-[10px]">
+                    <div className="absolute bottom-1.5 start-1.5">
+                      <Badge variant="warning" className="h-4 px-1.5 text-[9px] shadow-sm">
                         {t("common:status.lowStock")}
                       </Badge>
-                    </span>
+                    </div>
                   )}
-                  {/* Add overlay on hover */}
+
+                  {/* In-cart quantity bubble */}
+                  {cartLine && (
+                    <div className="absolute right-1.5 top-1.5 flex size-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-md">
+                      {cartLine.quantity}
+                    </div>
+                  )}
+
+                  {/* Hover add overlay */}
                   {!outOfStock && (
-                    <span className="absolute inset-0 flex items-center justify-center bg-primary/0 transition-colors group-hover:bg-primary/8">
-                      <Plus className="size-6 scale-75 text-primary opacity-0 transition-all group-hover:scale-100 group-hover:opacity-100" />
-                    </span>
+                    <div className="absolute inset-0 flex items-center justify-center bg-primary/0 transition-colors duration-150 group-hover:bg-primary/8">
+                      <Plus className="size-7 scale-75 text-primary opacity-0 drop-shadow transition-all duration-150 group-hover:scale-100 group-hover:opacity-100" />
+                    </div>
                   )}
                 </div>
 
-                <CardContent className="flex flex-col gap-0.5 p-2.5">
-                  <span className="line-clamp-2 text-xs font-medium leading-snug" title={product.name}>
+                {/* Info */}
+                <div className="flex flex-col gap-1 p-2.5">
+                  <p className="line-clamp-2 text-[11px] font-medium leading-tight" title={product.name}>
                     {product.name}
-                  </span>
-                  <div className="flex items-center justify-between gap-1 pt-0.5">
-                    <span className="text-sm font-bold text-primary">
+                  </p>
+                  <div className="flex items-end justify-between gap-1 pt-0.5">
+                    <span className="text-sm font-bold tabular-nums text-primary">
                       ${product.sellingPrice.toFixed(2)}
                     </span>
-                    <span className="text-[10px] text-muted-foreground">
+                    <span className="text-[10px] tabular-nums text-muted-foreground">
                       {product.totalStock} {product.unit}
                     </span>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             );
           })}
         </div>
