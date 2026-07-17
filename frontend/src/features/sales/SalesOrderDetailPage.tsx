@@ -201,8 +201,9 @@ export function SalesOrderDetailPage() {
 
       {/* Receipt preview dialog */}
       <Dialog open={receiptOpen} onOpenChange={setReceiptOpen}>
-        <DialogContent className="max-w-xs gap-0 p-0 overflow-hidden">
-          <DialogHeader className="flex-row items-center justify-between border-b p-3">
+        {/* [&>button]:hidden suppresses the default absolute close-X that DialogContent injects */}
+        <DialogContent className="max-w-xs gap-0 p-0 overflow-hidden [&>button]:hidden">
+          <DialogHeader className="flex flex-row items-center justify-between border-b p-3">
             <DialogTitle className="text-sm">
               {t("salesOrderDetailPage.receiptPreviewTitle")}
             </DialogTitle>
@@ -211,7 +212,7 @@ export function SalesOrderDetailPage() {
               {t("salesOrderDetailPage.printReceipt")}
             </Button>
           </DialogHeader>
-          <div className="max-h-[70vh] overflow-y-auto">
+          <div className="max-h-[70vh] overflow-y-auto bg-gray-100 p-4 print:p-0">
             <ReceiptPaper order={order} receipt={receipt} t={t} />
           </div>
         </DialogContent>
@@ -520,10 +521,15 @@ function ReceiptPaper({
   receipt: Receipt | undefined;
   t: TFunction<["sales", "common"]>;
 }) {
+  // Receipt always renders as white paper — never inherits dark theme tokens.
   return (
-    <div className="receipt-torn-edge relative mx-auto w-full max-w-xs bg-card p-5 pb-6 font-mono text-xs shadow-md print:max-w-full print:p-0 print:pb-3 print:shadow-none">
+    <div className="receipt-torn-edge relative mx-auto w-full max-w-xs p-5 pb-6 font-mono text-xs shadow-lg print:max-w-full print:p-0 print:pb-3 print:shadow-none"
+      style={{ background: "#ffffff", color: "#111827" }}
+    >
       {order.paymentStatus === "paid" && (
-        <div className="-rotate-12 absolute top-4 right-4 rounded border-2 border-success px-2 py-0.5 text-[10px] font-bold tracking-widest text-success print:top-1 print:right-1">
+        <div className="-rotate-12 absolute top-4 right-4 rounded border-2 px-2 py-0.5 text-[10px] font-bold tracking-widest print:top-1 print:right-1"
+          style={{ borderColor: "#16a34a", color: "#16a34a" }}
+        >
           {t("salesOrderDetailPage.receiptPaper.paidStamp")}
         </div>
       )}
@@ -531,30 +537,30 @@ function ReceiptPaper({
         <img src="/favicon.png" alt="" className="size-12 object-contain" />
         <p className="text-sm font-bold tracking-[0.2em] uppercase">HantiFlow Pro</p>
       </div>
-      <div className="border-t-2 border-foreground" />
+      <div className="border-t-2" style={{ borderColor: "#111827" }} />
       <div className="flex flex-col gap-0.5 py-3">
         <div className="flex justify-between">
-          <span className="text-muted-foreground">{t("salesOrderDetailPage.receiptPaper.orderNo")}</span>
+          <span style={{ color: "#6b7280" }}>{t("salesOrderDetailPage.receiptPaper.orderNo")}</span>
           <span>{order.orderNumber}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted-foreground">{t("common:fields.date")}</span>
+          <span style={{ color: "#6b7280" }}>{t("common:fields.date")}</span>
           <span>{new Date(order.createdAt._seconds * 1000).toLocaleString()}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted-foreground">{t("salesOrderDetailPage.receiptPaper.cashier")}</span>
+          <span style={{ color: "#6b7280" }}>{t("salesOrderDetailPage.receiptPaper.cashier")}</span>
           <span>{order.createdByName}</span>
         </div>
         {order.customerName && (
           <div className="flex justify-between">
-            <span className="text-muted-foreground">
+            <span style={{ color: "#6b7280" }}>
               {t("salesOrderDetailPage.receiptPaper.customer")}
             </span>
             <span>{order.customerName}</span>
           </div>
         )}
       </div>
-      <div className="border-t border-dashed border-border" />
+      <div className="border-t border-dashed" style={{ borderColor: "#d1d5db" }} />
       <div className="flex flex-col gap-2 py-3">
         {order.items.map((item, i) => (
           <div key={i}>
@@ -562,7 +568,7 @@ function ReceiptPaper({
               <span>{item.productName}</span>
               <span>${item.lineTotal.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-muted-foreground">
+            <div className="flex justify-between" style={{ color: "#6b7280" }}>
               <span>
                 {item.quantity} × ${item.unitPrice.toFixed(2)}
               </span>
@@ -571,53 +577,53 @@ function ReceiptPaper({
           </div>
         ))}
       </div>
-      <div className="border-t border-dashed border-border" />
+      <div className="border-t border-dashed" style={{ borderColor: "#d1d5db" }} />
       <div className="flex flex-col gap-0.5 py-3">
         <div className="flex justify-between">
-          <span className="text-muted-foreground">{t("common:fields.subtotal")}</span>
+          <span style={{ color: "#6b7280" }}>{t("common:fields.subtotal")}</span>
           <span>${order.subtotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted-foreground">{t("common:fields.discount")}</span>
+          <span style={{ color: "#6b7280" }}>{t("common:fields.discount")}</span>
           <span>-${order.discountTotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted-foreground">{t("common:fields.tax")}</span>
+          <span style={{ color: "#6b7280" }}>{t("common:fields.tax")}</span>
           <span>${order.taxTotal.toFixed(2)}</span>
         </div>
         {order.fulfillmentType === "delivery" && (
           <div className="flex justify-between">
-            <span className="text-muted-foreground">{t("salesOrderDetailPage.deliveryFee")}</span>
+            <span style={{ color: "#6b7280" }}>{t("salesOrderDetailPage.deliveryFee")}</span>
             <span>${order.deliveryFee.toFixed(2)}</span>
           </div>
         )}
       </div>
-      <div className="border-t-2 border-foreground" />
+      <div className="border-t-2" style={{ borderColor: "#111827" }} />
       <div className="flex justify-between py-3 text-base font-bold tracking-wide">
         <span>{t("salesOrderDetailPage.receiptPaper.total")}</span>
         <span>${order.grandTotal.toFixed(2)}</span>
       </div>
-      <div className="border-t-2 border-foreground" />
+      <div className="border-t-2" style={{ borderColor: "#111827" }} />
       <div className="flex flex-col gap-0.5 py-3">
         <div className="flex justify-between">
-          <span className="text-muted-foreground">{t("salesOrderDetailPage.receiptPaper.payment")}</span>
+          <span style={{ color: "#6b7280" }}>{t("salesOrderDetailPage.receiptPaper.payment")}</span>
           <span>{t(`posPage.paymentMethods.${order.paymentMethod}`)}</span>
         </div>
         {receipt && (
           <div className="flex justify-between">
-            <span className="text-muted-foreground">{t("salesOrderDetailPage.receiptPaper.paid")}</span>
+            <span style={{ color: "#6b7280" }}>{t("salesOrderDetailPage.receiptPaper.paid")}</span>
             <span>${receipt.amountPaid.toFixed(2)}</span>
           </div>
         )}
         {receipt && receipt.changeGiven > 0 && (
           <div className="flex justify-between">
-            <span className="text-muted-foreground">{t("salesOrderDetailPage.receiptPaper.change")}</span>
+            <span style={{ color: "#6b7280" }}>{t("salesOrderDetailPage.receiptPaper.change")}</span>
             <span>${receipt.changeGiven.toFixed(2)}</span>
           </div>
         )}
       </div>
-      <div className="border-t border-dashed border-border" />
-      <div className="flex flex-col items-center gap-0.5 pt-3 text-center text-muted-foreground">
+      <div className="border-t border-dashed" style={{ borderColor: "#d1d5db" }} />
+      <div className="flex flex-col items-center gap-0.5 pt-3 text-center" style={{ color: "#6b7280" }}>
         <p>{t("salesOrderDetailPage.receiptPaper.thankYou")}</p>
         {receipt && <p>{receipt.receiptNumber}</p>}
       </div>
