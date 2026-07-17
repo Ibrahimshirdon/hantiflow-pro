@@ -43,12 +43,23 @@
     "stats": {
       "totalDelivered": "Total delivered",
       "totalFailed": "Total failed",
-      "successRate": "Success rate"
+      "successRate": "Success rate",
+      "avgDuration": "Avg. duration"
     },
-    "table": {
-      "orderNumber": "Order #",
+    "filters": {
+      "searchPlaceholder": "Search order #...",
+      "all": "All statuses"
+    },
+    "detail": {
+      "pickup": "Pickup",
       "dropoff": "Dropoff",
-      "status": "Status"
+      "timeline": "Timeline",
+      "assigned": "Assigned",
+      "pickedUp": "Picked up",
+      "delivered": "Delivered",
+      "notes": "Notes",
+      "proofOfDelivery": "Proof of delivery",
+      "customerRating": "Customer rating"
     },
     "loading": "Loading...",
     "empty": "No completed deliveries yet."

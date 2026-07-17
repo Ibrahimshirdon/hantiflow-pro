@@ -43,12 +43,23 @@
     "stats": {
       "totalDelivered": "Wadarta la gaarsiiyay",
       "totalFailed": "Wadarta guuldarraysatay",
-      "successRate": "Heerka Guusha"
+      "successRate": "Heerka Guusha",
+      "avgDuration": "Muddo dhexe"
     },
-    "table": {
-      "orderNumber": "Dalabka #",
+    "filters": {
+      "searchPlaceholder": "Raadi dalabka #...",
+      "all": "Dhammaan xaaladaha"
+    },
+    "detail": {
+      "pickup": "Goobta la qaadayo",
       "dropoff": "Goobta la geynayo",
-      "status": "Xaaladda"
+      "timeline": "Jadwalka",
+      "assigned": "La qoondeeyay",
+      "pickedUp": "La qaaday",
+      "delivered": "La gaarsiiyay",
+      "notes": "Faallooyin",
+      "proofOfDelivery": "Caddaynta gaarsiinta",
+      "customerRating": "Qiimaynta macmiilka"
     },
     "loading": "Waa la soo rarayaa...",
     "empty": "Wali ma jiraan gaarsiino dhammaystiran."

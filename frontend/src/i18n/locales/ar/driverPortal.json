@@ -43,12 +43,23 @@
     "stats": {
       "totalDelivered": "إجمالي الموصَّل",
       "totalFailed": "إجمالي الفاشل",
-      "successRate": "معدل النجاح"
+      "successRate": "معدل النجاح",
+      "avgDuration": "متوسط المدة"
     },
-    "table": {
-      "orderNumber": "رقم الطلب",
-      "dropoff": "موقع التسليم",
-      "status": "الحالة"
+    "filters": {
+      "searchPlaceholder": "بحث برقم الطلب...",
+      "all": "كل الحالات"
+    },
+    "detail": {
+      "pickup": "نقطة الاستلام",
+      "dropoff": "نقطة التسليم",
+      "timeline": "المراحل الزمنية",
+      "assigned": "تم التعيين",
+      "pickedUp": "تم الاستلام",
+      "delivered": "تم التوصيل",
+      "notes": "ملاحظات",
+      "proofOfDelivery": "إثبات التوصيل",
+      "customerRating": "تقييم العميل"
     },
     "loading": "جارٍ التحميل...",
     "empty": "لا توجد عمليات توصيل مكتملة بعد."
