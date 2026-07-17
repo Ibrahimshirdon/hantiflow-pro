@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FirebaseError } from "firebase/app";
 import { useTranslation } from "react-i18next";
@@ -141,18 +141,6 @@ export function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 flex items-center gap-3">
-            <div className="h-px flex-1 bg-border" />
-            <span className="text-xs text-muted-foreground">or</span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            {t("login.newCustomer")}{" "}
-            <Link to="/register" className="font-semibold text-primary hover:underline">
-              {t("login.createAccount")}
-            </Link>
-          </p>
         </div>
       </div>
     </div>

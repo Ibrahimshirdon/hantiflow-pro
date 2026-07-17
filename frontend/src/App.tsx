@@ -10,7 +10,6 @@ import { PageLoader } from "@/components/shared/PageLoader";
 
 // Auth pages — small, always needed, keep eager
 import { LoginPage } from "@/features/auth/LoginPage";
-import { RegisterPage } from "@/features/auth/RegisterPage";
 
 // Layouts — needed before any page renders, keep eager
 import { DashboardLayout } from "@/layouts/DashboardLayout";
@@ -80,7 +79,7 @@ export default function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/register" element={<Navigate to="/login" replace />} />
 
               <Route element={<ProtectedRoute allowedRoles={["admin", "manager", "staff"]} />}>
                 <Route path="/app" element={<DashboardLayout />}>
