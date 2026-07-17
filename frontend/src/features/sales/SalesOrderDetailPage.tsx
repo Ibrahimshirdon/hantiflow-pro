@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import type { TFunction } from "i18next";
-import { AlertTriangle, CheckCircle2, Printer, XCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle2, MapPin, Printer, Truck, XCircle } from "lucide-react";
 import {
   approveOrder,
   cancelOrder,
@@ -14,8 +14,10 @@ import {
   getSalesOrder,
   listReturnsForOrder,
 } from "@/api/sales.api";
+import { getDeliveryByOrder } from "@/api/delivery.api";
 import { getApiErrorMessage } from "@/api/client";
 import type { Receipt, SalesOrder } from "@/types/sales.types";
+import type { Delivery as DeliveryType } from "@/types/delivery.types";
 import { ReturnOrderDialog } from "./ReturnOrderDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -65,6 +67,18 @@ export function SalesOrderDetailPage() {
     queryKey: ["returns", orderId],
     queryFn: () => listReturnsForOrder(orderId),
     enabled: order?.status === "completed",
+  });
+
+  const { data: delivery } = useQuery({
+    queryKey: ["delivery", "by-order", orderId],
+    queryFn: async () => {
+      try {
+        return await getDeliveryByOrder(orderId);
+      } catch {
+        return null;
+      }
+    },
+    retry: false,
   });
 
   const alreadyReturnedQty = useMemo(() => {
@@ -331,6 +345,8 @@ export function SalesOrderDetailPage() {
         </Card>
       </div>
 
+      {delivery && <DeliveryCard delivery={delivery} t={t} />}
+
       {returns && returns.length > 0 && (
         <Card className="print:hidden">
           <CardHeader>
@@ -373,6 +389,121 @@ export function SalesOrderDetailPage() {
         <ReceiptPaper order={order} receipt={receipt} t={t} />
       </div>
     </div>
+  );
+}
+
+function fmtTs(ts: { _seconds: number } | null | undefined) {
+  if (!ts) return "—";
+  return new Date(ts._seconds * 1000).toLocaleString(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+const DELIVERY_STATUS_VARIANT: Record<string, "success" | "destructive" | "warning" | "secondary"> = {
+  unassigned: "warning",
+  assigned: "secondary",
+  picked_up: "secondary",
+  in_transit: "secondary",
+  delivered: "success",
+  failed: "destructive",
+};
+
+function DeliveryCard({
+  delivery,
+  t,
+}: {
+  delivery: DeliveryType;
+  t: TFunction<["sales", "common"]>;
+}) {
+  return (
+    <Card className="print:hidden">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center justify-between text-base">
+          <span className="flex items-center gap-2">
+            <Truck className="size-4 text-muted-foreground" />
+            {t("salesOrderDetailPage.deliveryCard.heading")}
+          </span>
+          <Badge variant={DELIVERY_STATUS_VARIANT[delivery.status] ?? "secondary"}>
+            {t(`salesOrderDetailPage.deliveryCard.statuses.${delivery.status}`)}
+          </Badge>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
+        {/* Addresses */}
+        <div className="grid grid-cols-2 gap-2">
+          <div className="rounded-lg bg-muted/50 p-3">
+            <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+              {t("salesOrderDetailPage.deliveryCard.pickup")}
+            </p>
+            <div className="flex items-start gap-1.5">
+              <MapPin className="mt-0.5 size-3 shrink-0 text-muted-foreground" />
+              <div className="text-xs">
+                <p className="font-medium">{delivery.pickupAddress.line1}</p>
+                <p className="text-muted-foreground">{delivery.pickupAddress.city}</p>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-lg bg-muted/50 p-3">
+            <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+              {t("salesOrderDetailPage.deliveryCard.dropoff")}
+            </p>
+            <div className="flex items-start gap-1.5">
+              <MapPin className="mt-0.5 size-3 shrink-0 text-muted-foreground" />
+              <div className="text-xs">
+                <p className="font-medium">{delivery.dropoffAddress.line1}</p>
+                <p className="text-muted-foreground">{delivery.dropoffAddress.city}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Timeline */}
+        <div className="flex flex-col gap-1.5">
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+            {t("salesOrderDetailPage.deliveryCard.timeline")}
+          </p>
+          {[
+            { label: t("salesOrderDetailPage.deliveryCard.assigned"), ts: delivery.assignedAt },
+            { label: t("salesOrderDetailPage.deliveryCard.pickedUp"), ts: delivery.pickedUpAt },
+            { label: t("salesOrderDetailPage.deliveryCard.delivered"), ts: delivery.deliveredAt },
+          ].map(({ label, ts }) => (
+            <div key={label} className="flex items-center justify-between text-xs">
+              <span className="text-muted-foreground">{label}</span>
+              <span className="font-medium tabular-nums">{fmtTs(ts)}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Notes */}
+        {delivery.notes && (
+          <div className="rounded-lg bg-muted/50 p-2.5 text-xs">
+            <p className="mb-0.5 font-semibold text-muted-foreground">
+              {t("salesOrderDetailPage.deliveryCard.notes")}
+            </p>
+            <p>{delivery.notes}</p>
+          </div>
+        )}
+
+        {/* Proof of delivery */}
+        {delivery.proofOfDeliveryUrl && (
+          <div>
+            <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+              {t("salesOrderDetailPage.deliveryCard.proofOfDelivery")}
+            </p>
+            <a href={delivery.proofOfDeliveryUrl} target="_blank" rel="noreferrer">
+              <img
+                src={delivery.proofOfDeliveryUrl}
+                alt="Proof of delivery"
+                className="h-40 w-full rounded-lg border object-cover"
+              />
+            </a>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 

@@ -159,6 +159,25 @@
       "change": "Baaqi",
       "thankYou": "Mahadsanid iibsigaaga!",
       "paidStamp": "LA BIXIYAY"
+    },
+    "deliveryCard": {
+      "heading": "Gaarsiinta",
+      "pickup": "Meesha la qaadayo",
+      "dropoff": "Meesha la gaarsiiyo",
+      "timeline": "Jadwalka wakhtiga",
+      "assigned": "La xilsaaray",
+      "pickedUp": "La qaatay",
+      "delivered": "La gaarsiiyo",
+      "notes": "Xusuus-qoryo",
+      "proofOfDelivery": "Caddeynta gaarsiinta",
+      "statuses": {
+        "unassigned": "Aan la xilsaarinin",
+        "assigned": "La xilsaaray",
+        "picked_up": "La qaatay",
+        "in_transit": "Socda",
+        "delivered": "La gaarsiiyo",
+        "failed": "Fashilmay"
+      }
     }
   },
   "returnDialog": {

@@ -159,6 +159,25 @@
       "change": "الباقي",
       "thankYou": "شكرًا لشرائك!",
       "paidStamp": "مدفوع"
+    },
+    "deliveryCard": {
+      "heading": "التوصيل",
+      "pickup": "نقطة الاستلام",
+      "dropoff": "نقطة التسليم",
+      "timeline": "المراحل الزمنية",
+      "assigned": "تم التعيين",
+      "pickedUp": "تم الاستلام",
+      "delivered": "تم التوصيل",
+      "notes": "ملاحظات",
+      "proofOfDelivery": "إثبات التوصيل",
+      "statuses": {
+        "unassigned": "غير معيَّن",
+        "assigned": "معيَّن",
+        "picked_up": "تم الاستلام",
+        "in_transit": "في الطريق",
+        "delivered": "تم التوصيل",
+        "failed": "فشل"
+      }
     }
   },
   "returnDialog": {

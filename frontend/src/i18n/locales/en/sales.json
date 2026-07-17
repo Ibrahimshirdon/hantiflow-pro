@@ -159,6 +159,25 @@
       "change": "Change",
       "thankYou": "Thank you for your purchase!",
       "paidStamp": "PAID"
+    },
+    "deliveryCard": {
+      "heading": "Delivery",
+      "pickup": "Pickup",
+      "dropoff": "Dropoff",
+      "timeline": "Timeline",
+      "assigned": "Assigned",
+      "pickedUp": "Picked up",
+      "delivered": "Delivered",
+      "notes": "Notes",
+      "proofOfDelivery": "Proof of delivery",
+      "statuses": {
+        "unassigned": "Unassigned",
+        "assigned": "Assigned",
+        "picked_up": "Picked up",
+        "in_transit": "In transit",
+        "delivered": "Delivered",
+        "failed": "Failed"
+      }
     }
   },
   "returnDialog": {
