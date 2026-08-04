@@ -32,6 +32,8 @@
     "staffSalaries": "Salaries",
     "attendance": "Attendance",
     "myAttendance": "My Attendance",
+    "faceEnrollment": "Face Enrollment",
+    "faceCheckIn": "Face Check-In",
     "salesReport": "Sales Report",
     "inventoryReport": "Inventory Report",
     "users": "Users",

@@ -53,6 +53,8 @@ const CustomerLoanDetailsPage = lazy(() => import("@/features/finance/CustomerLo
 const StaffSalariesPage = lazy(() => import("@/features/hr/StaffSalariesPage").then((m) => ({ default: m.StaffSalariesPage })));
 const AttendancePage = lazy(() => import("@/features/hr/AttendancePage").then((m) => ({ default: m.AttendancePage })));
 const MyAttendancePage = lazy(() => import("@/features/hr/MyAttendancePage").then((m) => ({ default: m.MyAttendancePage })));
+const FaceEnrollmentPage = lazy(() => import("@/features/hr/FaceEnrollmentPage").then((m) => ({ default: m.FaceEnrollmentPage })));
+const FaceCheckInPage = lazy(() => import("@/features/hr/FaceCheckInPage").then((m) => ({ default: m.FaceCheckInPage })));
 const AuditLogsPage = lazy(() => import("@/features/security/AuditLogsPage").then((m) => ({ default: m.AuditLogsPage })));
 const ActivityLogsPage = lazy(() => import("@/features/security/ActivityLogsPage").then((m) => ({ default: m.ActivityLogsPage })));
 const SystemResetPage = lazy(() => import("@/features/security/SystemResetPage").then((m) => ({ default: m.SystemResetPage })));
@@ -106,6 +108,8 @@ export default function App() {
                   <Route path="hr/salaries" element={<StaffSalariesPage />} />
                   <Route path="hr/attendance" element={<AttendancePage />} />
                   <Route path="hr/my-attendance" element={<MyAttendancePage />} />
+                  <Route path="hr/face-enrollment" element={<FaceEnrollmentPage />} />
+                  <Route path="hr/face-checkin" element={<FaceCheckInPage />} />
                   <Route path="reports/sales" element={<SalesReportPage />} />
                   <Route path="reports/inventory" element={<InventoryReportPage />} />
                   <Route path="settings/users" element={<UsersPage />} />

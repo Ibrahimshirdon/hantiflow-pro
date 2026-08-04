@@ -16,6 +16,11 @@ export interface StaffSalary {
   updatedAt: FirestoreTimestampLike;
 }
 
+export interface FaceEnrollment {
+  staffId: string;
+  staffName: string;
+}
+
 export interface AttendanceRecord {
   id: string;
   staffId: string;

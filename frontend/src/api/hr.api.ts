@@ -1,5 +1,5 @@
 import { apiClient, type ApiSuccess } from "./client";
-import type { AttendanceRecord, StaffSalary } from "@/types/hr.types";
+import type { AttendanceRecord, FaceEnrollment, StaffSalary } from "@/types/hr.types";
 
 // Salaries
 export interface SetSalaryInput {
@@ -52,4 +52,37 @@ export async function recordAttendance(input: RecordAttendanceInput) {
 
 export async function deleteAttendance(id: string) {
   await apiClient.delete(`/hr/attendance/${id}`);
+}
+
+// Face attendance
+export async function listFaceEnrollments() {
+  const { data } = await apiClient.get<ApiSuccess<FaceEnrollment[]>>("/hr/face-attendance");
+  return data.data;
+}
+
+export async function enrollFace(staffId: string, descriptor: number[]) {
+  const { data } = await apiClient.post<ApiSuccess<{ staffId: string }>>(
+    "/hr/face-attendance/enroll",
+    { staffId, descriptor },
+  );
+  return data.data;
+}
+
+export async function deleteFaceEnrollment(staffId: string) {
+  await apiClient.delete(`/hr/face-attendance/${staffId}`);
+}
+
+export interface FaceCheckInResult {
+  matched: boolean;
+  staffId?: string;
+  staffName?: string;
+  checkedOut?: boolean;
+}
+
+export async function faceCheckIn(descriptor: number[]) {
+  const { data } = await apiClient.post<ApiSuccess<FaceCheckInResult>>(
+    "/hr/face-attendance/checkin",
+    { descriptor },
+  );
+  return data.data;
 }

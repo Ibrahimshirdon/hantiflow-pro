@@ -45,6 +45,39 @@
       "deleted": "Attendance record deleted"
     }
   },
+  "faceEnroll": {
+    "title": "Enroll face: {{name}}",
+    "hint": "Center your face in the circle, then capture.",
+    "loadingCamera": "Starting camera…",
+    "capture": "Capture face",
+    "errorCamera": "Couldn't access the camera. Check permissions and try again.",
+    "errorNoFace": "No face detected — try again with better lighting.",
+    "toasts": {
+      "enrolled": "Face enrolled for {{name}}"
+    }
+  },
+  "faceEnrollmentPage": {
+    "title": "Face Enrollment",
+    "subtitle": "Register a staff member's face so they can check in at the face check-in kiosk.",
+    "empty": "No staff, managers, or drivers found.",
+    "enrolled": "Enrolled",
+    "notEnrolled": "Not enrolled",
+    "enroll": "Enroll face",
+    "reEnroll": "Re-enroll face",
+    "toasts": {
+      "removed": "Face enrollment removed"
+    }
+  },
+  "faceCheckInPage": {
+    "title": "Face Check-In",
+    "subtitle": "Look at the camera to check in or out.",
+    "hint": "Scanning for a face…",
+    "loadingCamera": "Starting camera…",
+    "errorCamera": "Couldn't access the camera. Check permissions and try again.",
+    "checkedIn": "Checked in",
+    "checkedOut": "Checked out",
+    "notRecognized": "Face not recognized"
+  },
   "myAttendancePage": {
     "title": "My Attendance",
     "subtitle": "Check yourself in when you arrive, and out when you leave.",

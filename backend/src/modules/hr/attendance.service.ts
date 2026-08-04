@@ -19,20 +19,18 @@ function nowTimeString() {
 // staff member on the same day corrects the existing record (upsert)
 // instead of creating a duplicate row for that day.
 //
-// Staff (as opposed to admin/manager) hit this same endpoint for self
-// check-in/out, so everything about *who*, *when*, and *what* is
-// server-enforced rather than trusted from the request body: staffId is
-// forced to the caller's own uid, date is forced to today (no backdating
-// your own attendance), status is forced to "present" (you can't mark
-// yourself absent/on leave — that's still an admin/manager call), and
-// checkIn/checkOut are stamped from the server clock rather than whatever
-// the client sends. The first self-call of the day records check-in; a
-// second self-call the same day (a record already exists) records
-// check-out instead, without needing an explicit "which action" field.
-export async function recordAttendance(input: RecordAttendanceInput, actor: AuthenticatedUser) {
-  const isSelfService = actor.role === "staff";
-  const staffId = isSelfService ? actor.uid : input.staffId;
-  const date = isSelfService ? todayDateString() : input.date;
+// Shared by two self-service entry points — a staff member hitting their
+// own "check in/out" button, and a face-recognition kiosk match (see
+// faceAttendance.service.ts) — so everything about *who*, *when*, and
+// *what* is server-enforced rather than trusted from the request body:
+// date is always today (no backdating), status is always "present" (you
+// can't mark yourself absent/on leave — that's still an admin/manager
+// call), and checkIn/checkOut are stamped from the server clock. The first
+// call of the day for a given staffId records check-in; a second call the
+// same day (a record already exists) records check-out instead, without
+// needing an explicit "which action" field.
+export async function recordSelfAttendance(staffId: string, recordedBy: string) {
+  const date = todayDateString();
 
   const userSnap = await db.collection("users").doc(staffId).get();
   if (!userSnap.exists) {
@@ -43,26 +41,52 @@ export async function recordAttendance(input: RecordAttendanceInput, actor: Auth
   const docId = `${staffId}_${date}`;
   const ref = collection().doc(docId);
   const existing = await ref.get();
+  const existingData = existing.data();
 
-  const status = isSelfService ? "present" : input.status;
-  let checkIn = input.checkIn ?? null;
-  let checkOut = input.checkOut ?? null;
-  let notes = input.notes ?? null;
-  if (isSelfService) {
-    const existingData = existing.data();
-    checkIn = existing.exists ? (existingData!.checkIn as string | null) : nowTimeString();
-    checkOut = existing.exists ? nowTimeString() : null;
-    notes = existing.exists ? (existingData!.notes as string | null) : null;
-  }
+  const checkIn = existing.exists ? (existingData!.checkIn as string | null) : nowTimeString();
+  const checkOut = existing.exists ? nowTimeString() : null;
+  const notes = existing.exists ? (existingData!.notes as string | null) : null;
+  const checkedOut = existing.exists;
 
   await ref.set({
     staffId,
     staffName: user.displayName,
     date,
-    status,
+    status: "present",
     checkIn,
     checkOut,
     notes,
+    recordedBy,
+    createdAt: existing.exists ? existingData!.createdAt : FieldValue.serverTimestamp(),
+    updatedAt: FieldValue.serverTimestamp(),
+  });
+
+  return { id: docId, staffName: user.displayName, checkedOut };
+}
+
+export async function recordAttendance(input: RecordAttendanceInput, actor: AuthenticatedUser) {
+  if (actor.role === "staff") {
+    return recordSelfAttendance(actor.uid, actor.uid);
+  }
+
+  const userSnap = await db.collection("users").doc(input.staffId).get();
+  if (!userSnap.exists) {
+    throw new AppError(404, "Staff member not found");
+  }
+  const user = userSnap.data() as { displayName: string };
+
+  const docId = `${input.staffId}_${input.date}`;
+  const ref = collection().doc(docId);
+  const existing = await ref.get();
+
+  await ref.set({
+    staffId: input.staffId,
+    staffName: user.displayName,
+    date: input.date,
+    status: input.status,
+    checkIn: input.checkIn ?? null,
+    checkOut: input.checkOut ?? null,
+    notes: input.notes ?? null,
     recordedBy: actor.uid,
     createdAt: existing.exists ? existing.data()!.createdAt : FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp(),

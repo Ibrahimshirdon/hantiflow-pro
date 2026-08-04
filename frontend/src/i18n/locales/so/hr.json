@@ -45,6 +45,39 @@
       "deleted": "Diiwaanka xaadirinta waa la tirtiray"
     }
   },
+  "faceEnroll": {
+    "title": "Diiwaangeli wajiga: {{name}}",
+    "hint": "Wajigaaga geli goobabka, kadibna qabo.",
+    "loadingCamera": "Kamaradda ayaa bilaabmaysa…",
+    "capture": "Qabo wajiga",
+    "errorCamera": "Kamaradda lama gali karin. Fadlan hubi ogolaanshaha kadibna isku day.",
+    "errorNoFace": "Wax wajiga ah lama arag — isku day marlaba iftiin wanaagsan.",
+    "toasts": {
+      "enrolled": "Wajiga {{name}} waa la diiwaangeliyay"
+    }
+  },
+  "faceEnrollmentPage": {
+    "title": "Diiwaangelinta Wajiga",
+    "subtitle": "Diiwaangeli wajiga shaqaalaha si ay uga xaadiri karaan kiosk-ga xaadirinta wajiga.",
+    "empty": "Wax shaqaale, maamule, ama darawal ah lama helin.",
+    "enrolled": "Diiwaangashan",
+    "notEnrolled": "Aan diiwaangashanayn",
+    "enroll": "Diiwaangeli wajiga",
+    "reEnroll": "Dib u diiwaangeli wajiga",
+    "toasts": {
+      "removed": "Diiwaangelinta wajiga waa la saaray"
+    }
+  },
+  "faceCheckInPage": {
+    "title": "Xaadirinta Wajiga",
+    "subtitle": "Fiiri kamaradda si aad u xaadirto ama uga baxdo.",
+    "hint": "Waxaan raadinaynaa wajiga…",
+    "loadingCamera": "Kamaradda ayaa bilaabmaysa…",
+    "errorCamera": "Kamaradda lama gali karin. Fadlan hubi ogolaanshaha kadibna isku day.",
+    "checkedIn": "Waa lagu xaadiriyay",
+    "checkedOut": "Waa laga baxay",
+    "notRecognized": "Wajiga lama aqoonsan"
+  },
   "myAttendancePage": {
     "title": "Xaadirintayda",
     "subtitle": "Calaamadi gelitaankaaga marka aad timaaddo, iyo bixitaankaaga marka aad baxdo.",
