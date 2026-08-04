@@ -24,7 +24,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ShiftSummaryDialog } from "./ShiftSummaryDialog";
-import { CameraScanner } from "./CameraScanner";
 
 const POINTS_PER_DOLLAR = 100;
 
@@ -336,7 +335,6 @@ export function POSPage() {
               if (e.key === "Enter") handleBarcodeSearch();
             }}
           />
-          <CameraScanner onScan={onCameraScan} />
           <ShiftSummaryDialog />
         </div>
         <div className="grid grid-cols-2 gap-3 overflow-y-auto pe-1 sm:grid-cols-3 lg:grid-cols-4">
