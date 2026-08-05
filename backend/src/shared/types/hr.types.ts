@@ -17,9 +17,6 @@ export interface StaffSalary {
   updatedAt: Timestamp;
 }
 
-// One doc per staff member per day (doc id == `${staffId}_${date}`) so
-// recording attendance twice for the same day corrects the existing record
-// instead of creating a duplicate.
 // One doc per staff member (doc id == staffId) — enrolling a face again
 // overwrites the previous descriptor rather than keeping a history, same
 // upsert convention as StaffSalary.
@@ -32,6 +29,9 @@ export interface FaceEnrollment {
   updatedAt: Timestamp;
 }
 
+// One doc per staff member per day (doc id == `${staffId}_${date}`) so
+// recording attendance twice for the same day corrects the existing record
+// instead of creating a duplicate.
 export interface AttendanceRecord {
   id: string;
   staffId: string;
@@ -41,6 +41,11 @@ export interface AttendanceRecord {
   checkIn: string | null;
   checkOut: string | null;
   notes: string | null;
+  // How this record was captured: an admin/manager typing it in directly,
+  // a staff member tapping their own check-in/out button, or an
+  // unattended face-recognition kiosk match. Optional because records
+  // written before this field existed have none.
+  method?: "manual" | "self" | "face";
   recordedBy: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;

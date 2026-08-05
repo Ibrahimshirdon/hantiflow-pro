@@ -30,6 +30,7 @@ export interface AttendanceRecord {
   checkIn: string | null;
   checkOut: string | null;
   notes: string | null;
+  method?: "manual" | "self" | "face";
   recordedBy: string;
   createdAt: FirestoreTimestampLike;
   updatedAt: FirestoreTimestampLike;

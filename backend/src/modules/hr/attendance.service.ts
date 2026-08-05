@@ -29,7 +29,11 @@ function nowTimeString() {
 // call of the day for a given staffId records check-in; a second call the
 // same day (a record already exists) records check-out instead, without
 // needing an explicit "which action" field.
-export async function recordSelfAttendance(staffId: string, recordedBy: string) {
+export async function recordSelfAttendance(
+  staffId: string,
+  recordedBy: string,
+  method: "self" | "face",
+) {
   const date = todayDateString();
 
   const userSnap = await db.collection("users").doc(staffId).get();
@@ -56,6 +60,10 @@ export async function recordSelfAttendance(staffId: string, recordedBy: string) 
     checkIn,
     checkOut,
     notes,
+    // The check-out leg of a self-service pair keeps the method the
+    // check-in leg was recorded with, so a face check-in followed by a
+    // face check-out doesn't flip to "self" on the second call.
+    method: existing.exists ? ((existingData!.method as string | undefined) ?? method) : method,
     recordedBy,
     createdAt: existing.exists ? existingData!.createdAt : FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp(),
@@ -66,7 +74,7 @@ export async function recordSelfAttendance(staffId: string, recordedBy: string) 
 
 export async function recordAttendance(input: RecordAttendanceInput, actor: AuthenticatedUser) {
   if (actor.role === "staff") {
-    return recordSelfAttendance(actor.uid, actor.uid);
+    return recordSelfAttendance(actor.uid, actor.uid, "self");
   }
 
   const userSnap = await db.collection("users").doc(input.staffId).get();
@@ -87,6 +95,7 @@ export async function recordAttendance(input: RecordAttendanceInput, actor: Auth
     checkIn: input.checkIn ?? null,
     checkOut: input.checkOut ?? null,
     notes: input.notes ?? null,
+    method: "manual",
     recordedBy: actor.uid,
     createdAt: existing.exists ? existing.data()!.createdAt : FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp(),

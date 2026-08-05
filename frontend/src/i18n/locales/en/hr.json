@@ -24,7 +24,13 @@
     "presentSummary": "{{count}} of {{total}} present",
     "columns": {
       "checkIn": "Check-in",
-      "checkOut": "Check-out"
+      "checkOut": "Check-out",
+      "method": "Method"
+    },
+    "method": {
+      "manual": "Manual",
+      "self": "Self",
+      "face": "Face"
     },
     "empty": "No staff, managers, or drivers found.",
     "mark": "Mark",

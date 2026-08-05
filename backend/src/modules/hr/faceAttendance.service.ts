@@ -88,7 +88,7 @@ export async function checkInByFace(descriptor: number[]) {
     return { matched: false as const };
   }
 
-  const result = await recordSelfAttendance(best.staffId, best.staffId);
+  const result = await recordSelfAttendance(best.staffId, best.staffId, "face");
   return {
     matched: true as const,
     staffId: best.staffId,

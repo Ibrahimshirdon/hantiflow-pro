@@ -2,6 +2,7 @@ import { useMemo, useState, type FormEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { ScanFace } from "lucide-react";
 import { listUsers } from "@/api/auth.api";
 import { deleteAttendance, listAttendance, recordAttendance } from "@/api/hr.api";
 import { getApiErrorMessage } from "@/api/client";
@@ -44,6 +45,12 @@ const STATUS_VARIANT = {
   half_day: "warning",
   leave: "info",
   absent: "destructive",
+} as const;
+
+const METHOD_VARIANT = {
+  manual: "secondary",
+  self: "secondary",
+  face: "info",
 } as const;
 
 interface AttendanceForm {
@@ -157,6 +164,7 @@ export function AttendancePage() {
             <TableHead>{t("common:fields.status")}</TableHead>
             <TableHead>{t("attendancePage.columns.checkIn")}</TableHead>
             <TableHead>{t("attendancePage.columns.checkOut")}</TableHead>
+            <TableHead>{t("attendancePage.columns.method")}</TableHead>
             <TableHead>{t("common:fields.notes")}</TableHead>
             <TableHead className="text-end">{t("common:fields.actions")}</TableHead>
           </TableRow>
@@ -164,14 +172,14 @@ export function AttendancePage() {
         <TableBody>
           {isLoading && (
             <TableRow>
-              <TableCell colSpan={7} className="text-center text-muted-foreground">
+              <TableCell colSpan={8} className="text-center text-muted-foreground">
                 {t("common:actions.loading")}
               </TableCell>
             </TableRow>
           )}
           {!isLoading && eligibleStaff.length === 0 && (
             <TableRow>
-              <TableCell colSpan={7} className="text-center text-muted-foreground">
+              <TableCell colSpan={8} className="text-center text-muted-foreground">
                 {t("attendancePage.empty")}
               </TableCell>
             </TableRow>
@@ -197,6 +205,16 @@ export function AttendancePage() {
                 </TableCell>
                 <TableCell className="text-muted-foreground">{record?.checkIn ?? "—"}</TableCell>
                 <TableCell className="text-muted-foreground">{record?.checkOut ?? "—"}</TableCell>
+                <TableCell>
+                  {record?.method ? (
+                    <Badge variant={METHOD_VARIANT[record.method]} className="gap-1">
+                      {record.method === "face" && <ScanFace className="size-3" />}
+                      {t(`attendancePage.method.${record.method}`)}
+                    </Badge>
+                  ) : (
+                    <span className="text-muted-foreground">—</span>
+                  )}
+                </TableCell>
                 <TableCell className="text-muted-foreground">{record?.notes ?? "—"}</TableCell>
                 <TableCell className="text-end">
                   <div className="flex justify-end gap-2">

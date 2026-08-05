@@ -24,7 +24,13 @@
     "presentSummary": "{{count}} من {{total}} حاضر",
     "columns": {
       "checkIn": "وقت الحضور",
-      "checkOut": "وقت الانصراف"
+      "checkOut": "وقت الانصراف",
+      "method": "الطريقة"
+    },
+    "method": {
+      "manual": "يدوي",
+      "self": "ذاتي",
+      "face": "بالوجه"
     },
     "empty": "لم يتم العثور على موظفين أو مديرين أو سائقين.",
     "mark": "تسجيل",

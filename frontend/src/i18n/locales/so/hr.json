@@ -24,7 +24,13 @@
     "presentSummary": "{{count}} ka mid ah {{total}} ayaa joogay",
     "columns": {
       "checkIn": "Wakhtiga gelitaanka",
-      "checkOut": "Wakhtiga bixitaanka"
+      "checkOut": "Wakhtiga bixitaanka",
+      "method": "Habka"
+    },
+    "method": {
+      "manual": "Gacanta",
+      "self": "Iskiis",
+      "face": "Wajiga"
     },
     "empty": "Lama helin shaqaale, maareeye, ama darawal.",
     "mark": "Calaamadi",
