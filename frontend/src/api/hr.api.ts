@@ -81,6 +81,7 @@ export interface FaceCheckInResult {
   staffId?: string;
   staffName?: string;
   checkedOut?: boolean;
+  reason?: "not_enrolled" | "no_match";
 }
 
 export async function faceCheckIn(descriptor: number[]) {

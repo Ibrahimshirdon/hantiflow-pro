@@ -13,7 +13,7 @@ const RESULT_DISPLAY_MS = 4000;
 
 type Result =
   | { kind: "matched"; staffName: string; checkedOut: boolean }
-  | { kind: "unmatched" };
+  | { kind: "unmatched"; reason?: "not_enrolled" | "no_match" };
 
 export function FaceCheckInPage() {
   const { t } = useTranslation(["hr"]);
@@ -84,7 +84,7 @@ export function FaceCheckInPage() {
             checkedOut: !!outcome.checkedOut,
           });
         } else {
-          setResult({ kind: "unmatched" });
+          setResult({ kind: "unmatched", reason: outcome.reason });
         }
         setStatus("result");
         setTimeout(() => {
@@ -142,7 +142,11 @@ export function FaceCheckInPage() {
             {status === "result" && result?.kind === "unmatched" && (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-destructive/85 text-center text-white">
                 <XCircle className="size-14" />
-                <p className="text-lg font-semibold">{t("hr:faceCheckInPage.notRecognized")}</p>
+                <p className="text-lg font-semibold">
+                  {result.reason === "not_enrolled"
+                    ? t("hr:faceCheckInPage.notEnrolled")
+                    : t("hr:faceCheckInPage.notRecognized")}
+                </p>
               </div>
             )}
 

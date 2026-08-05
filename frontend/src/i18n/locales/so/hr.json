@@ -85,7 +85,8 @@
     "errorCamera": "Kamaradda lama gali karin. Fadlan hubi ogolaanshaha kadibna isku day.",
     "checkedIn": "Waa lagu xaadiriyay",
     "checkedOut": "Waa laga baxay",
-    "notRecognized": "Wajiga lama aqoonsan"
+    "notRecognized": "Wajiga lama aqoonsan",
+    "notEnrolled": "Wajigaaga wali lama diiwaangelin. Weydii maamule inuu ku diiwaangeliyo."
   },
   "myAttendancePage": {
     "title": "Xaadirintayda",

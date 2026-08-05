@@ -114,23 +114,32 @@ export async function deleteEnrollment(staffId: string) {
   return { staffId };
 }
 
-// The caller never asserts *who* they are — the matched identity is
-// determined entirely server-side from the closest enrolled descriptor,
-// which is what makes this safe to expose on a shared kiosk device: a
-// client can't just claim to be a given staffId, they have to actually
-// match that staff member's enrolled face within MATCH_THRESHOLD.
-export async function checkInByFace(descriptor: number[]) {
-  const snap = await collection().get();
-  const best = findClosestMatch(snap.docs, descriptor);
-
-  if (!best || best.distance > MATCH_THRESHOLD) {
-    return { matched: false as const };
+// Scoped to the logged-in caller's own enrollment only — this is *not* a
+// walk-up-anyone kiosk. It deliberately does not search across every
+// enrolled face and pick whichever is closest, because that would let
+// whoever's session happens to be open check in as anyone whose face is
+// in frame (e.g. Bishaar's browser session checking in Ibrahim just
+// because Ibrahim's face was pointed at the camera). Instead the scan is
+// checked against *only* the authenticated user's own descriptor: it
+// either matches Cali's own enrolled face closely enough, or it's denied
+// — even if it happens to match a different real person's enrollment.
+export async function checkInByFace(descriptor: number[], actor: AuthenticatedUser) {
+  const ref = collection().doc(actor.uid);
+  const snap = await ref.get();
+  if (!snap.exists) {
+    return { matched: false as const, reason: "not_enrolled" as const };
   }
 
-  const result = await recordSelfAttendance(best.staffId, best.staffId, "face");
+  const data = snap.data() as FaceEnrollment;
+  const distance = euclideanDistance(descriptor, data.descriptor);
+  if (distance > MATCH_THRESHOLD) {
+    return { matched: false as const, reason: "no_match" as const };
+  }
+
+  const result = await recordSelfAttendance(actor.uid, actor.uid, "face");
   return {
     matched: true as const,
-    staffId: best.staffId,
+    staffId: actor.uid,
     staffName: result.staffName,
     checkedOut: result.checkedOut,
   };

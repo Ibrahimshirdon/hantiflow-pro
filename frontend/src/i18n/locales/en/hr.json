@@ -85,7 +85,8 @@
     "errorCamera": "Couldn't access the camera. Check permissions and try again.",
     "checkedIn": "Checked in",
     "checkedOut": "Checked out",
-    "notRecognized": "Face not recognized"
+    "notRecognized": "Face not recognized",
+    "notEnrolled": "Your face has not been enrolled. Ask an admin to enroll you."
   },
   "myAttendancePage": {
     "title": "My Attendance",

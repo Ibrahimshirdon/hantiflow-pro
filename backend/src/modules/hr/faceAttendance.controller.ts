@@ -40,6 +40,6 @@ export async function remove(req: Request, res: Response) {
 }
 
 export async function checkIn(req: Request, res: Response) {
-  const result = await faceAttendanceService.checkInByFace(req.body.descriptor);
+  const result = await faceAttendanceService.checkInByFace(req.body.descriptor, req.user!);
   res.json({ success: true, data: result });
 }
