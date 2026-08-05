@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { requireRole } from "../../middleware/requireRole.js";
 import { validate } from "../../middleware/validate.js";
-import { recordAttendanceSchema } from "./attendance.types.js";
+import { recordAttendanceSchema, setAttendanceMethodSchema } from "./attendance.types.js";
 import * as attendanceController from "./attendance.controller.js";
 
 export const attendanceRouter = Router();
@@ -16,5 +16,11 @@ attendanceRouter.post(
   requireRole(["admin", "manager", "staff"]),
   validate(recordAttendanceSchema),
   attendanceController.record,
+);
+attendanceRouter.patch(
+  "/:staffId/method",
+  requireRole(["admin", "manager"]),
+  validate(setAttendanceMethodSchema),
+  attendanceController.setMethod,
 );
 attendanceRouter.delete("/:id", requireRole(["admin"]), attendanceController.remove);

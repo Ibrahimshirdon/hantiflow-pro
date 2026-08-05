@@ -67,14 +67,21 @@
     "subtitle": "Diiwaangeli wajiga shaqaalaha si ay uga xaadiri karaan kiosk-ga xaadirinta wajiga.",
     "empty": "Wax shaqaale, maamule, ama darawal ah lama helin.",
     "columns": {
-      "photo": "Sawirka"
+      "photo": "Sawirka",
+      "checkInMethod": "Habka xaadirinta"
     },
     "enrolled": "Diiwaangashan",
     "notEnrolled": "Aan diiwaangashanayn",
     "enroll": "Diiwaangeli wajiga",
     "reEnroll": "Dib u diiwaangeli wajiga",
+    "method": {
+      "both": "Labadaba la ogolyahay",
+      "face": "Wajiga oo keliya",
+      "manual": "Gacanta oo keliya"
+    },
     "toasts": {
-      "removed": "Diiwaangelinta wajiga waa la saaray"
+      "removed": "Diiwaangelinta wajiga waa la saaray",
+      "methodUpdated": "Habka xaadirinta waa la cusboonaysiiyay"
     }
   },
   "faceCheckInPage": {
@@ -86,7 +93,8 @@
     "checkedIn": "Waa lagu xaadiriyay",
     "checkedOut": "Waa laga baxay",
     "notRecognized": "Wajiga lama aqoonsan",
-    "notEnrolled": "Wajigaaga wali lama diiwaangelin. Weydii maamule inuu ku diiwaangeliyo."
+    "notEnrolled": "Wajigaaga wali lama diiwaangelin. Weydii maamule inuu ku diiwaangeliyo.",
+    "methodNotAllowed": "Akoonkaagu wuxuu ku xaddidan yahay xaadirinta gacanta. Isticmaal badhanka xaadirinta."
   },
   "myAttendancePage": {
     "title": "Xaadirintayda",

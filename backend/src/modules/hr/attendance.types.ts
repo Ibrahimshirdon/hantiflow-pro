@@ -9,3 +9,8 @@ export const recordAttendanceSchema = z.object({
   notes: z.string().optional(),
 });
 export type RecordAttendanceInput = z.infer<typeof recordAttendanceSchema>;
+
+export const setAttendanceMethodSchema = z.object({
+  method: z.enum(["face", "manual", "both"]),
+});
+export type SetAttendanceMethodInput = z.infer<typeof setAttendanceMethodSchema>;

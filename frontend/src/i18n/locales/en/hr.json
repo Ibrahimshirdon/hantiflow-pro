@@ -67,14 +67,21 @@
     "subtitle": "Register a staff member's face so they can check in at the face check-in kiosk.",
     "empty": "No staff, managers, or drivers found.",
     "columns": {
-      "photo": "Photo"
+      "photo": "Photo",
+      "checkInMethod": "Check-in method"
     },
     "enrolled": "Enrolled",
     "notEnrolled": "Not enrolled",
     "enroll": "Enroll face",
     "reEnroll": "Re-enroll face",
+    "method": {
+      "both": "Both allowed",
+      "face": "Face only",
+      "manual": "Manual only"
+    },
     "toasts": {
-      "removed": "Face enrollment removed"
+      "removed": "Face enrollment removed",
+      "methodUpdated": "Check-in method updated"
     }
   },
   "faceCheckInPage": {
@@ -86,7 +93,8 @@
     "checkedIn": "Checked in",
     "checkedOut": "Checked out",
     "notRecognized": "Face not recognized",
-    "notEnrolled": "Your face has not been enrolled. Ask an admin to enroll you."
+    "notEnrolled": "Your face has not been enrolled. Ask an admin to enroll you.",
+    "methodNotAllowed": "Your account is restricted to manual check-in. Use the Check-in button instead."
   },
   "myAttendancePage": {
     "title": "My Attendance",

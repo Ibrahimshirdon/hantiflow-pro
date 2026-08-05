@@ -54,6 +54,14 @@ export async function deleteAttendance(id: string) {
   await apiClient.delete(`/hr/attendance/${id}`);
 }
 
+export async function setAttendanceMethod(staffId: string, method: "face" | "manual" | "both") {
+  const { data } = await apiClient.patch<ApiSuccess<{ staffId: string; method: string }>>(
+    `/hr/attendance/${staffId}/method`,
+    { method },
+  );
+  return data.data;
+}
+
 // Face attendance
 export async function listFaceEnrollments() {
   const { data } = await apiClient.get<ApiSuccess<FaceEnrollment[]>>("/hr/face-attendance");
@@ -81,7 +89,7 @@ export interface FaceCheckInResult {
   staffId?: string;
   staffName?: string;
   checkedOut?: boolean;
-  reason?: "not_enrolled" | "no_match";
+  reason?: "not_enrolled" | "no_match" | "method_not_allowed";
 }
 
 export async function faceCheckIn(descriptor: number[]) {

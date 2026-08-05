@@ -24,3 +24,12 @@ export async function remove(req: Request, res: Response) {
   const result = await attendanceService.deleteAttendance(req.params.id as string);
   res.json({ success: true, data: result });
 }
+
+export async function setMethod(req: Request, res: Response) {
+  const result = await attendanceService.setAttendanceMethod(
+    req.params.staffId as string,
+    req.body,
+    req.user!,
+  );
+  res.json({ success: true, data: result });
+}

@@ -4,6 +4,7 @@ import { AppError } from "../../shared/utils/AppError.js";
 import { uploadBuffer } from "../../shared/utils/uploadFile.js";
 import type { AuthenticatedUser } from "../../shared/types/auth.types.js";
 import type { FaceEnrollment } from "../../shared/types/hr.types.js";
+import type { UserDoc } from "../../shared/types/user.types.js";
 import { recordSelfAttendance } from "./attendance.service.js";
 import type { EnrollFaceInput } from "./faceAttendance.types.js";
 
@@ -128,6 +129,16 @@ export async function checkInByFace(descriptor: number[], actor: AuthenticatedUs
   const snap = await ref.get();
   if (!snap.exists) {
     return { matched: false as const, reason: "not_enrolled" as const };
+  }
+
+  // Mirrors the symmetric check in attendance.service.ts's recordAttendance:
+  // an admin can restrict a staff member to the manual button only, in
+  // which case face check-in is refused even though a face enrollment
+  // still exists on file.
+  const userSnap = await db.collection("users").doc(actor.uid).get();
+  const user = userSnap.data() as UserDoc | undefined;
+  if (user?.attendanceMethod === "manual") {
+    return { matched: false as const, reason: "method_not_allowed" as const };
   }
 
   const data = snap.data() as FaceEnrollment;

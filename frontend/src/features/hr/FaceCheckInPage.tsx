@@ -13,7 +13,7 @@ const RESULT_DISPLAY_MS = 4000;
 
 type Result =
   | { kind: "matched"; staffName: string; checkedOut: boolean }
-  | { kind: "unmatched"; reason?: "not_enrolled" | "no_match" };
+  | { kind: "unmatched"; reason?: "not_enrolled" | "no_match" | "method_not_allowed" };
 
 export function FaceCheckInPage() {
   const { t } = useTranslation(["hr"]);
@@ -145,7 +145,9 @@ export function FaceCheckInPage() {
                 <p className="text-lg font-semibold">
                   {result.reason === "not_enrolled"
                     ? t("hr:faceCheckInPage.notEnrolled")
-                    : t("hr:faceCheckInPage.notRecognized")}
+                    : result.reason === "method_not_allowed"
+                      ? t("hr:faceCheckInPage.methodNotAllowed")
+                      : t("hr:faceCheckInPage.notRecognized")}
                 </p>
               </div>
             )}

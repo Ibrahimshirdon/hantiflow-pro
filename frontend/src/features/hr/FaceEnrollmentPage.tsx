@@ -4,12 +4,19 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { ScanFace, UserRound } from "lucide-react";
 import { listUsers } from "@/api/auth.api";
-import { deleteFaceEnrollment, listFaceEnrollments } from "@/api/hr.api";
+import { deleteFaceEnrollment, listFaceEnrollments, setAttendanceMethod } from "@/api/hr.api";
 import type { FaceEnrollment } from "@/types/hr.types";
 import { getApiErrorMessage } from "@/api/client";
 import type { UserProfile } from "@/types/auth.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -55,6 +62,16 @@ export function FaceEnrollmentPage() {
     onError: (error) => toast.error(getApiErrorMessage(error)),
   });
 
+  const methodMutation = useMutation({
+    mutationFn: ({ staffId, method }: { staffId: string; method: "face" | "manual" | "both" }) =>
+      setAttendanceMethod(staffId, method),
+    onSuccess: () => {
+      toast.success(t("hr:faceEnrollmentPage.toasts.methodUpdated"));
+      queryClient.invalidateQueries({ queryKey: ["users", "all"] });
+    },
+    onError: (error) => toast.error(getApiErrorMessage(error)),
+  });
+
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -69,20 +86,21 @@ export function FaceEnrollmentPage() {
             <TableHead>{t("common:fields.name")}</TableHead>
             <TableHead>{t("common:fields.role")}</TableHead>
             <TableHead>{t("common:fields.status")}</TableHead>
+            <TableHead>{t("hr:faceEnrollmentPage.columns.checkInMethod")}</TableHead>
             <TableHead className="text-end">{t("common:fields.actions")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {isLoading && (
             <TableRow>
-              <TableCell colSpan={5} className="text-center text-muted-foreground">
+              <TableCell colSpan={6} className="text-center text-muted-foreground">
                 {t("common:actions.loading")}
               </TableCell>
             </TableRow>
           )}
           {!isLoading && eligibleStaff.length === 0 && (
             <TableRow>
-              <TableCell colSpan={5} className="text-center text-muted-foreground">
+              <TableCell colSpan={6} className="text-center text-muted-foreground">
                 {t("hr:faceEnrollmentPage.empty")}
               </TableCell>
             </TableRow>
@@ -117,6 +135,27 @@ export function FaceEnrollmentPage() {
                   ) : (
                     <Badge variant="secondary">{t("hr:faceEnrollmentPage.notEnrolled")}</Badge>
                   )}
+                </TableCell>
+                <TableCell>
+                  <Select
+                    value={user.attendanceMethod ?? "both"}
+                    disabled={methodMutation.isPending}
+                    onValueChange={(value) =>
+                      methodMutation.mutate({
+                        staffId: user.uid,
+                        method: value as "face" | "manual" | "both",
+                      })
+                    }
+                  >
+                    <SelectTrigger className="w-36">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="both">{t("hr:faceEnrollmentPage.method.both")}</SelectItem>
+                      <SelectItem value="face">{t("hr:faceEnrollmentPage.method.face")}</SelectItem>
+                      <SelectItem value="manual">{t("hr:faceEnrollmentPage.method.manual")}</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </TableCell>
                 <TableCell className="text-end">
                   <div className="flex justify-end gap-2">

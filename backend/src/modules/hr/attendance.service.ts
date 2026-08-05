@@ -1,9 +1,11 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../../config/firebase.js";
 import { AppError } from "../../shared/utils/AppError.js";
+import { recordAuditLog } from "../../shared/utils/auditLog.js";
 import type { AuthenticatedUser } from "../../shared/types/auth.types.js";
 import type { AttendanceRecord } from "../../shared/types/hr.types.js";
-import type { RecordAttendanceInput } from "./attendance.types.js";
+import type { UserDoc } from "../../shared/types/user.types.js";
+import type { RecordAttendanceInput, SetAttendanceMethodInput } from "./attendance.types.js";
 
 const collection = () => db.collection("attendanceRecords");
 
@@ -74,6 +76,14 @@ export async function recordSelfAttendance(
 
 export async function recordAttendance(input: RecordAttendanceInput, actor: AuthenticatedUser) {
   if (actor.role === "staff") {
+    const selfSnap = await db.collection("users").doc(actor.uid).get();
+    const self = selfSnap.data() as UserDoc | undefined;
+    if (self?.attendanceMethod === "face") {
+      throw new AppError(
+        403,
+        "Your account is restricted to face check-in. Use the Face Check-In kiosk instead.",
+      );
+    }
     return recordSelfAttendance(actor.uid, actor.uid, "self");
   }
 
@@ -128,6 +138,41 @@ export async function listAttendance(filters: {
   if (filters.dateTo) records = records.filter((r) => r.date <= filters.dateTo!);
 
   return records.sort((a, b) => b.date.localeCompare(a.date));
+}
+
+// Admin/manager-set restriction on which check-in path a given staff
+// member may use. "both" clears the restriction (stored as field deletion,
+// not the literal string) rather than being a third stored state — see
+// UserDoc.attendanceMethod, where undefined already means unrestricted.
+export async function setAttendanceMethod(
+  staffId: string,
+  input: SetAttendanceMethodInput,
+  actor: AuthenticatedUser,
+) {
+  const ref = db.collection("users").doc(staffId);
+  const snap = await ref.get();
+  if (!snap.exists) {
+    throw new AppError(404, "Staff member not found");
+  }
+  const before = snap.data() as UserDoc;
+
+  await ref.update({
+    attendanceMethod: input.method === "both" ? FieldValue.delete() : input.method,
+    updatedAt: FieldValue.serverTimestamp(),
+  });
+
+  await recordAuditLog({
+    userId: actor.uid,
+    userName: actor.email,
+    role: actor.role,
+    action: "ATTENDANCE_METHOD_CHANGED",
+    entityType: "user",
+    entityId: staffId,
+    before: { attendanceMethod: before.attendanceMethod ?? "both" },
+    after: { attendanceMethod: input.method },
+  });
+
+  return { staffId, method: input.method };
 }
 
 export async function deleteAttendance(id: string) {

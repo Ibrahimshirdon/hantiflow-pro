@@ -16,6 +16,7 @@ export interface UserDoc {
   role: UserRole;
   status: "active" | "suspended";
   photoURL?: string;
+  attendanceMethod?: "face" | "manual";
   createdAt: FirestoreTimestampLike;
   updatedAt: FirestoreTimestampLike;
 }

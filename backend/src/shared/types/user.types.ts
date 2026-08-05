@@ -10,6 +10,11 @@ export interface UserDoc {
   role: UserRole;
   status: "active" | "suspended";
   photoURL?: string;
+  // Admin-set restriction on how this staff member is allowed to check
+  // in/out for attendance. Undefined means unrestricted (both the manual
+  // button and the face kiosk work) — this is an opt-in restriction, not a
+  // default lockout.
+  attendanceMethod?: "face" | "manual";
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
