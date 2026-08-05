@@ -60,10 +60,14 @@ export async function listFaceEnrollments() {
   return data.data;
 }
 
-export async function enrollFace(staffId: string, descriptor: number[]) {
-  const { data } = await apiClient.post<ApiSuccess<{ staffId: string }>>(
+export async function enrollFace(staffId: string, descriptor: number[], photo: Blob) {
+  const formData = new FormData();
+  formData.append("staffId", staffId);
+  formData.append("descriptor", JSON.stringify(descriptor));
+  formData.append("photo", photo, "face.jpg");
+  const { data } = await apiClient.post<ApiSuccess<{ staffId: string; photoUrl: string }>>(
     "/hr/face-attendance/enroll",
-    { staffId, descriptor },
+    formData,
   );
   return data.data;
 }

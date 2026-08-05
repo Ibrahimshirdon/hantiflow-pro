@@ -19,6 +19,7 @@ export interface StaffSalary {
 export interface FaceEnrollment {
   staffId: string;
   staffName: string;
+  photoUrl: string;
 }
 
 export interface AttendanceRecord {

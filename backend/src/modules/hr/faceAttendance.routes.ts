@@ -1,16 +1,20 @@
 import { Router } from "express";
 import { requireRole } from "../../middleware/requireRole.js";
 import { validate } from "../../middleware/validate.js";
-import { enrollFaceSchema, faceCheckInSchema } from "./faceAttendance.types.js";
+import { upload } from "../../middleware/upload.js";
+import { faceCheckInSchema } from "./faceAttendance.types.js";
 import * as faceAttendanceController from "./faceAttendance.controller.js";
 
 export const faceAttendanceRouter = Router();
 
 faceAttendanceRouter.get("/", requireRole(["admin", "manager"]), faceAttendanceController.list);
+// multipart/form-data (staffId + descriptor + a photo file), so this uses
+// multer's upload middleware instead of the JSON-only validate() middleware
+// — see faceAttendance.controller.ts for the manual schema check.
 faceAttendanceRouter.post(
   "/enroll",
   requireRole(["admin", "manager"]),
-  validate(enrollFaceSchema),
+  upload.single("photo"),
   faceAttendanceController.enroll,
 );
 faceAttendanceRouter.delete(

@@ -24,6 +24,7 @@ export interface FaceEnrollment {
   staffId: string;
   staffName: string;
   descriptor: number[];
+  photoUrl: string;
   enrolledBy: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;

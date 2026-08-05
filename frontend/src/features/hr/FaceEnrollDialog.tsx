@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Camera, Check } from "lucide-react";
 import { enrollFace } from "@/api/hr.api";
 import { getApiErrorMessage } from "@/api/client";
-import { detectFaceDescriptor, loadFaceModels } from "@/lib/faceApi";
+import { captureVideoFrame, detectFaceDescriptor, loadFaceModels } from "@/lib/faceApi";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -76,7 +76,8 @@ export function FaceEnrollDialog({ open, onOpenChange, staffId, staffName }: Pro
   }, [open, videoEl, t]);
 
   const enrollMutation = useMutation({
-    mutationFn: (descriptor: number[]) => enrollFace(staffId, descriptor),
+    mutationFn: ({ descriptor, photo }: { descriptor: number[]; photo: Blob }) =>
+      enrollFace(staffId, descriptor, photo),
     onSuccess: () => {
       toast.success(t("hr:faceEnroll.toasts.enrolled", { name: staffName }));
       queryClient.invalidateQueries({ queryKey: ["faceEnrollments"] });
@@ -95,7 +96,12 @@ export function FaceEnrollDialog({ open, onOpenChange, staffId, staffName }: Pro
         setError(t("hr:faceEnroll.errorNoFace"));
         return;
       }
-      enrollMutation.mutate(descriptor);
+      const photo = await captureVideoFrame(videoEl);
+      if (!photo) {
+        setError(t("hr:faceEnroll.errorNoFace"));
+        return;
+      }
+      enrollMutation.mutate({ descriptor, photo });
     } finally {
       setCapturing(false);
     }

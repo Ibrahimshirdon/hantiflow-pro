@@ -1,6 +1,7 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../../config/firebase.js";
 import { AppError } from "../../shared/utils/AppError.js";
+import { uploadBuffer } from "../../shared/utils/uploadFile.js";
 import type { AuthenticatedUser } from "../../shared/types/auth.types.js";
 import type { FaceEnrollment } from "../../shared/types/hr.types.js";
 import { recordSelfAttendance } from "./attendance.service.js";
@@ -23,13 +24,26 @@ function euclideanDistance(a: number[], b: number[]) {
 }
 
 // Doc id == staffId, so re-enrolling (e.g. after a haircut throws off
-// matches) simply overwrites the previous descriptor.
-export async function enrollFace(input: EnrollFaceInput, actor: AuthenticatedUser) {
+// matches) simply overwrites the previous descriptor and photo. The photo
+// itself plays no part in matching (that's purely the descriptor) — it
+// exists solely so an admin reviewing the enrollment list can visually
+// confirm whose face is on file, the same way product photos exist for
+// human review rather than for any matching logic.
+export async function enrollFace(
+  input: EnrollFaceInput,
+  photoBuffer: Buffer,
+  actor: AuthenticatedUser,
+) {
   const userSnap = await db.collection("users").doc(input.staffId).get();
   if (!userSnap.exists) {
     throw new AppError(404, "Staff member not found");
   }
   const user = userSnap.data() as { displayName: string };
+
+  const photoUrl = await uploadBuffer(photoBuffer, {
+    folder: "face-enrollments",
+    resourceType: "image",
+  });
 
   const ref = collection().doc(input.staffId);
   const existing = await ref.get();
@@ -37,22 +51,24 @@ export async function enrollFace(input: EnrollFaceInput, actor: AuthenticatedUse
     staffId: input.staffId,
     staffName: user.displayName,
     descriptor: input.descriptor,
+    photoUrl,
     enrolledBy: actor.uid,
     createdAt: existing.exists ? existing.data()!.createdAt : FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp(),
   });
 
-  return { staffId: input.staffId };
+  return { staffId: input.staffId, photoUrl };
 }
 
 // Deliberately omits the descriptor field — the admin UI only needs to
-// know *who* is enrolled, never the raw biometric vector itself.
+// know *who* is enrolled and what they look like, never the raw biometric
+// vector itself.
 export async function listEnrollments() {
   const snap = await collection().get();
   return snap.docs
     .map((d) => {
       const data = d.data() as FaceEnrollment;
-      return { staffId: data.staffId, staffName: data.staffName };
+      return { staffId: data.staffId, staffName: data.staffName, photoUrl: data.photoUrl };
     })
     .sort((a, b) => a.staffName.localeCompare(b.staffName));
 }

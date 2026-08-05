@@ -66,6 +66,9 @@
     "title": "Face Enrollment",
     "subtitle": "Register a staff member's face so they can check in at the face check-in kiosk.",
     "empty": "No staff, managers, or drivers found.",
+    "columns": {
+      "photo": "Photo"
+    },
     "enrolled": "Enrolled",
     "notEnrolled": "Not enrolled",
     "enroll": "Enroll face",

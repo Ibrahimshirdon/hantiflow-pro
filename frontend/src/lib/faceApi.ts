@@ -32,3 +32,16 @@ export async function detectFaceDescriptor(video: HTMLVideoElement): Promise<num
     .withFaceDescriptor();
   return detection ? Array.from(detection.descriptor) : null;
 }
+
+// Snapshots the current video frame as a JPEG blob — purely for human
+// review (an admin looking at "whose face is this?"), never used in the
+// matching logic itself, which relies solely on the descriptor above.
+export function captureVideoFrame(video: HTMLVideoElement): Promise<Blob | null> {
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return Promise.resolve(null);
+  ctx.drawImage(video, 0, 0);
+  return new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.9));
+}

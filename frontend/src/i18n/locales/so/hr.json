@@ -66,6 +66,9 @@
     "title": "Diiwaangelinta Wajiga",
     "subtitle": "Diiwaangeli wajiga shaqaalaha si ay uga xaadiri karaan kiosk-ga xaadirinta wajiga.",
     "empty": "Wax shaqaale, maamule, ama darawal ah lama helin.",
+    "columns": {
+      "photo": "Sawirka"
+    },
     "enrolled": "Diiwaangashan",
     "notEnrolled": "Aan diiwaangashanayn",
     "enroll": "Diiwaangeli wajiga",
