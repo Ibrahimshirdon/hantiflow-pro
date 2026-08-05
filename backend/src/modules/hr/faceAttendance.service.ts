@@ -23,12 +23,27 @@ function euclideanDistance(a: number[], b: number[]) {
   return Math.sqrt(sum);
 }
 
-// Doc id == staffId, so re-enrolling (e.g. after a haircut throws off
-// matches) simply overwrites the previous descriptor and photo. The photo
-// itself plays no part in matching (that's purely the descriptor) — it
-// exists solely so an admin reviewing the enrollment list can visually
-// confirm whose face is on file, the same way product photos exist for
-// human review rather than for any matching logic.
+function findClosestMatch(
+  docs: FirebaseFirestore.QueryDocumentSnapshot[],
+  descriptor: number[],
+): { staffId: string; staffName: string; distance: number } | null {
+  let best: { staffId: string; staffName: string; distance: number } | null = null;
+  for (const doc of docs) {
+    const data = doc.data() as FaceEnrollment;
+    const distance = euclideanDistance(descriptor, data.descriptor);
+    if (!best || distance < best.distance) {
+      best = { staffId: data.staffId, staffName: data.staffName, distance };
+    }
+  }
+  return best;
+}
+
+// Doc id == staffId, so re-enrolling yourself (e.g. after a haircut throws
+// off matches) simply overwrites your own previous descriptor and photo.
+// The photo itself plays no part in matching (that's purely the
+// descriptor) — it exists solely so an admin reviewing the enrollment list
+// can visually confirm whose face is on file, the same way product photos
+// exist for human review rather than for any matching logic.
 export async function enrollFace(
   input: EnrollFaceInput,
   photoBuffer: Buffer,
@@ -39,6 +54,22 @@ export async function enrollFace(
     throw new AppError(404, "Staff member not found");
   }
   const user = userSnap.data() as { displayName: string };
+
+  // One-face-one-account boundary: reject the enrollment if this face is
+  // already on file under a *different* staff member, before it ever
+  // touches Cloudinary or Firestore. Without this, the same person could
+  // be enrolled under two accounts and clock in as either — or two
+  // employees could share one enrollment by mistake — either of which
+  // defeats the point of using a face as an identity check at all.
+  const snap = await collection().get();
+  const otherDocs = snap.docs.filter((doc) => doc.id !== input.staffId);
+  const closest = findClosestMatch(otherDocs, input.descriptor);
+  if (closest && closest.distance <= MATCH_THRESHOLD) {
+    throw new AppError(
+      409,
+      `This face is already enrolled for ${closest.staffName}. Each face can only be enrolled once.`,
+    );
+  }
 
   const photoUrl = await uploadBuffer(photoBuffer, {
     folder: "face-enrollments",
@@ -90,15 +121,7 @@ export async function deleteEnrollment(staffId: string) {
 // match that staff member's enrolled face within MATCH_THRESHOLD.
 export async function checkInByFace(descriptor: number[]) {
   const snap = await collection().get();
-
-  let best: { staffId: string; staffName: string; distance: number } | null = null;
-  for (const doc of snap.docs) {
-    const data = doc.data() as FaceEnrollment;
-    const distance = euclideanDistance(descriptor, data.descriptor);
-    if (!best || distance < best.distance) {
-      best = { staffId: data.staffId, staffName: data.staffName, distance };
-    }
-  }
+  const best = findClosestMatch(snap.docs, descriptor);
 
   if (!best || best.distance > MATCH_THRESHOLD) {
     return { matched: false as const };
