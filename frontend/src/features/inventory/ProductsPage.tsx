@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Package, Upload } from "lucide-react";
 import { ImportProductsDialog } from "./ImportProductsDialog";
 import { listCategories, listProducts } from "@/api/inventory.api";
+import { useAuth } from "@/context/AuthContext";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,8 @@ import {
 export function ProductsPage() {
   const { t } = useTranslation(["inventory", "common"]);
   const navigate = useNavigate();
+  const { profile } = useAuth();
+  const canImport = profile?.role === "admin" || profile?.role === "manager";
   const [search, setSearch] = useState("");
   const [categoryId, setCategoryId] = useState<string>("all");
   const [lowStockOnly, setLowStockOnly] = useState(false);
@@ -63,16 +66,18 @@ export function ProductsPage() {
           <h1 className="text-2xl font-semibold">{t("productsPage.title")}</h1>
           <p className="text-muted-foreground">{t("productsPage.subtitle")}</p>
         </div>
-        <button
-          onClick={() => setImportOpen(true)}
-          className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-        >
-          <Upload className="size-4" />
-          {t("productsPage.importCsv")}
-        </button>
+        {canImport && (
+          <button
+            onClick={() => setImportOpen(true)}
+            className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            <Upload className="size-4" />
+            {t("productsPage.importCsv")}
+          </button>
+        )}
       </div>
 
-      <ImportProductsDialog open={importOpen} onOpenChange={setImportOpen} />
+      {canImport && <ImportProductsDialog open={importOpen} onOpenChange={setImportOpen} />}
 
       <div className="flex flex-wrap items-end gap-4">
         <div className="flex flex-col gap-1.5">
