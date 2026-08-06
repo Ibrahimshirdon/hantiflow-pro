@@ -58,6 +58,14 @@
     "capture": "Qabo wajiga",
     "errorCamera": "Kamaradda lama gali karin. Fadlan hubi ogolaanshaha kadibna isku day.",
     "errorNoFace": "Wax wajiga ah lama arag — isku day marlaba iftiin wanaagsan.",
+    "tabs": {
+      "camera": "Kamaradda",
+      "upload": "Soo Rar Sawir"
+    },
+    "uploadPlaceholder": "Wali sawir lama dooran",
+    "chooseFile": "Dooro sawir…",
+    "uploadHint": "Isticmaal sawir cad, dhawaan qaaday, oo si toos ah wajiga u eegaya si xaadirinta loo hubiyo si sax ah.",
+    "enrollFromPhoto": "Diiwaangeli sawirka",
     "toasts": {
       "enrolled": "Wajiga {{name}} waa la diiwaangeliyay"
     }

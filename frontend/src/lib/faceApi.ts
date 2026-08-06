@@ -24,10 +24,15 @@ export function loadFaceModels() {
 }
 
 // Returns a 128-length face embedding for the most prominent face in the
-// current video frame, or null if no face was detected.
-export async function detectFaceDescriptor(video: HTMLVideoElement): Promise<number[] | null> {
+// given source, or null if no face was detected. Works identically for a
+// live video frame (the check-in kiosk, the camera-capture enroll flow) or
+// a static uploaded photo (the upload-photo enroll flow) — face-api.js's
+// detector doesn't care which one it's looking at.
+export async function detectFaceDescriptor(
+  source: HTMLVideoElement | HTMLImageElement,
+): Promise<number[] | null> {
   const detection = await faceapi
-    .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+    .detectSingleFace(source, new faceapi.TinyFaceDetectorOptions())
     .withFaceLandmarks()
     .withFaceDescriptor();
   return detection ? Array.from(detection.descriptor) : null;

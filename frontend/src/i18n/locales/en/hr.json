@@ -58,6 +58,14 @@
     "capture": "Capture face",
     "errorCamera": "Couldn't access the camera. Check permissions and try again.",
     "errorNoFace": "No face detected — try again with better lighting.",
+    "tabs": {
+      "camera": "Camera",
+      "upload": "Upload Photo"
+    },
+    "uploadPlaceholder": "No photo selected yet",
+    "chooseFile": "Choose a photo…",
+    "uploadHint": "Use a clear, recent, front-facing photo for the most reliable check-in matches.",
+    "enrollFromPhoto": "Enroll from photo",
     "toasts": {
       "enrolled": "Face enrolled for {{name}}"
     }
