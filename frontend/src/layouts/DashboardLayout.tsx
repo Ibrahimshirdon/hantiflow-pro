@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import { listDeliveries, listDeliveryIssues } from "@/api/delivery.api";
 import { UserMenu } from "@/components/shared/UserMenu";
 import { NotificationBell } from "@/components/shared/NotificationBell";
+import { AttendanceReminderDialog } from "@/components/shared/AttendanceReminderDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -91,6 +92,7 @@ export function DashboardLayout() {
 
   return (
     <div className="flex h-screen">
+      <AttendanceReminderDialog />
       {/* Global new-delivery alert — visible on every page */}
       {deliveryAlert && (
         <div className="fixed inset-x-0 top-4 z-[100] flex justify-center px-4 pointer-events-none">

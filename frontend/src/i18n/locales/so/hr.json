@@ -104,6 +104,17 @@
     "notEnrolled": "Wajigaaga wali lama diiwaangelin. Weydii maamule inuu ku diiwaangeliyo.",
     "methodNotAllowed": "Akoonkaagu wuxuu ku xaddidan yahay xaadirinta gacanta. Isticmaal badhanka xaadirinta."
   },
+  "attendanceReminder": {
+    "title": "Ha ilaawin inaad xaadirto",
+    "body": "Maanta wali ma xaadirin. Hadda xaadir si xaadirintaadu loo diiwaangeliyo.",
+    "faceOnlyBody": "Maanta wali ma xaadirin. Akoonkaagu wuxuu u baahan yahay kiosk-ga Xaadirinta Wajiga.",
+    "checkInNow": "Hadda xaadir",
+    "goToKiosk": "Tag Xaadirinta Wajiga",
+    "later": "Xasuusi mar dambe",
+    "toasts": {
+      "checkedIn": "Waa lagu xaadiriyay"
+    }
+  },
   "myAttendancePage": {
     "title": "Xaadirintayda",
     "subtitle": "Calaamadi gelitaankaaga marka aad timaaddo, iyo bixitaankaaga marka aad baxdo.",

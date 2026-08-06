@@ -104,6 +104,17 @@
     "notEnrolled": "Your face has not been enrolled. Ask an admin to enroll you.",
     "methodNotAllowed": "Your account is restricted to manual check-in. Use the Check-in button instead."
   },
+  "attendanceReminder": {
+    "title": "Don't forget to check in",
+    "body": "You haven't checked in today. Check in now so your attendance is recorded.",
+    "faceOnlyBody": "You haven't checked in today. Your account requires the Face Check-In kiosk.",
+    "checkInNow": "Check in now",
+    "goToKiosk": "Go to Face Check-In",
+    "later": "Remind me later",
+    "toasts": {
+      "checkedIn": "Checked in"
+    }
+  },
   "myAttendancePage": {
     "title": "My Attendance",
     "subtitle": "Check yourself in when you arrive, and out when you leave.",
