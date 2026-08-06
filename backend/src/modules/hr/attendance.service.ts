@@ -17,6 +17,22 @@ function nowTimeString() {
   return new Date().toTimeString().slice(0, 5);
 }
 
+// Both times are "HH:MM" from the same calendar day (self-service records
+// never span midnight — see recordSelfAttendance), so a straight minutes
+// difference is enough; no need to reach for a full date library.
+function minutesBetween(startHHMM: string, endHHMM: string): number {
+  const [startHour, startMinute] = startHHMM.split(":").map(Number);
+  const [endHour, endMinute] = endHHMM.split(":").map(Number);
+  return endHour! * 60 + endMinute! - (startHour! * 60 + startMinute!);
+}
+
+// Minimum time a face check-in must stand before a face check-out is
+// accepted. Exists specifically to close the "walk up, scan twice in a
+// row" abuse case the face kiosk makes trivially easy compared to the
+// manual button — someone could otherwise register a full attendance day
+// in a few seconds without actually being present for it.
+const MIN_FACE_SHIFT_MINUTES = 120;
+
 // Doc id == `${staffId}_${date}` — recording attendance again for the same
 // staff member on the same day corrects the existing record (upsert)
 // instead of creating a duplicate row for that day.
@@ -49,8 +65,24 @@ export async function recordSelfAttendance(
   const existing = await ref.get();
   const existingData = existing.data();
 
-  const checkIn = existing.exists ? (existingData!.checkIn as string | null) : nowTimeString();
-  const checkOut = existing.exists ? nowTimeString() : null;
+  const now = nowTimeString();
+
+  // Only gates a *face* check-out — the whole point is closing a gap the
+  // face kiosk specifically opens up (two instant scans), not restricting
+  // the pre-existing manual button, which has no such rule.
+  if (existing.exists && !existingData!.checkOut && method === "face") {
+    const existingCheckIn = existingData!.checkIn as string;
+    const elapsed = minutesBetween(existingCheckIn, now);
+    if (elapsed < MIN_FACE_SHIFT_MINUTES) {
+      throw new AppError(
+        400,
+        `You checked in at ${existingCheckIn}. Face check-out is only available at least 2 hours after check-in.`,
+      );
+    }
+  }
+
+  const checkIn = existing.exists ? (existingData!.checkIn as string | null) : now;
+  const checkOut = existing.exists ? now : null;
   const notes = existing.exists ? (existingData!.notes as string | null) : null;
   const checkedOut = existing.exists;
 

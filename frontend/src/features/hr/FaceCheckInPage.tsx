@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 import { CheckCircle2, ScanFace, XCircle } from "lucide-react";
 import { faceCheckIn } from "@/api/hr.api";
+import { getApiErrorMessage } from "@/api/client";
 import { detectFaceDescriptor, loadFaceModels } from "@/lib/faceApi";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -13,7 +15,8 @@ const RESULT_DISPLAY_MS = 4000;
 
 type Result =
   | { kind: "matched"; staffName: string; checkedOut: boolean }
-  | { kind: "unmatched"; reason?: "not_enrolled" | "no_match" | "method_not_allowed" };
+  | { kind: "unmatched"; reason?: "not_enrolled" | "no_match" | "method_not_allowed" }
+  | { kind: "denied"; message: string };
 
 export function FaceCheckInPage() {
   const { t } = useTranslation(["hr"]);
@@ -91,10 +94,21 @@ export function FaceCheckInPage() {
           setResult(null);
           setStatus("scanning");
         }, RESULT_DISPLAY_MS);
-      } catch {
-        // Transient network/API error — stay in scanning state and just
-        // try again on the next tick rather than surfacing a kiosk-blocking
-        // error screen for what's likely a momentary blip.
+      } catch (err) {
+        // A real response from the server (e.g. the 2-hour minimum-shift
+        // rule rejecting a too-soon face check-out) is worth surfacing —
+        // silently retrying would just make the kiosk look broken. A bare
+        // network failure (no response at all: offline, timeout, CORS)
+        // stays silent and retries next tick, since that's genuinely just
+        // a momentary blip rather than a decision the user needs to see.
+        if (axios.isAxiosError(err) && err.response) {
+          setResult({ kind: "denied", message: getApiErrorMessage(err) });
+          setStatus("result");
+          setTimeout(() => {
+            setResult(null);
+            setStatus("scanning");
+          }, RESULT_DISPLAY_MS);
+        }
       } finally {
         busyRef.current = false;
       }
@@ -149,6 +163,13 @@ export function FaceCheckInPage() {
                       ? t("hr:faceCheckInPage.methodNotAllowed")
                       : t("hr:faceCheckInPage.notRecognized")}
                 </p>
+              </div>
+            )}
+
+            {status === "result" && result?.kind === "denied" && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-destructive/85 text-center text-white">
+                <XCircle className="size-14" />
+                <p className="px-6 text-lg font-semibold">{result.message}</p>
               </div>
             )}
 
