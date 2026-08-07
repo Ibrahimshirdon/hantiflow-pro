@@ -88,7 +88,9 @@
       "totalRevenue": "إجمالي الإيرادات",
       "costOfGoodsSold": "تكلفة البضاعة المباعة",
       "totalExpenses": "إجمالي المصروفات",
-      "netProfit": "صافي الربح"
+      "netProfit": "صافي الربح",
+      "cashOnHand": "النقد المتوفر",
+      "outstandingLoans": "القروض المستحقة"
     },
     "cashFlowCard": {
       "title": "التدفق النقدي",

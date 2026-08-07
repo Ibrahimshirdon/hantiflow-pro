@@ -88,7 +88,9 @@
       "totalRevenue": "Total revenue",
       "costOfGoodsSold": "Cost of goods sold",
       "totalExpenses": "Total expenses",
-      "netProfit": "Net profit"
+      "netProfit": "Net profit",
+      "cashOnHand": "Cash on hand",
+      "outstandingLoans": "Outstanding loans"
     },
     "cashFlowCard": {
       "title": "Cash flow",

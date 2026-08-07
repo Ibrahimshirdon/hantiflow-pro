@@ -31,6 +31,8 @@ export interface FinancialSummary {
   totalExpenses: number;
   grossProfit: number;
   netProfit: number;
+  cashOnHand: number;
+  outstandingLoans: number;
   orderCount: number;
   expensesByCategory: { category: string; amount: number }[];
 }

@@ -2,6 +2,7 @@ import { db } from "../../config/firebase.js";
 import type { SalesOrder } from "../../shared/types/sales.types.js";
 import type { Product } from "../../shared/types/inventory.types.js";
 import type { Expense, OtherIncome } from "../../shared/types/finance.types.js";
+import type { Loan } from "../../shared/types/loan.types.js";
 
 function round2(n: number): number {
   return Math.round(n * 100) / 100;
@@ -72,11 +73,24 @@ async function getCostOfGoodsSold(orders: SalesOrder[]): Promise<number> {
   return cogs;
 }
 
+// Total money currently owed to the business across every outstanding
+// customer loan — a point-in-time balance (how much credit is out there
+// right now), not a period flow, so unlike the rest of this summary it
+// deliberately ignores the date range: a loan issued two months ago that's
+// still unpaid is just as relevant to "how much do we have out on credit"
+// as one issued yesterday.
+async function getOutstandingLoansTotal(): Promise<number> {
+  const snap = await db.collection("loans").where("status", "==", "outstanding").get();
+  const total = snap.docs.reduce((sum, d) => sum + (d.data() as Loan).balanceRemaining, 0);
+  return round2(total);
+}
+
 export async function getFinancialSummary(range: DateRange) {
-  const [sales, expenses, otherIncome] = await Promise.all([
+  const [sales, expenses, otherIncome, outstandingLoans] = await Promise.all([
     getCompletedSalesInRange(range),
     getExpensesInRange(range),
     getOtherIncomeInRange(range),
+    getOutstandingLoansTotal(),
   ]);
   const cogs = await getCostOfGoodsSold(sales);
 
@@ -86,6 +100,12 @@ export async function getFinancialSummary(range: DateRange) {
   const totalExpenses = round2(expenses.reduce((sum, e) => sum + e.amount, 0));
   const grossProfit = round2(salesRevenue - cogs);
   const netProfit = round2(totalRevenue - cogs - totalExpenses);
+  // Cash actually collected minus cash actually paid out over the range —
+  // same "cashIn - cashOut" the Cash Flow chart plots per day, just
+  // totaled across the whole period. Deliberately excludes COGS: cost of
+  // goods sold is an accounting valuation of inventory already on hand,
+  // not itself a cash movement recorded in this range.
+  const cashOnHand = round2(totalRevenue - totalExpenses);
 
   const expensesByCategory = new Map<string, number>();
   expenses.forEach((e) => {
@@ -100,6 +120,8 @@ export async function getFinancialSummary(range: DateRange) {
     totalExpenses,
     grossProfit,
     netProfit,
+    cashOnHand,
+    outstandingLoans,
     orderCount: sales.length,
     expensesByCategory: Array.from(expensesByCategory, ([category, amount]) => ({ category, amount })),
   };

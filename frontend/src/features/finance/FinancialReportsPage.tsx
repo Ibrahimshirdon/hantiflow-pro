@@ -14,7 +14,9 @@ import {
 } from "recharts";
 import { useTranslation } from "react-i18next";
 import {
+  Banknote,
   DollarSign,
+  HandCoins,
   Package,
   PiggyBank,
   Receipt,
@@ -101,7 +103,7 @@ export function FinancialReportsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         <StatCard
           label={t("financialReportsPage.stats.salesRevenue")}
           value={`$${(summary?.salesRevenue ?? 0).toFixed(2)}`}
@@ -137,6 +139,18 @@ export function FinancialReportsPage() {
           value={`$${(summary?.netProfit ?? 0).toFixed(2)}`}
           icon={PiggyBank}
           tone="success"
+        />
+        <StatCard
+          label={t("financialReportsPage.stats.cashOnHand")}
+          value={`$${(summary?.cashOnHand ?? 0).toFixed(2)}`}
+          icon={Banknote}
+          tone="success"
+        />
+        <StatCard
+          label={t("financialReportsPage.stats.outstandingLoans")}
+          value={`$${(summary?.outstandingLoans ?? 0).toFixed(2)}`}
+          icon={HandCoins}
+          tone="warning"
         />
       </div>
 

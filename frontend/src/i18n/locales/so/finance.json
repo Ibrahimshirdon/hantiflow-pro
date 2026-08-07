@@ -88,7 +88,9 @@
       "totalRevenue": "Wadarta dakhliga",
       "costOfGoodsSold": "Qiimaha alaabta la iibiyay",
       "totalExpenses": "Wadarta kharashaadka",
-      "netProfit": "Faa'iidada saafiga ah"
+      "netProfit": "Faa'iidada saafiga ah",
+      "cashOnHand": "Lacagta gacanta ku jirta",
+      "outstandingLoans": "Deymaha aan la bixin"
     },
     "cashFlowCard": {
       "title": "Socodka lacagta",
